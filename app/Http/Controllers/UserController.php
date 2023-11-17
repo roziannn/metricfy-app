@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,7 +45,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -52,15 +53,27 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        User::where('id', $id)->update([
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'roles'=> $request->roles
+        ]);
+
+        $request->accepts('session');
+        session()->flash('successUpdate', 'Berhasil mengubah data user!');
+
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete($id)
     {
-        //
+        $data_user = User::find($id);
+        $data_user->delete();
+
+        return redirect('/admin/dashboard')->with('successDelete', 'Berhasil menghapus data!');
     }
     /**
      * Remove the specified resource from storage.

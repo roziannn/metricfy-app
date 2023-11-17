@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudyController;
 use App\Http\Controllers\RegisterController;
@@ -18,13 +19,19 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
+
+
+
+Route::get('/',[HomeController::class, 'index']);
 
 Route::get('/login',[UserController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/login',[UserController::class, 'authenticate']); 
 Route::post('/logout',[UserController::class, 'logout']);
+Route::post('/edit-user{id}',[UserController::class, 'update']);
+Route::get('/delete-user{id}', [UserController::class, 'delete']);
 
 Route::get('/register',[RegisterController::class, 'index'])->name('register')->middleware('guest');
 Route::post('/register-store',[RegisterController::class, 'store']);

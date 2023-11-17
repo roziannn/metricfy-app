@@ -1,10 +1,10 @@
 <div class="col-md-9 mb-5">
     <div class="card card-content p-3">
         <div class="fs-5 font-weight-bold">Data User</div>
-        <div class="text-right">
+        {{-- <div class="text-right">
             <a href="#" class="btn btn-primary btn-sm shadow" data-bs-toggle="modal"
                 data-bs-target="#createUser">Tambah User</a>
-        </div>
+        </div> --}}
         <div class="bd-example py-3">
             <table class="table">
                 <thead class="table-light">
@@ -23,6 +23,9 @@
                                 <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal{{ $user->id }}">
                                     <i class="fas fa-pen-to-square text-white"></i>
+                                </a>
+                                <a href="#" class="btn btn-danger btn-sm"data-toggle="modal"
+                                    data-target="#modal-danger{{ $user->id }}"><i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -73,7 +76,7 @@
                         </div>
                         <div class="text-right justify-content-around mt-3">
                             <button type="button" class="btn btn-sm btn-danger pull-left"
-                            data-bs-dismiss="modal">Batal</button>
+                                data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-sm btn-primary">Simpan</a></button>
                         </div>
                     </form>
@@ -83,48 +86,73 @@
     </div>
 
     {{-- MODAL FOR EDIT USER DATA --}}
-    @foreach ($data_user as $item)
-        <div class="modal fade" id="modal{{ $item->id }}">
+    @foreach ($data_user as $user)
+        <div class="modal fade" id="modal{{ $user->id }}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
+                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button> --}}
                     </div>
                     <div class="modal-body">
-                        <form action="{{ url('/dashboard/admin/user/edit' . $item->id) }}" method="POST">
+                        <form action="{{ url('/edit-user' . $user->id) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="col-sm-12 mb-3">
                                 <label class="small" for="name">Nama Lengkap</label>
                                 <input class="form-control" id="name" name="name" type="text"
-                                    value="{{ $item->name }}" autocomplete="off">
+                                    value="{{ $user->name }}" autocomplete="off">
                             </div>
                             <div class="col-sm-12 mb-3">
                                 <label class="small" for="email">Email</label>
                                 <input class="form-control" id="email" name="email" type="text"
-                                    value="{{ $item->email }}" autocomplete="off">
+                                    value="{{ $user->email }}" autocomplete="off">
                             </div>
                             <div class="col-sm-12 mb-3">
                                 <label class="small" for="roles">Roles</label>
                                 <select class="form-select input-sm" name="roles" id="roles"
-                                    value="{{ $item->roles }}" required>
+                                    value="{{ $user->roles }}" required>
                                     <option disabled> --- Roles ---</option>
-                                    <option value="USER"{{ $item->roles == 'USER' ? 'selected' : '' }}>
+                                    <option value="USER"{{ $user->roles == 'USER' ? 'selected' : '' }}>
                                         USER</option>
-                                    <option value="ADMIN"{{ $item->roles == 'ADMIN' ? 'selected' : '' }}>
+                                    <option value="ADMIN"{{ $user->roles == 'ADMIN' ? 'selected' : '' }}>
                                         ADMIN</option>
                                 </select>
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-danger pull-left"
+                        <button type="button" class="btn btn-m btn-danger pull-left"
                             data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary btn-m">Simpan Perubahan</button>
                     </div>
                     </form>
                 </div>
             </div>
         </div>
     @endforeach
+
+    {{-- MODAL FOR DELETE USER --}}
+    @foreach ($data_user as $user)
+    <div class="modal modal-danger fade" id="modal-danger{{ $user->id }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi</h5>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button> --}}
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('/delete-user' . $user->id) }}" method="GET">
+                        {{ csrf_field() }}
+                        <p>Yakin ingin menghapus data?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-m btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-m btn-danger">Hapus</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
 </div>

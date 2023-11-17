@@ -16,6 +16,28 @@
 </div>
 @endif
 
+
+@foreach ($data as $item )
+    
+
+@if(auth()->check())
+    @if(auth()->user()->id == $item->id)
+        <p>{{ $item->kelas }}</p>
+    @else
+        <!-- Pengecekan lebih lanjut di dalam blok else -->
+        @if(auth()->user()->kelas == isNotNull)
+            <!-- Tambahkan logika khusus jika pengguna adalah admin -->
+            <p>Anda adalah seorang admin.</p>
+        @else
+            <p>Anda tidak memiliki hak akses untuk melihat data ini.</p>
+        @endif
+    @endif
+@else
+    <p>Silakan login untuk melihat data.</p>
+@endif
+
+@endforeach
+
 @include('partials.hero-preview')
 @include('partials.feature-preview')
 @include('partials.materi-preview')

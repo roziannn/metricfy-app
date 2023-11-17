@@ -7,14 +7,14 @@
         <div class="header-title d-flex flex-column align-items-start">
             <div class="row align-items-center">
                 <div class="col">
-                    <strong class="fs-6">Shania Gracia Harlan</strong>
+                    <strong class="fs-6">DASHBOARD ADMIN</strong>
                     <small>gracia@gmail.com</small>
                 </div>
             </div>
         </div>
 
 
-        <a href="/dashboard/posts" class="profile-settings-item my-3 active">Proyek Saya</a>
+        <a href="/dashboard/posts" class="profile-settings-item my-3 active">Data User</a>
         <a href="/dashboard/my-workshop" class="profile-settings-item mb-3"> Event</a>
         <a href="/account/profile" class="profile-settings-item">
             Pengaturan</a>

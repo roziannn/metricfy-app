@@ -31,7 +31,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group my-3">
+                {{-- <div class="form-group my-3">
                     <label for="kelas">Kelas</label>
                     <div class="form-check form-check-inline ms-5">
                         <input class="form-check-input" type="radio" name="kelas" id="kls_10">
@@ -51,7 +51,7 @@
                             XII
                         </label>
                     </div>
-                </div>
+                </div> --}}
                 
                 <div class="form-group my-3">
                     <label for="password">Kata Sandi</label>
