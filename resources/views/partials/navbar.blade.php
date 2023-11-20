@@ -60,7 +60,7 @@
                         @endif
 
                         @if (auth()->user()->roles === 'ADMIN')
-                            <li><a class="dropdown-item px-3 py-2" href="/admin/dashboard">
+                            <li><a class="dropdown-item px-3 py-2" href="/main-dashboard-admin">
                                     Dashboard Admin</a></li>
                             <li>
                         @endif

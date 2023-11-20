@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\StudyController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use GuzzleHttp\Middleware;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -36,9 +37,12 @@ Route::get('/delete-user{id}', [UserController::class, 'delete']);
 Route::get('/register',[RegisterController::class, 'index'])->name('register')->middleware('guest');
 Route::post('/register-store',[RegisterController::class, 'store']);
 
-Route::get('/materi-belajar', [StudyController::class, 'index'])->name('materi');
-Route::get('/materi-belajar/numerasi-dasar-matematika', [StudyController::class, 'show']);
+Route::get('/materi-belajar', [ModuleController::class, 'index'])->name('materi');
+Route::get('/materi-belajar/numerasi-dasar-matematika', [ModuleController::class, 'show']);
 
-Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
+Route::get('/main-dashboard-admin', [DashboardController::class, 'adminDashboard']);
+Route::get('/dashboard-admin/data-user', [DashboardController::class, 'adminDashboardDataUser']);
+Route::get('/dashboard-admin/data-module', [DashboardController::class, 'adminDashboardDataModule']);
+Route::get('/dashboard-admin/module/create', [ModuleController::class, 'create']);
 
 

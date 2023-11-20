@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StudyController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('page.study.index');
+       return view('page.study.index');
     }
 
     /**
@@ -19,7 +19,7 @@ class StudyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.dashboard-admin.dataModule.create');
     }
 
     /**

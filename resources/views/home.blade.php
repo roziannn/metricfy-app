@@ -17,7 +17,7 @@
 @endif
 
 
-@foreach ($data as $item )
+{{-- @foreach ($data as $item )
     
 
 @if(auth()->check())
@@ -36,7 +36,7 @@
     <p>Silakan login untuk melihat data.</p>
 @endif
 
-@endforeach
+@endforeach --}}
 
 @include('partials.hero-preview')
 @include('partials.feature-preview')
