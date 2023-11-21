@@ -1,10 +1,10 @@
 <div class="col-md-9 mb-5">
     <div class="card card-content p-3">
         <div class="fs-5 font-weight-bold">Data User</div>
-        <div class="text-right">
+        '<div class="text-right">
             <a href="#" class="btn btn-primary btn-sm shadow" data-bs-toggle="modal"
                 data-bs-target="#createUser">Tambah User</a>
-        </div>
+        </div>'
         <div class="bd-example py-3">
             <table class="table">
                 <thead class="table-light">

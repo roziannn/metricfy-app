@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
@@ -11,7 +12,9 @@ class ModuleController extends Controller
      */
     public function index()
     {
-       return view('page.study.index');
+        $data_module = Module::all();
+
+        return view('user.module.index', compact('data_module'));
     }
 
     /**
@@ -27,15 +30,29 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Module::create($request->all());
+
+        $request->accepts('session');
+        session()->flash('successStore', 'Berhasil menambahkan data!');
+
+        return redirect('/dashboard-admin/data-module');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function showUser($slug)
     {
-        return view('page.study.show');
+        $show_module = Module::where('slug', $slug)->first();
+
+        return view('user.module.show', compact('show_module'));
+    }
+
+    public function showAdmin($slug)
+    {
+        $module = Module::where('slug', $slug)->first();
+
+        return view('admin.dashboard-admin.dataModule.show', compact('module'));
     }
 
     /**
@@ -49,9 +66,21 @@ class ModuleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = ([
+            'title' => 'required|max:30',
+            'description' => 'required|max:255',
+            'content' => 'required|max:500',
+        ]);
+
+
+        $validatedData = $request->validate($rules);
+
+        $module = Module::find($id);
+        $module->update($validatedData);
+
+        return redirect('/dashboard-admin/data-module')->with('successUpdate', 'Module berhasil diperbarui!');
     }
 
     /**

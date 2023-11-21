@@ -8,9 +8,9 @@
         </div>
     @endif
 
-    @if (session()->has('successRegister'))
+    @if (session()->has('successStore'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
-            {{ session('successRegister') }}
+            {{ session('successStore') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif

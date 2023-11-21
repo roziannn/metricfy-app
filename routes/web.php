@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Module;
 use GuzzleHttp\Middleware;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -38,11 +39,20 @@ Route::get('/register',[RegisterController::class, 'index'])->name('register')->
 Route::post('/register-store',[RegisterController::class, 'store']);
 
 Route::get('/materi-belajar', [ModuleController::class, 'index'])->name('materi');
-Route::get('/materi-belajar/numerasi-dasar-matematika', [ModuleController::class, 'show']);
+Route::get('/materi-belajar/{slug}', [ModuleController::class, 'showUser']);
 
 Route::get('/main-dashboard-admin', [DashboardController::class, 'adminDashboard']);
 Route::get('/dashboard-admin/data-user', [DashboardController::class, 'adminDashboardDataUser']);
 Route::get('/dashboard-admin/data-module', [DashboardController::class, 'adminDashboardDataModule']);
 Route::get('/dashboard-admin/module/create', [ModuleController::class, 'create']);
+Route::post('/dashboard-admin/module/store', [ModuleController::class, 'store']);
+Route::post('/dashboard-admin/module/{id}/update', [ModuleController::class, 'update']);
+
+// Slug modul
+Route::get('/module/{slug}', 'ModuleController@show'); // Contoh route untuk modul
+Route::get('/submodule/{slug}', 'SubmoduleController@show'); // Contoh route untuk submodul
+
+//module ADMIN
+Route::get('/dashboard-admin/data-module/{slug}', [ModuleController::class, 'showAdmin'])->name('admin.dashboard-admin.show');
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Return_;
@@ -23,8 +24,8 @@ class DashboardController extends Controller
     }
 
     public function adminDashboardDataModule(){
-         $data_user = User::all();
+        $data_module = Module::orderBy('created_at', 'asc')->get();
         
-         return view('admin.dashboard-admin.dataModule.index', compact('data_user'));
+         return view('admin.dashboard-admin.dataModule.index', compact('data_module'));
     }
 }
