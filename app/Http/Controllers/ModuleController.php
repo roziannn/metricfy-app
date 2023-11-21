@@ -69,14 +69,29 @@ class ModuleController extends Controller
         return redirect()->route('admin.dashboard-admin.show', ['slug' => $module->slug]);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // show page all module/index untuk user
     public function showUser($slug)
     {
         $show_module = Module::where('slug', $slug)->first();
 
         return view('user.module.show', compact('show_module'));
+    }
+
+    //show masuk ke subModule untuk user
+    public function subModuleShowUser($moduleSlug, $submoduleSlug){
+
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+
+        $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
+
+        $breadcrumbs = [
+            'Materi' => route('materi'),
+            $module->title => route('user.module.show', ['slug' => $module->slug]),
+            $submodule->title => ''
+        ];
+    
+
+        return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs'));
     }
 
     public function showAdmin($slug)

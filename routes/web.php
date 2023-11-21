@@ -27,7 +27,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 
-Route::get('/',[HomeController::class, 'index']);
+Route::get('/',[HomeController::class, 'index'])->name('home');
 
 Route::get('/login',[UserController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/login',[UserController::class, 'authenticate']); 
@@ -39,7 +39,7 @@ Route::get('/register',[RegisterController::class, 'index'])->name('register')->
 Route::post('/register-store',[RegisterController::class, 'store']);
 
 Route::get('/materi-belajar', [ModuleController::class, 'index'])->name('materi');
-Route::get('/materi-belajar/{slug}', [ModuleController::class, 'showUser']);
+Route::get('/materi-belajar/{slug}', [ModuleController::class, 'showUser'])->name('user.module.show');
 
 Route::get('/main-dashboard-admin', [DashboardController::class, 'adminDashboard']);
 Route::get('/dashboard-admin/data-user', [DashboardController::class, 'adminDashboardDataUser']);
@@ -56,6 +56,9 @@ Route::get('/submodule/{slug}', 'SubmoduleController@show'); // Contoh route unt
 Route::get('/dashboard-admin/data-module/{slug}', [ModuleController::class, 'showAdmin'])->name('admin.dashboard-admin.show');
 Route::get('/dashboard-admin/data-module/{slug}/create-sub-module', [ModuleController::class, 'createSubModule']);
 Route::post('/dashboard-admin/data-module/{id}/store-sub-module', [ModuleController::class, 'storeSubModule']);
+
+//subModule User view
+Route::get('/materi-belajar/{moduleSlug}/{submoduleSlug}', [ModuleController::class,'subModuleShowUser']); //slug 1 untuk module, slug 2 untuk submodulenya
 
 
 
