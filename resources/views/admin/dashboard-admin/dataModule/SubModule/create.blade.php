@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+
 <button class="btn btn-sm btn-secondary"> <a href="/dashboard-admin/data-module" class="text-decoration-none text-white">Back</a></button>
 <form method="POST" action="/dashboard-admin/data-module/{{ $data_module->id }}/store-sub-module">
     @csrf

@@ -1,6 +1,14 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+
+@if (session()->has('successStore'))
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
+    {{ session('successStore') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
     <button class="btn btn-sm btn-secondary"> <a href="/dashboard-admin/data-module"
             class="text-decoration-none text-white">Back</a></button>
     <h5 class="py-3">Module</h5>

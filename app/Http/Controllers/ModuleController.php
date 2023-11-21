@@ -64,7 +64,9 @@ class ModuleController extends Controller
 
 
         $request->accepts('session');
-        session()->flash('successStore', 'Berhasil menambahkan data!');
+        session()->flash('successStore', 'Berhasil menambahkan sub module!');
+
+        return redirect()->route('admin.dashboard-admin.show', ['slug' => $module->slug]);
     }
 
     /**
