@@ -45,10 +45,11 @@
             </h5>
         </div>
         <div class="col text-right">
-            <a href="#" class="btn btn-primary btn-m shadow">Tambah Sub Materi</a>
+            <a href="/dashboard-admin/data-module/{{ $module->slug }}/create-sub-module"
+                class="btn btn-m btn-primary">Tambah Sub Materi</a>
         </div>
     </div>
-    
+
     <div class="bd-example">
         <table class="table">
             <thead class="table-light">
@@ -58,17 +59,19 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($module->submodules as $sub)
                 <tr>
-                    <td></td>
-                    <td>
-                        <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal">
-                            <i class="fas fa-pen-to-square text-white"></i>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm"data-toggle="modal" data-target="#modal-danger"><i
-                                class="fa fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
+                        <td>{{ $sub->title }}</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal">
+                                <i class="fas fa-pen-to-square text-white"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm"data-toggle="modal"
+                                data-target="#modal-danger"><i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
             </tbody>
         </table>
     </div>

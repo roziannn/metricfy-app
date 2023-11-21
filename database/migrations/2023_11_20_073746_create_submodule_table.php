@@ -13,11 +13,10 @@ return new class extends Migration
     {
             Schema::create('submodules', function (Blueprint $table) {
                 $table->id();
-                $table->string('module_title');
-                $table->string('sub_name');
-                $table->string('slug')->unique()->after('sub_name');
+                $table->string('title');
+                $table->string('slug')->unique()->after('title');
                 $table->longText('content');
-                $table->foreignId('module_id')->constrained('modules');
+                $table->foreignId('module_id')->onDelete('cascade'); 
                 $table->timestamps();
             });
     }

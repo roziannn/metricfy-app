@@ -54,5 +54,8 @@ Route::get('/submodule/{slug}', 'SubmoduleController@show'); // Contoh route unt
 
 //module ADMIN
 Route::get('/dashboard-admin/data-module/{slug}', [ModuleController::class, 'showAdmin'])->name('admin.dashboard-admin.show');
+Route::get('/dashboard-admin/data-module/{slug}/create-sub-module', [ModuleController::class, 'createSubModule']);
+Route::post('/dashboard-admin/data-module/{id}/store-sub-module', [ModuleController::class, 'storeSubModule']);
+
 
 

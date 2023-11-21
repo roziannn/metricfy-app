@@ -7,7 +7,7 @@
         <div class="header-title d-flex flex-column align-items-start">
             <div class="row align-items-center">
                 <div class="col">
-                    <strong class="fs-6">{{ Auth::user()->roles }}</strong> <br>
+                    {{-- <strong class="fs-6">{{ Auth::user()->roles }}</strong> <br> --}}
                     <small>gracia@gmail.com</small>
                 </div>
             </div>

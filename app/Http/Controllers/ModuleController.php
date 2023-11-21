@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
+use App\Models\Submodule;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
@@ -25,6 +27,13 @@ class ModuleController extends Controller
         return view('admin.dashboard-admin.dataModule.create');
     }
 
+    public function createSubModule($slug){
+
+        $data_module = Module::where('slug', $slug)->first();
+
+        return view('admin.dashboard-admin.dataModule.SubModule.create', compact('data_module'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -36,6 +45,26 @@ class ModuleController extends Controller
         session()->flash('successStore', 'Berhasil menambahkan data!');
 
         return redirect('/dashboard-admin/data-module');
+    }
+
+    //belum di test??
+    public function storeSubModule(Request $request, $id){
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:120',
+            'content' => 'required|max:255',
+        ]);
+        $module = Module::where('id', $id)->first();
+
+        Submodule::create([
+            'title' => $validatedData['title'],
+            'slug' => Str::slug($validatedData['title']),
+            'content' => $validatedData['content'],
+            'module_id' => $module->id,
+        ]);
+
+
+        $request->accepts('session');
+        session()->flash('successStore', 'Berhasil menambahkan data!');
     }
 
     /**
@@ -51,6 +80,8 @@ class ModuleController extends Controller
     public function showAdmin($slug)
     {
         $module = Module::where('slug', $slug)->first();
+
+        //we dont need o recall subModules, karena di model Module sudah ada hasMany submodules 
 
         return view('admin.dashboard-admin.dataModule.show', compact('module'));
     }

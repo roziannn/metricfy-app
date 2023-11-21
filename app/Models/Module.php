@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Module extends Model
 {
-    protected $fillable = ['title', 'description', 'content', 'parent_id', 'slug'];
+    protected $guarded = ['id'];
 
     public static function boot()
     {
@@ -25,7 +25,7 @@ class Module extends Model
 
     public function submodules()
     {
-        return $this->hasMany(Module::class, 'parent_id');
+        return $this->hasMany(Submodule::class);
     }
 }
 
