@@ -7,6 +7,7 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExerciseController;
+use App\Models\Exercise;
 use App\Models\Module;
 use GuzzleHttp\Middleware;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -64,8 +65,10 @@ Route::post('/dashboard-admin/data-module/{slug}/update', [ModuleController::cla
 //subModule User view
 Route::get('/materi-belajar/{moduleSlug}/{submoduleSlug}', [ModuleController::class,'subModuleShowUser']); //slug 1 untuk module, slug 2 untuk submodulenya
 
-//Exercise by Admin
+//ExerciseModule by Admin
 Route::get('/dashboard-admin/data-module/{slug}/create-exercise', [ExerciseController::class, 'create'])->name('admin.dashboard-admin.dataModule.exerciseModule');
+Route::post('/dashboard-admin/data-module/{id}/store-exercise', [ExerciseController::class, 'store']);
+Route::get('/dashboard-admin/data-module/{id}/delete-exercise', [ExerciseController::class, 'delete']);
 
-
-
+//ExerciseModule by User
+Route::get('/{slug}/latihan-soal', [ExerciseController::class, 'show']);

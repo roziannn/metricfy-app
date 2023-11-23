@@ -81,7 +81,6 @@
     </div>
 </nav>
 
-
 <div class="modal" id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

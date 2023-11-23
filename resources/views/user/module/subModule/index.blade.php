@@ -32,21 +32,9 @@
                     allowfullscreen></iframe>
                 <p class="pt-3 text-justify">{{ $submodule->content }}</p>
             </div>
-            <div class="col-md-4 m-0 p-0 py-3">
-                <div class="card">
-                    <div class="card-body">
-                        <li class="d-flex justify-content-between align-items-center py-2">
-                            A list item
-                        </li>
-                        <li class="d-flex justify-content-between align-items-center py-2">
-                            A second list item
-                        </li>
-                        <li class="d-flex justify-content-between align-items-center py-2">
-                            A third list item
-                        </li>
-                    </div>
-                </div>
-            </div>
+            
+            {{-- partials next-preview/playlist --}}
+            @include('user.module.partials.subMateri-playlist-module')
         </div>
     </div>
 @endsection

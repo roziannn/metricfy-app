@@ -11,6 +11,10 @@ class Exercise extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'options' => 'json',
+    ];
+
     public function module(){
         return $this->belongsTo(Module::class);
     }

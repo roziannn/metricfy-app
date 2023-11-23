@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('module_id')->constrained();
             $table->text('question');
+            $table->json('options');
             $table->string('answer');
             $table->timestamps();
         });

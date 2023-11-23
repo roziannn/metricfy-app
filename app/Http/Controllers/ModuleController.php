@@ -115,14 +115,17 @@ class ModuleController extends Controller
 
         $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
 
+        $playlist = $module->submodules; //playlist next-preview user
+
+        $exerciseModule = $module->exercises;
+
         $breadcrumbs = [
             'Materi' => route('materi'),
             $module->title => route('user.module.show', ['slug' => $module->slug]),
             $submodule->title => ''
         ];
 
-
-        return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs'));
+        return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'exerciseModule'));
     }
 
     public function showAdmin($slug)
