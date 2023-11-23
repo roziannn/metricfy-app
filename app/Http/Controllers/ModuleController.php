@@ -27,7 +27,8 @@ class ModuleController extends Controller
         return view('admin.dashboard-admin.dataModule.create');
     }
 
-    public function createSubModule($slug){
+    public function createSubModule($slug)
+    {
 
         $data_module = Module::where('slug', $slug)->first();
 
@@ -48,10 +49,12 @@ class ModuleController extends Controller
     }
 
     //belum di test??
-    public function storeSubModule(Request $request, $id){
+    public function storeSubModule(Request $request, $id)
+    {
         $validatedData = $request->validate([
             'title' => 'required|string|max:120',
             'content' => 'required|max:255',
+            'video_embed' => 'nullable|string'
         ]);
         $module = Module::where('id', $id)->first();
 
@@ -60,6 +63,7 @@ class ModuleController extends Controller
             'slug' => Str::slug($validatedData['title']),
             'content' => $validatedData['content'],
             'module_id' => $module->id,
+            'video_embed' => $validatedData['video_embed'],
         ]);
 
 
@@ -67,6 +71,32 @@ class ModuleController extends Controller
         session()->flash('successStore', 'Berhasil menambahkan sub module!');
 
         return redirect()->route('admin.dashboard-admin.show', ['slug' => $module->slug]);
+    }
+
+    public function editSubModule($moduleSlug, $submoduleSlug){
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+
+        $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
+
+        return view('admin.dashboard-admin.dataModule.SubModule.edit', compact('module','submodule'));
+    }
+
+    public function updateSubModule(Request $request, $slug){
+        $rules = ([
+            'title' => 'required',
+            'content' => 'required|max:500',
+            'video_embed' => 'required',
+        ]);
+
+        $validatedData = $request->validate($rules);
+        
+        $submodule = Submodule::where('slug', $slug)->first();
+        $submodule->update($validatedData);
+        
+        $updatedSlug = $submodule->fresh()->slug;
+        $newUrl = url("/dashboard-admin/data-module/{$submodule->module->slug}/{$updatedSlug}/edit");
+
+        return redirect($newUrl)->with('successUpdate', 'Submodule berhasil di update!');
     }
 
     // show page all module/index untuk user
@@ -78,7 +108,8 @@ class ModuleController extends Controller
     }
 
     //show masuk ke subModule untuk user
-    public function subModuleShowUser($moduleSlug, $submoduleSlug){
+    public function subModuleShowUser($moduleSlug, $submoduleSlug)
+    {
 
         $module = Module::where('slug', $moduleSlug)->firstOrFail();
 
@@ -89,7 +120,7 @@ class ModuleController extends Controller
             $module->title => route('user.module.show', ['slug' => $module->slug]),
             $submodule->title => ''
         ];
-    
+
 
         return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs'));
     }

@@ -55,8 +55,10 @@
         <div class="col text-right">
             <a href="/dashboard-admin/data-module/{{ $module->slug }}/create-sub-module"
                 class="btn btn-m btn-primary">Tambah Sub Materi</a>
+            <a href="/dashboard-admin/data-module/{{ $module->slug }}/create-exercise"
+                class="btn btn-m btn-warning">Tambah Soal/Latihan</a>
         </div>
-    </div>
+    </div>    
 
     <div class="bd-example">
         <table class="table">
@@ -71,10 +73,10 @@
                 <tr>
                         <td>{{ $sub->title }}</td>
                         <td>
-                            <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal">
+                            <a href="/dashboard-admin/data-module/{{ $module->slug }}/{{ $sub->slug }}/edit" class="btn btn-warning btn-sm">
                                 <i class="fas fa-pen-to-square text-white"></i>
                             </a>
-                            <a href="#" class="btn btn-danger btn-sm"data-toggle="modal"
+                            <a href="/dashboard-admin/data-module/{moduleSlug}/{submoduleSlug}/edit" class="btn btn-danger btn-sm"data-toggle="modal"
                                 data-target="#modal-danger"><i class="fa fa-trash"></i>
                             </a>
                         </td>

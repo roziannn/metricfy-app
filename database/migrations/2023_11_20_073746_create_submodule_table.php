@@ -16,6 +16,7 @@ return new class extends Migration
                 $table->string('title');
                 $table->string('slug')->unique()->after('title');
                 $table->longText('content');
+                $table->text('video_embed')->nullable();
                 $table->foreignId('module_id')->onDelete('cascade'); 
                 $table->timestamps();
             });
