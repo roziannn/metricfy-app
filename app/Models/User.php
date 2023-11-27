@@ -45,4 +45,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function userProgress()
+    {
+        return $this->hasMany(UserProgress::class);
+    }
 }

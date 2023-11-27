@@ -28,6 +28,11 @@ class Module extends Model
         return $this->hasMany(Submodule::class);
     }
 
+    public function userProgress()
+    {
+        return $this->hasMany(UserProgress::class);
+    }
+
     public function exercises(){
         return $this->hasMany(Exercise::class);
     }

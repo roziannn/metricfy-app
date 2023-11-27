@@ -20,7 +20,7 @@
                             <td>{{ $module->description }}</td>
                             <td>
                                 <a href="/dashboard-admin/data-module/{{ $module->slug }}" class="btn btn-success btn-sm"><i class="bi bi-eye"></i>
-                                </a>
+                                </a>    
                             </td>
                         </tr>
                     @endforeach

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Module;
 use App\Models\Submodule;
 use Illuminate\Support\Str;
+use App\Models\UserProgress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ModuleController extends Controller
 {
@@ -73,15 +75,17 @@ class ModuleController extends Controller
         return redirect()->route('admin.dashboard-admin.show', ['slug' => $module->slug]);
     }
 
-    public function editSubModule($moduleSlug, $submoduleSlug){
+    public function editSubModule($moduleSlug, $submoduleSlug)
+    {
         $module = Module::where('slug', $moduleSlug)->firstOrFail();
 
         $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
 
-        return view('admin.dashboard-admin.dataModule.SubModule.edit', compact('module','submodule'));
+        return view('admin.dashboard-admin.dataModule.SubModule.edit', compact('module', 'submodule'));
     }
 
-    public function updateSubModule(Request $request, $slug){
+    public function updateSubModule(Request $request, $slug)
+    {
         $rules = ([
             'title' => 'required',
             'content' => 'required|max:500',
@@ -89,10 +93,10 @@ class ModuleController extends Controller
         ]);
 
         $validatedData = $request->validate($rules);
-        
+
         $submodule = Submodule::where('slug', $slug)->first();
         $submodule->update($validatedData);
-        
+
         $updatedSlug = $submodule->fresh()->slug;
         $newUrl = url("/dashboard-admin/data-module/{$submodule->module->slug}/{$updatedSlug}/edit");
 
@@ -102,18 +106,43 @@ class ModuleController extends Controller
     // show page all module/index untuk user
     public function showUser($slug)
     {
-        $show_module = Module::where('slug', $slug)->first();
+        $show_module = Module::where('slug', $slug)
+            ->with(['submodules' => function ($query) {
+                $query->orderBy('id', 'asc');}])->first();
+
+        // get user progress by current modul 
+        $userProgress = UserProgress::where([
+            'user_id' => auth()->user()->id,
+            'module_id' => $show_module->id,
+        ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
+
+        // Menentukan status kunci untuk setiap submodul
+        $submodules = $show_module->submodules;
+        dd($submodules);
+
+        foreach ($submodules as $key => $submodule) {
+            if ($key === 0) {  // Submodule urutan pertama (index 0) tidak boleh terkunci
+                $submodule->locked = false;
+            } else {
+                // Jika submodule index sebelumnya sudah diklik, maka submodule sekarang tidak dikunci
+                $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($submodules[$key - 1]->id, $userProgress);
+            }
+        }
+
 
         return view('user.module.show', compact('show_module'));
     }
+
 
     //show masuk ke subModule untuk user
     public function subModuleShowUser($moduleSlug, $submoduleSlug)
     {
 
-        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+        $user = auth()->user();
 
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
         $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
+
 
         $playlist = $module->submodules; //playlist next-preview user
 
@@ -124,6 +153,14 @@ class ModuleController extends Controller
             $module->title => route('user.module.show', ['slug' => $module->slug]),
             $submodule->title => ''
         ];
+
+        $userProgress = UserProgress::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'submodule_id' => $submodule->id,
+                'module_id' => $module->id,
+            ]
+        );
 
         return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'exerciseModule'));
     }

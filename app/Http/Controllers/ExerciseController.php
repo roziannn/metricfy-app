@@ -90,9 +90,6 @@ class ExerciseController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function delete(string $id)
     {
         $question = Exercise::find($id);

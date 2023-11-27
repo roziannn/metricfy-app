@@ -24,25 +24,26 @@
             <div class="card-body">
                 <h5 class="card-title">Soal {{ $loop->index + 1 }}</h5>
                 <p class="card-text">{{ $item->question }}</p>
-
                 @foreach (json_decode($item->options) as $option)
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answer"
-                            id="answer{{ $loop->index + 1 }}" value="{{ $option }}">
+                        <input class="form-check-input" type="radio" name="answer" id="answer{{ $loop->index + 1 }}"
+                            value="{{ chr(64 + $loop->index + 1) }}">
                         <label class="form-check-label" for="answer{{ $loop->index + 1 }}">
-                            {{ $option }}
+                            {{ chr(64 + $loop->index + 1) }} . {{ $option }}
                         </label>
                     </div>
                 @endforeach
+                <div class="text-start">
+                    <button class="btn btn-m btn-primary col-md-2 col-sm-12">Kirim Jawaban</button>
+                </div>
             </div>
         </div>
     @endforeach
 @endsection
 
 <script>
-  function showQuestion(index) {
-      document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-      document.getElementById('item' + index).style.display = 'block';
-  }
+    function showQuestion(index) {
+        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+        document.getElementById('item' + index).style.display = 'block';
+    }
 </script>
-

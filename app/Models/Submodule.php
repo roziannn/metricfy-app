@@ -27,4 +27,9 @@ class Submodule extends Model
     {
         return $this->belongsTo(Module::class);
     }
+
+    public function userProgress()
+    {
+        return $this->hasMany(UserProgress::class);
+    }
 }

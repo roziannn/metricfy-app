@@ -72,3 +72,4 @@ Route::get('/dashboard-admin/data-module/{id}/delete-exercise', [ExerciseControl
 
 //ExerciseModule by User
 Route::get('/{slug}/latihan-soal', [ExerciseController::class, 'show']);
+Route::get('/{slug}/latihan-soal', [ExerciseController::class, 'show']);

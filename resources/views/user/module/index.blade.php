@@ -14,7 +14,7 @@
         </div> --}}
         <div class="row py-3">
             @foreach ($data_module as $module)
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-3 mb-4">
                     <div class="card white-bg shadow">
                         <img src="" class="card-img-top" alt="...">
                         <div class="card-body">
