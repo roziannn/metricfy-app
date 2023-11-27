@@ -21,9 +21,6 @@ class ModuleController extends Controller
         return view('user.module.index', compact('data_module'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.dashboard-admin.dataModule.create');
@@ -37,9 +34,6 @@ class ModuleController extends Controller
         return view('admin.dashboard-admin.dataModule.SubModule.create', compact('data_module'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         Module::create($request->all());
@@ -50,7 +44,6 @@ class ModuleController extends Controller
         return redirect('/dashboard-admin/data-module');
     }
 
-    //belum di test??
     public function storeSubModule(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -108,7 +101,8 @@ class ModuleController extends Controller
     {
         $show_module = Module::where('slug', $slug)
             ->with(['submodules' => function ($query) {
-                $query->orderBy('id', 'asc');}])->first();
+                $query->orderBy('id', 'asc');
+            }])->first();
 
         // get user progress by current modul 
         $userProgress = UserProgress::where([
@@ -118,17 +112,16 @@ class ModuleController extends Controller
 
         // Menentukan status kunci untuk setiap submodul
         $submodules = $show_module->submodules;
-        dd($submodules);
 
         foreach ($submodules as $key => $submodule) {
-            if ($key === 0) {  // Submodule urutan pertama (index 0) tidak boleh terkunci
+            if ($key === 0) {
                 $submodule->locked = false;
-            } else {
-                // Jika submodule index sebelumnya sudah diklik, maka submodule sekarang tidak dikunci
-                $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($submodules[$key - 1]->id, $userProgress);
+                continue;
             }
+        
+            $prevSubmodule = $submodules[$key - 1];
+            $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($prevSubmodule->id, $userProgress);
         }
-
 
         return view('user.module.show', compact('show_module'));
     }
@@ -137,22 +130,14 @@ class ModuleController extends Controller
     //show masuk ke subModule untuk user
     public function subModuleShowUser($moduleSlug, $submoduleSlug)
     {
-
         $user = auth()->user();
 
-        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+        $module = Module::where('slug', $moduleSlug)
+            ->with(['submodules' => function ($query) {
+                $query->orderBy('id', 'asc');
+            }])->first();
+
         $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
-
-
-        $playlist = $module->submodules; //playlist next-preview user
-
-        $exerciseModule = $module->exercises;
-
-        $breadcrumbs = [
-            'Materi' => route('materi'),
-            $module->title => route('user.module.show', ['slug' => $module->slug]),
-            $submodule->title => ''
-        ];
 
         $userProgress = UserProgress::updateOrCreate(
             [
@@ -162,14 +147,37 @@ class ModuleController extends Controller
             ]
         );
 
-        return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'exerciseModule'));
+        $userProgressList = UserProgress::where([
+            'user_id' => $user->id,
+            'module_id' => $module->id,
+        ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
+
+        // Filter playlist based on user progress
+        $playlist = $module->submodules;
+
+        foreach ($playlist as $key => $playlistItem) {
+            if ($key === 1) {
+                $playlistItem->locked = false;
+            } else {
+                $playlistItem->locked = !in_array($playlistItem->id, $userProgressList) && !in_array($playlist[$key - 1]->id, $userProgressList);
+            }
+        }
+
+        $exerciseModule = $module->exercises;
+
+        $breadcrumbs = [
+            'Materi' => route('materi'),
+            $module->title => route('user.module.show', ['slug' => $module->slug]),
+            $submodule->title => ''
+        ];
+
+        return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'exerciseModule', 'userProgressList'));
     }
 
     public function showAdmin($slug)
     {
         $module = Module::where('slug', $slug)->first();
 
-        //we dont need o recall subModules, karena di model Module sudah ada hasMany submodules 
 
         return view('admin.dashboard-admin.dataModule.show', compact('module'));
     }
