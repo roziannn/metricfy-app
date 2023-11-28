@@ -1,16 +1,15 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-
-@if (session('message'))
-<div class="alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between" id="alert" role="alert">
-    <div>
-        {{ session('message') }}
-    </div>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-
+    @if (session('message'))
+        <div class="alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between"
+            id="alert" role="alert">
+            <div>
+                {{ session('message') }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <ol class="breadcrumb">
         @foreach ($breadcrumbs as $label => $url)
@@ -58,21 +57,24 @@
 @endsection
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Function to show a specific question card by index
-        function showQuestion(index) {
-            document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-            document.getElementById('item' + index).style.display = 'block';
-        }
+  document.addEventListener('DOMContentLoaded', function() {
+      // Func show specific question card by index
+      function showQuestion(index) {
+          document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+          document.getElementById('item' + index).style.display = 'block';
+    
+          sessionStorage.setItem('selectedCardIndex', index); // Store the selected card index in a session or localStorage
+      }
 
-        showQuestion(0);
+      const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
 
-        // Attach click event handlers to the buttons
-        document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
-            button.addEventListener('click', function() {
-                showQuestion(index);
-            });
-        });
-    });
+      // Show the selected card on page load
+      showQuestion(selectedCardIndex);
+
+      document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
+          button.addEventListener('click', function() {
+              showQuestion(index);
+          });
+      });
+  });
 </script>
-
