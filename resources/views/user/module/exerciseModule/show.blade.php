@@ -21,21 +21,26 @@
 
     @foreach ($exerciseModule as $item)
         <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
+            <input type="hidden" name="exercise_id" value="{{ $item->id }}">
             <div class="card-body">
                 <h5 class="card-title">Soal {{ $loop->index + 1 }}</h5>
                 <p class="card-text">{{ $item->question }}</p>
                 @foreach (json_decode($item->options) as $option)
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answer" id="answer{{ $loop->index + 1 }}"
-                            value="{{ chr(64 + $loop->index + 1) }}">
-                        <label class="form-check-label" for="answer{{ $loop->index + 1 }}">
-                            {{ chr(64 + $loop->index + 1) }} . {{ $option }}
-                        </label>
-                    </div>
+                    <form action="{{ route('submitAnswer', ['slug' => $item->module->slug, 'exerciseId' => $item->id]) }}"
+                        method="post">
+                        @csrf
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="answer" id="answer{{ $loop->index + 1 }}"
+                                value="{{ chr(64 + $loop->index + 1) }}">
+                            <label class="form-check-label" for="answer{{ $loop->index + 1 }}">
+                                {{ chr(64 + $loop->index + 1) }} . {{ $option }}
+                            </label>
+                        </div>
                 @endforeach
                 <div class="text-start">
-                    <button class="btn btn-m btn-primary col-md-2 col-sm-12">Kirim Jawaban</button>
+                    <button type="submit" class="btn btn-m btn-primary col-md-2 col-sm-12">Kirim Jawaban</button>
                 </div>
+                </form>
             </div>
         </div>
     @endforeach

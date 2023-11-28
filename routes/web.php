@@ -72,4 +72,5 @@ Route::get('/dashboard-admin/data-module/{id}/delete-exercise', [ExerciseControl
 
 //ExerciseModule by User
 Route::get('/{slug}/latihan-soal', [ExerciseController::class, 'show']);
-Route::get('/{slug}/latihan-soal', [ExerciseController::class, 'show']);
+Route::post('/{slug}/latihan-soal/{exerciseId}/submit', [ExerciseController::class,'submitAnswer'])->name('submitAnswer');//Cek jawaban exercise
+

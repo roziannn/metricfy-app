@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Module;
 use App\Models\Exercise;
+use App\Models\UserExerciseAnswer;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ExerciseController extends Controller
 {
@@ -14,19 +16,18 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
      * Show the form for creating a new resource.
      */
 
-     //BY ADMIN
+    //BY ADMIN
     public function create($slug)
     {
         $module = Module::where('slug', $slug)->firstOrFail();
 
-        $available_questions = Exercise::whereHas('module', function ($query) use ($module){
+        $available_questions = Exercise::whereHas('module', function ($query) use ($module) {
             $query->where('id', $module->id);
         })->get();
 
@@ -62,7 +63,7 @@ class ExerciseController extends Controller
     public function show($slug)
     {
         $module = Module::where('slug', $slug)->firstOrFail();
-        
+
         $exerciseModule = $module->exercises;
 
         $breadcrumbs = [
@@ -71,7 +72,36 @@ class ExerciseController extends Controller
             'Latihan Soal' => ''
         ];
 
-        return view('user.module.exerciseModule.show', compact('module','exerciseModule', 'breadcrumbs'));
+        return view('user.module.exerciseModule.show', compact('module', 'exerciseModule', 'breadcrumbs'));
+    }
+
+    public function submitAnswer(Request $request, $slug, $exerciseId)
+    {
+        $request->validate([
+            'answer' => [
+                'required',
+                Rule::in(['A', 'B', 'C', 'D', 'E']),
+            ]
+        ]);
+    
+        $userAnswer = strtoupper($request->input('answer'));
+    
+        $exercise = Exercise::findOrFail($exerciseId);
+    
+        $correctAnswer = strtoupper($exercise->answer);
+        $isCorrect = ($userAnswer === $correctAnswer);
+    
+        UserExerciseAnswer::create([
+            'user_id' => auth()->user()->id,
+            'module_id' => $exercise->module_id,
+            'exercise_id' => $exercise->id,
+            'user_answer' => $userAnswer,
+            'is_correct' => $isCorrect,
+        ]);
+    
+        $message = $isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+    
+        return back()->with('message', $message);
     }
 
     /**
