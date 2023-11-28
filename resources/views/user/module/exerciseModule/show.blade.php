@@ -1,6 +1,17 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+
+@if (session('message'))
+<div class="alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between" id="alert" role="alert">
+    <div>
+        {{ session('message') }}
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+
     <ol class="breadcrumb">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
@@ -47,8 +58,21 @@
 @endsection
 
 <script>
-    function showQuestion(index) {
-        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-        document.getElementById('item' + index).style.display = 'block';
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to show a specific question card by index
+        function showQuestion(index) {
+            document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+            document.getElementById('item' + index).style.display = 'block';
+        }
+
+        showQuestion(0);
+
+        // Attach click event handlers to the buttons
+        document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
+            button.addEventListener('click', function() {
+                showQuestion(index);
+            });
+        });
+    });
 </script>
+

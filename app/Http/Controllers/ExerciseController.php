@@ -101,12 +101,9 @@ class ExerciseController extends Controller
     
         $message = $isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
     
-        return back()->with('message', $message);
+        return back()->with(['message' => $message]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
