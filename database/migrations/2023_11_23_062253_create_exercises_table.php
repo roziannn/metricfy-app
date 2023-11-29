@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('module_id')->constrained();
             $table->text('question');
             $table->json('options');
+            // $table->integer('point')->default(3);
             $table->string('answer');
             $table->timestamps();
         });

@@ -1,16 +1,6 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-    @if (session('message'))
-        <div class="alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between"
-            id="alert" role="alert">
-            <div>
-                {{ session('message') }}
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <ol class="breadcrumb">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
@@ -32,6 +22,21 @@
     @foreach ($exerciseModule as $item)
         <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
             <input type="hidden" name="exercise_id" value="{{ $item->id }}">
+            <div class="alert-container">
+                @if (session('message'))
+                    <div class="alert custom-alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between"
+                        id="alert" role="alert">
+                        <div>
+                            @if (strpos(session('message'), 'Benar') == false)
+                                <i class="fas fa-triangle-exclamation px-2"></i>
+                            @endif
+                            {{ session('message') }}
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+            </div>
+
             <div class="card-body">
                 <h5 class="card-title">Soal {{ $loop->index + 1 }}</h5>
                 <p class="card-text">{{ $item->question }}</p>
@@ -57,24 +62,45 @@
 @endsection
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      // Func show specific question card by index
-      function showQuestion(index) {
-          document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-          document.getElementById('item' + index).style.display = 'block';
-    
-          sessionStorage.setItem('selectedCardIndex', index); // Store the selected card index in a session or localStorage
-      }
+    document.addEventListener('DOMContentLoaded', function() {
+        function showQuestion(index) {
+            document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+            document.getElementById('item' + index).style.display =
+                'block'; // show specific question card by index
 
-      const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
+            sessionStorage.setItem('selectedCardIndex',
+                index); // Store the selected card index in a session or localStorage
+        }
 
-      // Show the selected card on page load
-      showQuestion(selectedCardIndex);
+        const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
 
-      document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
-          button.addEventListener('click', function() {
-              showQuestion(index);
-          });
-      });
-  });
+        showQuestion(selectedCardIndex);
+
+        document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
+            button.addEventListener('click', function() {
+                showQuestion(index);
+
+                document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList
+                    .remove('active'));
+                button.classList.add('active');
+            });
+        });
+    });
 </script>
+<style>
+    .alert-container {
+        position: relative;
+        height: 0;
+    }
+
+    .custom-alert {
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
