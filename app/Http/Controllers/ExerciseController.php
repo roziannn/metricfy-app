@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Module;
 use App\Models\Exercise;
+use App\Models\User;
 use App\Models\UserExerciseAnswer;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -91,7 +92,11 @@ class ExerciseController extends Controller
         $correctAnswer = strtoupper($exercise->answer);
         $isCorrect = ($userAnswer === $correctAnswer);
 
-        if ( $isCorrect === false){
+        $pointsEarn = 0;
+
+        if ( $isCorrect === true){
+            $pointsEarn = $exercise->point;
+        } else {
             $exercise->point = 0;
         }
     
@@ -103,6 +108,11 @@ class ExerciseController extends Controller
             'point'=> $exercise->point,
             'is_correct' => $isCorrect,
         ]);
+
+        $user = auth()->user();
+        $user->point += $pointsEarn; //current point ditambah pointEarned
+        $user->save();
+
 
         $message = $isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
     
