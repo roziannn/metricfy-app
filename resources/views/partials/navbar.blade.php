@@ -52,7 +52,7 @@
                     </a>
 
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item px-3 py-2" href="/account/profile">Edit Profile</a>
+                        <li><a class="dropdown-item px-3 py-2" href="/profile">Profile</a>
                         </li>
                         @if (auth()->user()->roles === 'USER')
                             <li><a class="dropdown-item px-3 py-2" href="/dashboard/posts">Dashboard</a>
