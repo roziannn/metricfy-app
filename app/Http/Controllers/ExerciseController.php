@@ -90,15 +90,20 @@ class ExerciseController extends Controller
     
         $correctAnswer = strtoupper($exercise->answer);
         $isCorrect = ($userAnswer === $correctAnswer);
+
+        if ( $isCorrect === false){
+            $exercise->point = 0;
+        }
     
         UserExerciseAnswer::create([
             'user_id' => auth()->user()->id,
             'module_id' => $exercise->module_id,
             'exercise_id' => $exercise->id,
             'user_answer' => $userAnswer,
+            'point'=> $exercise->point,
             'is_correct' => $isCorrect,
         ]);
-    
+
         $message = $isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
     
         return back()->with(['message' => $message]);

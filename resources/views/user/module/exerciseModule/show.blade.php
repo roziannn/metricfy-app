@@ -60,18 +60,17 @@
         </div>
     @endforeach
 @endsection
-
 <script>
+    function showQuestion(index) {
+        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+        document.getElementById('item' + index).style.display =
+            'block'; // show specific question card by index
+
+        sessionStorage.setItem('selectedCardIndex',
+        index); // Store the selected card index in a session or localStorage
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-        function showQuestion(index) {
-            document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-            document.getElementById('item' + index).style.display =
-                'block'; // show specific question card by index
-
-            sessionStorage.setItem('selectedCardIndex',
-                index); // Store the selected card index in a session or localStorage
-        }
-
         const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
 
         showQuestion(selectedCardIndex);
@@ -87,6 +86,7 @@
         });
     });
 </script>
+
 <style>
     .alert-container {
         position: relative;
@@ -98,7 +98,7 @@
         z-index: 1000;
         width: 100%;
     }
-    
+
     .btn-outline-primary:hover {
         background-color: #007bff;
         color: #fff;
