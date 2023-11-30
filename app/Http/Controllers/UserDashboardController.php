@@ -22,16 +22,22 @@ class UserDashboardController extends Controller
             'email' => 'email',
             'kelas' => 'string',
             'avatar' => 'image|mimes:jpeg,png,jpg',
-            'phone' => 'max:13'
+            'phone' => 'numeric|regex:/^[0-9]*$/'
         ]);
 
 
         $imageName = $user->avatar;
 
-        if ($request->avatar) {
-            $avatar_img = $request->avatar;
-            $imageName = $user->username . '-' . time() . '.' . $avatar_img->extension();
+        if ($request->hasFile('avatar')){
+            $avatar_img = $request->file('avatar');
+            $imageName = $user->name . '-' . time() . '.' . $avatar_img->extension();   
             $avatar_img->move(public_path('img/avatar'), $imageName);
+
+            //if user update avatar, delete last photo and replace new one
+            $oldImg_path = public_path('img/avatar') . '/' . $user->avatar;
+            if ($user->avatar && file_exists($oldImg_path)){
+                unlink($oldImg_path);
+            }
         }
 
         $request->user()->update(
@@ -39,7 +45,7 @@ class UserDashboardController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'kelas' => $request->kelas,
-                'avatar' => $imageName,
+                'avatar' => $request->hasFile('avatar') ? $imageName : $user->avatar,
                 'phone' => $request->phone,
             ]
         );

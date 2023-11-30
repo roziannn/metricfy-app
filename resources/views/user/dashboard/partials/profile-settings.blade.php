@@ -86,13 +86,13 @@
                         <label for="phone" class="text-muted form-control-sm p-0 m-0">Nomor HP</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                            <input type="text" name="phone" class="form-control form-control-sm" id="phone"
-                                placeholder="Ketik disini">
+                            <input type="number" name="phone" class="form-control form-control-sm" id="phone"
+                                value="{{ $user->phone }}" placeholder="Ketik disini">
                         </div>
                     </div>
                 </div>
                 <div class="text-end">
-                    <button type="submit" class="btn btn-sm btn-primary mt-2">Simpan Perubahan</button>
+                    <button type="submit" class="btn btn-m btn-primary mt-3">Simpan Perubahan</button>
                 </div>
             </form>
         </div>

@@ -52,7 +52,7 @@
                     </a>
 
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item px-3 py-2" href="/profile">Profile</a>
+                        <li><a class="dropdown-item px-3 py-2" href="/profile">Profil</a>
                         </li>
                         @if (auth()->user()->roles === 'USER')
                             <li><a class="dropdown-item px-3 py-2" href="/dashboard/posts">Dashboard</a>
@@ -60,13 +60,14 @@
                         @endif
 
                         @if (auth()->user()->roles === 'ADMIN')
+                        {{-- <li class="header px-3 small text-muted">Admin</li> --}}
                             <li><a class="dropdown-item px-3 py-2" href="/main-dashboard-admin">
-                                    Dashboard Admin</a></li>
+                                    Dashboard</a></li>
                             <li>
                         @endif
                         <form action="/logout" method="post" class="px-3 pt-4">
                             @csrf
-                            <button type="submit" class="btn btn-sm btn-danger">Logout</button>
+                            <button type="submit" class="btn btn-sm btn-danger w-100">Logout</button>
                         </form>
                         </li>
                     </ul>

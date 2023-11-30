@@ -15,7 +15,7 @@
                 <p>{{ auth()->user()->email }}</p>
                 <small class="card-title text-muted">Phone
                 </small>
-                <p>{{ auth()->user()->email }}</p>
+                <p>{{ auth()->user()->phone }}</p>
                 <small class="card-title text-muted">Roles
                 </small>
                 <p>{{ auth()->user()->roles }}</p>
