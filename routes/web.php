@@ -78,3 +78,4 @@ Route::post('/{slug}/latihan-soal/{exerciseId}/submit', [ExerciseController::cla
 
 //Dashboard user
 Route::get('/profile', [UserDashboardController::class, 'profile']); //profile
+Route::post('/profile/update', [UserDashboardController::class, 'profileUpdate']); //profile

@@ -2,6 +2,7 @@
     <div class="card">
         <div class="card-body">
             <div class="profile-head text-center">
+                @include('user.dashboard.partials.profile-avatar')
                 <h5 class="card-title fs-5">{{ auth()->user()->name }}</h5>
                 <small class="card-title font-weight-bold"> <span class="badge badge-danger">Level 1</span>
                     <span>&#8226;</span> <i class="fa-solid fa-bolt text-warning"></i> {{ auth()->user()->point }} XP
