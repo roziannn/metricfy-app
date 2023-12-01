@@ -5,20 +5,25 @@
     </div>
 
     <div class="col-lg-5 ml-auto">
-        <div class="card">
+        <div class="card border">
             <div class="card-body">
                 <div class="text-center">
-                    <h3 class="card-title py-2">Leaderboard</h3>
+                    <h3 class="card-title py-2"><i class="fa-solid fa-medal text-danger"></i> Leaderboard <i class="fa-solid fa-medal text-danger"></i></h3>
                 </div>
-                
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
+
+                {{-- <p class="card-text">Peringkat teratas metricfy</p> --}}
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A third item</li>
+                    @foreach ($leaderboard as $item)
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div class="list-name">
+                                    {{ $item->name }}</div>
+                                <div class="list-point">
+                                    <span class="badge badge-pill badge-primary"><i class="fa-solid fa-bolt text-warning"></i> {{ $item->point }} XP</span>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

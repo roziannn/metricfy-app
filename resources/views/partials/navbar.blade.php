@@ -1,8 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger p-3" aria-label="Offcanvas navbar large">
     <div class="container">
         <a class="navbar-brand" style="margin-right: 50px;" href="/"><strong>Metricfy</strong></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
@@ -18,17 +17,17 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-                    <li class="nav-item px-3">
-                        <a class="nav-link active" aria-current="page" href="/">Beranda</a>
+                    <li class="nav-item px-3 {{ Request::is('/') ? 'active' : '' }}">
+                        <a class="nav-link" href="/">Beranda</a>
                     </li>
-                    <li class="nav-item px-3">
+                    <li class="nav-item px-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
                         <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
                     </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="#">Blog</a>
+                    <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
+                        <a class="nav-link" href="/blog">Blog</a>
                     </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="#">Game</a>
+                    <li class="nav-item px-3 {{ Request::is('game') ? 'active' : '' }}">
+                        <a class="nav-link" href="/game">Game</a>
                     </li>
                 </ul>
             </div>
@@ -156,3 +155,9 @@
         }
     });
 </script>
+
+{{-- <style>
+    .bg-purple {
+        background-color: #370665;
+    }
+</style> --}}

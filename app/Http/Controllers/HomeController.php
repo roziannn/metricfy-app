@@ -13,8 +13,11 @@ class HomeController extends Controller
     public function index()
     {
 
-    $data = User::all();
-      return view('home', compact('data'));
+        $data = User::all();
+
+        $leaderboard = User::orderBy('point', 'desc')->get();
+
+        return view('home', compact('data', 'leaderboard'));
     }
 
     /**

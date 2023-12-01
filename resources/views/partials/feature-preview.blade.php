@@ -8,7 +8,7 @@
                             <i class="lnr lnr-rocket"></i>
                         </div>
                         <div class="icon-body">
-                            <h5>Cepat &amp; <br>Mudah</h5>
+                            <h6>Gratis &amp; <br>Mudah</h6>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                             <i class="lnr lnr-earth"></i>
                         </div>
                         <div class="icon-body">
-                            <h5>Kompetensi <br>Internasional</h5>
+                            <h5>Sesuai <br>Kompetensi</h5>
                         </div>
                     </div>
                 </div>

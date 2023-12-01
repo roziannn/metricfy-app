@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-        <img class="rounded-lg-3" src="/img/gracia1.jpg" alt="" width="520">
+        <img class="rounded-lg-3" src="{{ asset('img/module/' . $show_module->thumbnail) }}" alt="" width="520">
     </div>
   </div>
 
