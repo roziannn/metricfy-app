@@ -4,19 +4,10 @@
             class="bi bi-gear-fill"></i></button>
 
     <div class="card profile-settings d-none d-lg-flex border-0">
-        <div class="header-title d-flex flex-column align-items-start">
-            <div class="row align-items-center">
-                <div class="col">
-                    {{-- <strong class="fs-6">{{ Auth::user()->roles }}</strong> <br> --}}
-                    <small>gracia@gmail.com</small>
-                </div>
-            </div>
-        </div>
 
-
-        <a href="/main-dashboard-admin" class="profile-settings-item my-3">Dashboard</a>
-        <a href="/dashboard-admin/data-user" class="profile-settings-item mb-3"> Data User</a>
-        <a href="/dashboard-admin/data-module" class="profile-settings-item">Data Module</a>
+        <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none">Overview</a>
+        <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none"> Data User</a>
+        <a href="/dashboard-admin/data-module" class="profile-settings-item text-decoration-none">Data Module</a>
 
 
     </div>
@@ -72,18 +63,17 @@
         top: 80px;
         left: 0;
         z-index: 10;
-        padding: 1rem;
+        padding: 8px;
     }
 
-    .profile-settings {
-        padding: 20px;
-    }
 
     .profile-settings-item {
         text-decoration: none;
         padding-left: 8px;
         color: #111111;
+        padding: 8px;
     }
+
 
     .bi-settings-icon {
         padding-right: 10px;

@@ -1,16 +1,14 @@
 <div class="col-md-9 mb-5">
     <div class="card card-content p-3">
-        <div class="fs-5 font-weight-bold">Data User</div>
-        <div class="text-right">
-            <a href="#" class="btn btn-primary btn-sm shadow" data-bs-toggle="modal"
-                data-bs-target="#createUser">Tambah User</a>
+        <div class="d-flex justify-content-between">
+            <div class="fs-5">Data User</div>
+            <a href="#" class="btn btn-primary btn-sm shadow" data-bs-toggle="modal" data-bs-target="#createUser">Tambah User</a>
         </div>
         <div class="bd-example py-3">
             <table class="table">
                 <thead class="table-light">
                     <tr>
                         <th scope="col">Email</th>
-                        <th scope="col">Roles</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -18,7 +16,6 @@
                     @foreach ($data_user as $user)
                         <tr>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->roles }}</td>
                             <td>
                                 <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal{{ $user->id }}">
@@ -133,26 +130,27 @@
 
     {{-- MODAL FOR DELETE USER --}}
     @foreach ($data_user as $user)
-    <div class="modal modal-danger fade" id="modal-danger{{ $user->id }}">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi</h5>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        <div class="modal modal-danger fade" id="modal-danger{{ $user->id }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Konfirmasi</h5>
+                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button> --}}
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url('/delete-user' . $user->id) }}" method="GET">
+                            {{ csrf_field() }}
+                            <p>Yakin ingin menghapus data?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-m btn-outline pull-left"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-m btn-danger">Hapus</button>
+                    </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ url('/delete-user' . $user->id) }}" method="GET">
-                        {{ csrf_field() }}
-                        <p>Yakin ingin menghapus data?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-m btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-m btn-danger">Hapus</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
 </div>

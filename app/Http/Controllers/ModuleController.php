@@ -16,7 +16,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $data_module = Module::all();
+        $data_module = Module::orderBy('created_at', 'asc')->get();
 
         return view('user.module.index', compact('data_module'));
     }
@@ -118,7 +118,7 @@ class ModuleController extends Controller
                 $submodule->locked = false;
                 continue;
             }
-        
+
             $prevSubmodule = $submodules[$key - 1];
             $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($prevSubmodule->id, $userProgress);
         }
@@ -191,25 +191,47 @@ class ModuleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * update data-module
      */
     public function update(Request $request, $id)
     {
+        $module = Module::find($id);
+
         $rules = ([
             'title' => 'required|max:30',
             'description' => 'required|max:255',
             'content' => 'required|max:500',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
-
+        
         $validatedData = $request->validate($rules);
+        
 
-        $module = Module::find($id);
-        $module->update($validatedData);
-
+        $module->update([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'content' => $validatedData['content'],
+        ]);
+    
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailName = $module->slug . '-' . time() . '.' . $thumbnail->extension(); 
+            $thumbnail->move(public_path('img/module'), $thumbnailName);
+    
+            $oldImagePath = public_path('img/module') . '/' . $module->thumbnail;
+            if ($module->thumbnail && file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+    
+            $module->thumbnail = $thumbnailName;
+            $module->save();
+        }
+    
+      
         return redirect('/dashboard-admin/data-module')->with('successUpdate', 'Module berhasil diperbarui!');
     }
 
+    
     /**
      * Remove the specified resource from storage.
      */

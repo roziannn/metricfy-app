@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3" aria-label="Offcanvas navbar large">
     <div class="container">
-        <a class="navbar-brand" style="margin-right: 50px;" href="#"><strong>Metricfy</strong></a>
+        <a class="navbar-brand" style="margin-right: 50px;" href="/"><strong>Metricfy</strong></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
             aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
