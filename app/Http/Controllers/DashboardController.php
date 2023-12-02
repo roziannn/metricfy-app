@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,15 +18,21 @@ class DashboardController extends Controller
         return view('admin.dashboard-admin.mainDashboard-admin', compact('data_user', 'userCount'));
     }
 
-    public function adminDashboardDataUser(){
+    public function adminDashboardDataUser(){ //view
          $data_user = User::all();
         
          return view('admin.dashboard-admin.dataUser.index', compact('data_user'));
     }
 
-    public function adminDashboardDataModule(){
+    public function adminDashboardDataModule(){ //view
         $data_module = Module::orderBy('created_at', 'asc')->get();
         
          return view('admin.dashboard-admin.dataModule.index', compact('data_module'));
+    }
+
+    public function adminDashboardDataBlog(){ //view
+        $data_blog = Blog::orderBy('created_at', 'asc')->get();
+        
+         return view('admin.dashboard-admin.dataBlog.index', compact('data_blog'));
     }
 }

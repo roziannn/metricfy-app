@@ -1,9 +1,9 @@
-<footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-3 border-top">
-    <div class="col-md-3 mb-4">
-      <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none fs-3">
-       <b> Metricfy</b>
+<footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 border-top">
+    <div class="col-md-3 ">
+      <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none fs-3 nav-logo">
+       Metricfy
       </a>
-      Belajar Numerasi dengan Metode Inovatif, Mengubah Angka Menjadi Cerita yang Menginspirasi
+      Belajar Numerasi dengan ragam <br> Metode Inovatif
       <p class="mt-2"> &copy; 2023</p>
     </div>
     <div class="col-md-1"></div>

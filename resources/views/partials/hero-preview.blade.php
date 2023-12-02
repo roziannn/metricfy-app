@@ -1,11 +1,18 @@
 <div class="py-2">
-    <div class="p-2 mb-4 bg-body-tertiary rounded-3">
-        <div class="container-fluid py-5">
-            <h2 class="fw-bold">Pelajari Numerasi <br> dengan Cara Lebih Menarik!</h2>
-            <p class="col-sm-6 px-0 pb-3">Using a series of utilities, you can create this jumbotron. <br> just like the one
-                in
-                previous</p>
-            <a href="/materi-belajar" type="button" class="btn btn-warning py-2 col-sm-2 font-weight-bold">Belajar Sekarang</a>
+    <div class="px-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-3">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md-6">
+                    <h2 class="fw-bold">Pelajari Numerasi <br> dengan Cara Lebih Menarik!</h2>
+                    <p class="col-sm-12 px-0 py-1 pb-3">Using a series of utilities, you can create this jumbotron. <br> just like the one
+                        in
+                        previous</p>
+                    <a href="/materi-belajar" type="button" class="btn btn-warning text-white py-2 col-sm-6 font-weight-bold shadow">Belajar Sekarang</a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <img src="{{ asset('img/actor/lia.png') }}" alt="" class="img-fluid">
+                </div>
+            </div>
         </div>
     </div>
 </div>

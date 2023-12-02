@@ -1,5 +1,5 @@
 <div class="row py-5">
-    <div class="dicoding-programs__headline col-lg-4">
+    <div class="col-lg-4">
         <h2 class="mb-3 font-weight-500">Peringkat Belajar</h2>
         <p>Jadi yang teratas diantara pengguna lainnya dengan belajar sekarang!</p>
     </div>

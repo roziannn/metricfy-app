@@ -40,6 +40,7 @@
 
 @include('partials.hero-preview')
 {{-- @include('partials.feature-preview') --}}
+@include('partials.intro-preview')
 @include('partials.materi-preview')
 @include('partials.leaderboard-preview')
 @include('partials.program-preview')

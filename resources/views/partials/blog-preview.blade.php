@@ -1,9 +1,9 @@
-<div class="row align-items-center flex-column flex-md-row justify-content-between">
+<div class="py-3 row align-items-center flex-column flex-md-row justify-content-between">
     <div class="col-12 col-md-6 my-3">
         <h4>Blog</h4>
     </div>
     <div class="col-12 col-md-3 text-end my-3">
-        <h6>Lihat Semua</h6>
+        <a href="#" class="btn btn-m btn-outline-danger">Lihat Semua</a>
     </div>
 </div>
 

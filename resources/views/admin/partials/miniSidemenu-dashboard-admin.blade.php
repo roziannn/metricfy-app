@@ -8,6 +8,7 @@
         <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none">Overview</a>
         <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none"> Data User</a>
         <a href="/dashboard-admin/data-module" class="profile-settings-item text-decoration-none">Data Module</a>
+        <a href="/dashboard-admin/data-blog" class="profile-settings-item text-decoration-none">Data Blog</a>
 
 
     </div>

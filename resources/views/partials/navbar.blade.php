@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger p-3" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger p-2 fixed-top" aria-label="Offcanvas navbar large">
     <div class="container">
-        <a class="navbar-brand" style="margin-right: 50px;" href="/"><strong>Metricfy</strong></a>
+        <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="/">METRICFY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
             aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -72,8 +72,8 @@
                     </ul>
                 </div>
             @else
-                <div class="nav-item">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                <div class="nav-item shadow">
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                         data-bs-target="#loginModal">Login</button>
                 </div>
             </div>

@@ -182,9 +182,6 @@ class ModuleController extends Controller
         return view('admin.dashboard-admin.dataModule.show', compact('module'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //

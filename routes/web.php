@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Blog;
 use App\Models\Module;
 use App\Models\Exercise;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserDashboard;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModuleController;
@@ -62,6 +64,13 @@ Route::get('/dashboard-admin/data-module/{slug}/create-sub-module', [ModuleContr
 Route::post('/dashboard-admin/data-module/{id}/store-sub-module', [ModuleController::class, 'storeSubModule']);
 Route::get('/dashboard-admin/data-module/{moduleSlug}/{submoduleSlug}/edit', [ModuleController::class,'editSubModule']); 
 Route::post('/dashboard-admin/data-module/{slug}/update', [ModuleController::class,'updateSubModule']); 
+
+//blog ADMIN
+Route::get('/dashboard-admin/data-blog', [DashboardController::class, 'adminDashboardDataBlog'])->name('admin-blog');
+Route::get('/dashboard-admin/blog/create', [BlogController::class, 'create']);
+Route::post('/dashboard-admin/blog/store', [BlogController::class, 'store']);
+Route::post('/dashboard-admin/blog/{slug}/update', [BlogController::class, 'update']);
+Route::get('/dashboard-admin/blog/{slug}', [BlogController::class, 'showAdmin']);
 
 
 //subModule User view
