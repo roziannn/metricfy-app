@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Module;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
+
+    public function index(){ //view both user,admin, (+)guest
+
+        $data_blog = Blog::all();
+
+        return view('user.blog.index', compact('data_blog'));
+    }
+
     public function create()
     { //only by admin
 
@@ -50,12 +59,20 @@ class BlogController extends Controller
 
         $blog = Blog::where('slug', $slug)->first();
 
+        return view('admin.dashboard-admin.dataBlog.show', compact('blog'));
+    }
+
+    public function showUser($slug){
+        $blog = Blog::where('slug', $slug)->first();
+
         $breadcrumbs = [
             'Blog' => route('admin-blog'),
-            $blog->title => route('user.module.show', ['slug' => $blog->slug]),
+            $blog->title => ''
         ];
 
-        return view('admin.dashboard-admin.dataBlog.show', compact('blog', 'breadcrumbs'));
+        $viewlist = Blog::orderBy('created_at', 'asc')->limit(5)->get();
+
+        return view('user.blog.show', compact('blog', 'breadcrumbs', 'viewlist'));
     }
 
     public function update(Request $request, $id)

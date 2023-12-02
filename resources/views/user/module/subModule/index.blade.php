@@ -15,7 +15,6 @@
         {{ $submodule->title }}
     </h5>
 
-
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-md-8 my-3 pr-3 p-0">

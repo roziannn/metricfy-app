@@ -72,6 +72,10 @@ Route::post('/dashboard-admin/blog/store', [BlogController::class, 'store']);
 Route::post('/dashboard-admin/blog/{slug}/update', [BlogController::class, 'update']);
 Route::get('/dashboard-admin/blog/{slug}', [BlogController::class, 'showAdmin']);
 
+//blog USER
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/blog/{slug}', [BlogController::class, 'showUser'])->name('user-blog');
+
 
 //subModule User view
 Route::get('/materi-belajar/{moduleSlug}/{submoduleSlug}', [ModuleController::class,'subModuleShowUser']); //slug 1 untuk module, slug 2 untuk submodulenya
