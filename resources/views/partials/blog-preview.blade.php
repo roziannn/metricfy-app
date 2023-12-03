@@ -12,14 +12,11 @@
     @foreach ($artikel_blog as $artikel)
         <div class="col">
             <div class="card border-0">
-                <img src="{{ asset('img/blog/' . $artikel->thumbnail) }}" class="card-img-top rounded-4">
+                <img src="{{ asset('img/blog/' . $artikel->thumbnail) }}" class="img-fluid rounded-4">
                 <div class="card-body">
                     <a href="/blog/{{ $artikel->slug }}"
-                        class="card-title fs-5 font-weight-bold text-decoration-none">{{ $artikel->title }}</a>
-                    <p class="card-text text-truncate">This is a longer card with supporting text below as a natural
-                        lead-in to
-                        additional
-                        content. This content is a little bit longer.</p>
+                        class="card-title fs-6 font-weight-bold text-decoration-none">{{ $artikel->title }}</a>
+                    <p class="card-text text-truncate">{{ $artikel->content }}</p>
                 </div>
             </div>
         </div>

@@ -26,8 +26,16 @@
                     <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
                         <a class="nav-link" href="/blog">Blog</a>
                     </li>
-                    <li class="nav-item px-3 {{ Request::is('game') ? 'active' : '' }}">
-                        <a class="nav-link" href="/game">Game</a>
+                    <li class="nav-item dropdown px-3">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Pojok Literasi
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow">
+                            <li><a class="dropdown-item py-2" href="#">Sastra</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Kamus KBBI</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Sinonim</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Something else here</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -59,7 +67,7 @@
                         @endif
 
                         @if (auth()->user()->roles === 'ADMIN')
-                        {{-- <li class="header px-3 small text-muted">Admin</li> --}}
+                            {{-- <li class="header px-3 small text-muted">Admin</li> --}}
                             <li><a class="dropdown-item px-3 py-2" href="/main-dashboard-admin">
                                     Dashboard</a></li>
                             <li>
@@ -99,9 +107,9 @@
                     @csrf
                     <div class="form-group mb-3">
                         <label for="email">Masukkan Email kamu</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                            id="email" required placeholder="Ketik disini" autofocus required
-                            value="{{ old('email') }}">
+                        <input type="email" name="email"
+                            class="form-control @error('email') is-invalid @enderror" id="email" required
+                            placeholder="Ketik disini" autofocus required value="{{ old('email') }}">
                         @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}

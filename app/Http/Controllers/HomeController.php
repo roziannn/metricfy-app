@@ -18,7 +18,7 @@ class HomeController extends Controller
 
         $leaderboard = User::orderBy('point', 'desc')->get();
 
-        $artikel_blog = Blog::OrderBy('created_at', 'desc')->limit(4)->get();
+        $artikel_blog = Blog::OrderBy('updated_at', 'desc')->limit(4)->get();
 
         return view('home', compact('data', 'leaderboard', 'artikel_blog'));
     }
