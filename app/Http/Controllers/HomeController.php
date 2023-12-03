@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,9 @@ class HomeController extends Controller
 
         $leaderboard = User::orderBy('point', 'desc')->get();
 
-        return view('home', compact('data', 'leaderboard'));
+        $artikel_blog = Blog::OrderBy('created_at', 'desc')->limit(4)->get();
+
+        return view('home', compact('data', 'leaderboard', 'artikel_blog'));
     }
 
     /**

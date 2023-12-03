@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger p-2 fixed-top" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2 fixed-top" aria-label="Offcanvas navbar large">
     <div class="container">
         <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="/">METRICFY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"

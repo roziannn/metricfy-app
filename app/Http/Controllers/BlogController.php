@@ -12,7 +12,7 @@ class BlogController extends Controller
 
     public function index(){ //view both user,admin, (+)guest
 
-        $data_blog = Blog::all();
+        $data_blog = Blog::OrderBy('updated_at', 'desc')->get();
 
         return view('user.blog.index', compact('data_blog'));
     }
