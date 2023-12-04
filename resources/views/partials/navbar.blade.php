@@ -59,10 +59,17 @@
                     </a>
 
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item px-3 py-2" href="/profile">Profil</a>
+                        <li class="m-3">
+                            <img src="{{ asset('img/avatar/' . auth()->user()->avatar) }}" class="rounded-circle" style="width: 36px; height: 36px;" alt=""> 
+
+                            <span class="px-1 font-weight-bold">{{  explode(' ', auth()->user()->name)[0] }}</span>
+                            <span class="px-1"><i class="fa-solid fa-coins pe-1 text-warning"></i> {{ auth()->user()->point }} xp</span>
+                            <hr>
+                        </li>
+                        <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>
                         @if (auth()->user()->roles === 'USER')
-                            <li><a class="dropdown-item px-3 py-2" href="/dashboard/posts">Dashboard</a>
+                            <li><a class="dropdown-item px-3" href="/dashboard/posts">Dashboard</a>
                             </li>
                         @endif
 
@@ -164,8 +171,11 @@
     });
 </script>
 
-{{-- <style>
-    .bg-purple {
+<style>
+    /* .bg-purple {
         background-color: #370665;
+    } */
+    .dropdown-menu {
+        width: 200px;
     }
-</style> --}}
+</style>
