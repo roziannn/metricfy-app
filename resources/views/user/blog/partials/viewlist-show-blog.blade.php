@@ -1,4 +1,4 @@
-<div class="col-sm-4 border-left">
+<div class="col-md-12 col-lg-4 border-left">
     <h5 class="font-weight-bold py-3">Baca Artikel Lainnya</h5>
     
     @foreach ($viewlist as $item)

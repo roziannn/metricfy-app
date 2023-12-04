@@ -70,9 +70,16 @@ class BlogController extends Controller
             $blog->title => ''
         ];
 
+        //read estimated
+        $kataCount = str_word_count(strip_tags($blog->content));
+        $avrgUserReading = 300;
+
+        $estimatedReadingTime = ceil($kataCount / $avrgUserReading); 
+
+        //artikel lainnya side-right list
         $viewlist = Blog::orderBy('created_at', 'asc')->limit(5)->get();
 
-        return view('user.blog.show', compact('blog', 'breadcrumbs', 'viewlist'));
+        return view('user.blog.show', compact('blog', 'breadcrumbs', 'viewlist', 'estimatedReadingTime'));
     }
 
     public function update(Request $request, $id)

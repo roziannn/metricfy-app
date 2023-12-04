@@ -1,5 +1,5 @@
 <div class="col-md-4 m-0 p-0 py-3">
-    <div class="card">
+    <div class="card rounded-5">
         <div class="card-body">
             <h5>{{ $module->title }}</h5>
             @foreach ($playlist as $item)

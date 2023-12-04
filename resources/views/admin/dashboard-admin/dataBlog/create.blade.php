@@ -20,7 +20,9 @@
         <div class="row pb-3">
             <div class="col-sm-12">
                 <label for="title" class="text-muted form-control-sm p-0 m-0">Blog Content</label>
-                <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+                {{-- <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea> --}}
+                <input id="content" type="hidden" name="content" value="{{ old('content') }}">
+                <trix-editor input="content"></trix-editor>
             </div>
         </div>
         <div class="d-flex justify-content-end">

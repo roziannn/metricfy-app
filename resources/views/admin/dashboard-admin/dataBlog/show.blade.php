@@ -31,9 +31,11 @@
         <div class="row pb-3">
             <div class="col-sm-12">
                 <label for="title" class="text-muted form-control-sm p-0 m-0">Blog Content</label>
-                <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ $blog->content }}</textarea>
+                <input id="content" type="hidden" name="content" value="{{ old('content', $blog->content) }}">
+                <trix-editor input="content"></trix-editor>
             </div>
         </div>
+        {{-- <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ $blog->content }}</textarea> --}}
         <div class="d-flex justify-content-end py-3">
             <button class="btn btn-m btn-success col-md-2 col-sm-12" type="submit">Simpan Perubahan</button>
         </div>

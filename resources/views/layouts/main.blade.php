@@ -44,8 +44,8 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
 
-    {{-- <link rel="stylesheet" type="text/css" href="/css/trix.css"> --}}
-    {{-- <script type="text/javascript" src="/js/trix.js"></script> --}}
+    <link rel="stylesheet" type="text/css" href="/css/trix.css">
+    <script type="text/javascript" src="/js/trix.js"></script>
 
     <style>
         trix-toolbar [data-trix-button-group="file-tools"] {

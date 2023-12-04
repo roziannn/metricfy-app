@@ -3,7 +3,7 @@
 @section('container')
     <div class="pb-5">
         <div class="row justify-content-between">
-            <div class="col-sm-8 pt-2">
+            <div class="col-md-12 col-lg-8 pt-2">
                 {{-- <ol class="breadcrumb bg-light px-0">
                     @foreach ($breadcrumbs as $label => $url)
                         @if ($url)
@@ -15,12 +15,13 @@
                 </ol> --}}
                 <div class="head-content row">
                     <h3 class="font-weight-bold">{{ $blog->title }}</h3>
-                    <small>{{ $blog->updated_at->format('M j, Y') }}</small>
+                    <span class="font-weight-bold text-black-50">{{ $blog->updated_at->format('M j, Y') }} <span class="px-1"> &#8226; </span> {{ $estimatedReadingTime }} minutes read</span>
                     <img src="{{ asset('img/blog/' . $blog->thumbnail) }}" class="py-4" alt="">
                 </div>
-
+                
                 <div class="body-content">
-                    <p>{{ $blog->content }}</p>
+                    <p>{!! $blog->content !!}</p>
+
                 </div>
             </div>
             @include('user.blog.partials.viewlist-show-blog') 

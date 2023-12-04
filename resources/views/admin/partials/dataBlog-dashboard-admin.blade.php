@@ -17,7 +17,8 @@
                     @foreach ($data_blog as $blog)
                         <tr>
                             <td>{{ $blog->title }}</td>
-                            <td>{{ $blog->content }}</td>
+                            <td>{{ Str::limit($blog->content,100) }}
+                            </td>
                             <td>
                                 <a href="/dashboard-admin/blog/{{ $blog->slug }}" class="btn btn-success btn-sm"><i class="bi bi-eye"></i>
                                 </a>
