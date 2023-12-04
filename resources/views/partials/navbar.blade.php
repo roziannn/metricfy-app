@@ -31,9 +31,9 @@
                             Pojok Literasi
                         </a>
                         <ul class="dropdown-menu border-0 shadow">
-                            <li><a class="dropdown-item py-2" href="#">Sastra</a></li>
                             <li><a class="dropdown-item py-2" href="#">Kamus KBBI</a></li>
                             <li><a class="dropdown-item py-2" href="#">Sinonim</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Cerpen Corner</a></li>
                             <li><a class="dropdown-item py-2" href="#">Something else here</a></li>
                         </ul>
                     </li>

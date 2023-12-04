@@ -104,6 +104,13 @@ class ModuleController extends Controller
                 $query->orderBy('id', 'asc');
             }])->first();
 
+        //count total subMateri
+        if ($show_module) {
+            $totalCurrentSub = $show_module->submodules->count();
+        } else {
+            $totalCurrentSub = 0; 
+        }
+
         // get user progress by current modul 
         $userProgress = UserProgress::where([
             'user_id' => auth()->user()->id,
@@ -123,7 +130,7 @@ class ModuleController extends Controller
             $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($prevSubmodule->id, $userProgress);
         }
 
-        return view('user.module.show', compact('show_module'));
+        return view('user.module.show', compact('show_module', 'totalCurrentSub'));
     }
 
 
@@ -200,35 +207,35 @@ class ModuleController extends Controller
             'content' => 'required|max:500',
             'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
-        
+
         $validatedData = $request->validate($rules);
-        
+
 
         $module->update([
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'content' => $validatedData['content'],
         ]);
-    
+
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
-            $thumbnailName = $module->slug . '-' . time() . '.' . $thumbnail->extension(); 
+            $thumbnailName = $module->slug . '-' . time() . '.' . $thumbnail->extension();
             $thumbnail->move(public_path('img/module'), $thumbnailName);
-    
+
             $oldImagePath = public_path('img/module') . '/' . $module->thumbnail;
             if ($module->thumbnail && file_exists($oldImagePath)) {
                 unlink($oldImagePath);
             }
-    
+
             $module->thumbnail = $thumbnailName;
             $module->save();
         }
-    
-      
+
+
         return redirect('/dashboard-admin/data-module')->with('successUpdate', 'Module berhasil diperbarui!');
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      */
