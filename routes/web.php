@@ -13,6 +13,7 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PojokLiterasiController;
 use App\Http\Controllers\UserDashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -92,3 +93,7 @@ Route::post('/{slug}/latihan-soal/{exerciseId}/submit', [ExerciseController::cla
 //Dashboard user
 Route::get('/profile', [UserDashboardController::class, 'profile']); //profile
 Route::post('/profile/update', [UserDashboardController::class, 'profileUpdate']); //profile
+
+//Pojok-literasi - Page (user)
+Route::get('/wikimedia/search',[PojokLiterasiController::class, 'wikiSearch'])->name('wikimedia-search');
+Route::get('/wikimedia',[PojokLiterasiController::class, 'wikiIndex']);

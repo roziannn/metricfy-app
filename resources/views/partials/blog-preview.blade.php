@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <a href="/blog/{{ $artikel->slug }}"
                         class="card-title fs-6 font-weight-bold text-decoration-none">{{ $artikel->title }}</a>
-                    <p class="card-text text-truncate">{{ $artikel->content }}</p>
+                    {{-- <p class="card-text text-truncate">{{ $artikel->content }}</p> --}}
                 </div>
             </div>
         </div>
