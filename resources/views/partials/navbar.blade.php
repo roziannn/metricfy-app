@@ -31,10 +31,10 @@
                             Pojok Literasi
                         </a>
                         <ul class="dropdown-menu border-0 shadow">
-                            <li><a class="dropdown-item py-2" href="/wikimedia">Wikimedia</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Sinonim</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Cerpen Corner</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item py-2" href="/wikimedia">Cari Kata</a></li>
+                            <li><a class="dropdown-item py-2" href="/kamus">Kamus Bahasa</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Buku & Sastra</a></li>
+                            {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
                         </ul>
                     </li>
                 </ul>
@@ -59,12 +59,11 @@
                     </a>
 
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li class="m-3">
+                        <li class="m-3 pb-2 border-bottom">
                             <img src="{{ asset('img/avatar/' . auth()->user()->avatar) }}" class="rounded-circle" style="width: 36px; height: 36px;" alt=""> 
 
                             <span class="px-1 font-weight-bold">{{  explode(' ', auth()->user()->name)[0] }}</span>
                             <span class="px-1"><i class="fa-solid fa-coins pe-1 text-warning"></i> {{ auth()->user()->point }} xp</span>
-                            <hr>
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>

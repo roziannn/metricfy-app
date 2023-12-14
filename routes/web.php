@@ -97,3 +97,7 @@ Route::post('/profile/update', [UserDashboardController::class, 'profileUpdate']
 //Pojok-literasi - Page (user)
 Route::get('/wikimedia/search',[PojokLiterasiController::class, 'wikiSearch'])->name('wikimedia-search');
 Route::get('/wikimedia',[PojokLiterasiController::class, 'wikiIndex']);
+Route::get('/kamus/search',[PojokLiterasiController::class, 'kamusSearch'])->name('kamus-search');
+Route::get('/kamus',[PojokLiterasiController::class, 'kamusIndex']);
+
+
