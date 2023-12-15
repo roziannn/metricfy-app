@@ -20,9 +20,17 @@
                         <i class="fa-solid fa-angle-right"></i>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <p>Keluar</p>
+                        <a href="/logout"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="text-decoration-none text-secondary">
+                            Keluar
+                        </a>
                         <i class="fa-solid fa-angle-right"></i>
+                        <form id="logout-form" action="/logout" method="post" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>

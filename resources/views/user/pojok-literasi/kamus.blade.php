@@ -11,14 +11,17 @@
                     <button class="btn btn-sm btn-danger" type="submit">Search</button>
                 </div>
             </form>
+
             @if (!empty($results))
-                <p class="border-bottom fs-5">Hasil Pencarian:</p>
+                <p class="fs-5 border-bottom">Hasil Pencarian:</p>
                 <p class="font-weight-bolder fs-4">{{ $results[0]['title'] }}</p>
-                <p>{!! $results[0]['snippet'] !!}</p>
+                @php
+                    $snippetWithoutTranslation = str_replace('Terjemahan[?] Terjemahan', '', $results[0]['snippet']);
+                @endphp
+                <p>{!! $snippetWithoutTranslation !!}</p>
             @else
                 <p>No results found.</p>
             @endif
-
         </div>
     </div>
 @endsection

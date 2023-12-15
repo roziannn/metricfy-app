@@ -161,13 +161,13 @@
 
 <style>
     .alert-container {
-        position: relative;
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
         height: 0;
     }
 
     .custom-alert {
-        position: absolute;
-        z-index: 1000;
         width: 100%;
     }
 

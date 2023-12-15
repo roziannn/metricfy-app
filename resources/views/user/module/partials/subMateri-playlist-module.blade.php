@@ -1,7 +1,8 @@
 <div class="col-md-4 m-0 p-0 py-3">
     <div class="card rounded-5">
         <div class="card-body">
-            <h5>{{ $module->title }}</h5>
+            <h6>{{ $module->title }} </h6>
+            {{-- <span class="text-muted">(16 menit)</span> --}}
             @foreach ($playlist as $item)
                 <li class="d-flex justify-content-between align-items-center py-2">
                     @if (!$item->locked)
