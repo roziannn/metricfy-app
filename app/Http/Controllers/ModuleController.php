@@ -81,8 +81,7 @@ class ModuleController extends Controller
     {
         $rules = ([
             'title' => 'required',
-            'content' => 'required|max:500',
-            'video_embed' => 'required',
+            'content' => 'required|max:1000',
         ]);
 
         $validatedData = $request->validate($rules);

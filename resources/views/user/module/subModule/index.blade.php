@@ -4,7 +4,8 @@
     <ol class="breadcrumb bg-light px-0">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
-                <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
+                </li>
             @else
                 <li class="breadcrumb-item active" aria-current="page">{{ $label }}</li>
             @endif
@@ -26,14 +27,18 @@
                     $url = $embed . $youtube;
                 @endphp
 
-                {{-- Gunakan sintaks Blade untuk menyusun iframe --}}
-                <iframe width="100%" height="360" src="{{ $url }}" title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen class="rounded-5"></iframe>
-                        <p class="pt-3 text-justify">{{ $submodule->content }}</p>
-                        {{-- <p>Unduh rangkuman materi</p> --}}
+                @if ($submodule->video_embed != null && $submodule->video_embed !== '')
+                    <iframe width="100%" height="360" src="{{ $url }}" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen class="rounded-5"></iframe>
+                    <p class="pt-3 text-justify">{{ $submodule->content }}</p>
+                @else
+                    <p class="pt-3 text-justify">{{ $submodule->content }}</p>
+                @endif
+
             </div>
-            
+
             {{-- partials next-preview/playlist --}}
             @include('user.module.partials.subMateri-playlist-module')
         </div>

@@ -6,7 +6,7 @@
           {{ $show_module->description }} <br>
       </p>
       <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar progress-bar-striped" id="progress-bar-inner"></div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated" id="progress-bar-inner"></div>
       </div>
     </div>
   </div>
