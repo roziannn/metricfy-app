@@ -12,65 +12,17 @@
         @endforeach
     </ol>
 
-    {{-- <div class="d-flex justify-content-start mb-3">
-        @foreach ($exerciseModule as $item)
-            <button class="btn btn-outline-primary mx-2" onclick="showQuestion({{ $loop->index }})">
-                {{ $loop->index + 1 }}
-            </button>
-        @endforeach
-    </div>
-
-    @foreach ($exerciseModule as $item)
-        <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
-            <input type="hidden" name="exercise_id" value="{{ $item->id }}">
-            <div class="alert-container">
-                @if (session('message'))
-                    <div class="alert custom-alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between"
-                        id="alert" role="alert">
-                        <div>
-                            @if (strpos(session('message'), 'Benar') == false)
-                                <i class="fas fa-triangle-exclamation px-2"></i>
-                            @endif
-                            {{ session('message') }}
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-            </div>
-
-            <div class="card-body">
-                <h5 class="card-title">Soal {{ $loop->index + 1 }}</h5>
-                <p class="card-text">{{ $item->question }}</p>
-                @foreach (json_decode($item->options) as $option)
-                    <form action="{{ route('submitAnswer', ['slug' => $item->module->slug, 'exerciseId' => $item->id]) }}"
-                        method="post">
-                        @csrf
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="answer" id="answer{{ $loop->index + 1 }}"
-                                value="{{ chr(64 + $loop->index + 1) }}">
-                            <label class="form-check-label" for="answer{{ $loop->index + 1 }}">
-                                {{ chr(64 + $loop->index + 1) }} . {{ $option }}
-                            </label>
-                        </div>
-                @endforeach
-                <div class="text-start pt-3">
-                    <button type="submit" class="btn btn-m btn-primary col-md-2 col-sm-12">Kirim Jawaban</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    @endforeach --}}
-
     <div class="row">
         <div class="col-md-3 mb-3">
             <div class="d-flex flex-wrap">
                 @foreach ($exerciseModule as $item)
-                    <button class="btn btn-outline-primary m-2" onclick="showQuestion({{ $loop->index }})">
+                    <button id="button{{ $loop->index }}" class="btn btn-outline-primary m-2" onclick="showQuestion({{ $loop->index }})">
                         {{ $loop->index + 1 }}
                     </button>
                 @endforeach
             </div>
         </div>
+        
 
         <div class="col-md-9">
             @foreach ($exerciseModule as $item)
@@ -132,7 +84,8 @@
         </div>
     </div>
 @endsection
-<script>
+
+{{-- <script>
     function showQuestion(index) {
         document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
         document.getElementById('item' + index).style.display =
@@ -157,7 +110,32 @@
             });
         });
     });
+</script> --}}
+
+<script>
+    function showQuestion(index) {
+        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+        document.getElementById('item' + index).style.display = 'block';
+
+        sessionStorage.setItem('selectedCardIndex', index);
+
+        document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('button' + index).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
+
+        showQuestion(selectedCardIndex);
+
+        document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
+            button.addEventListener('click', function() {
+                showQuestion(index);
+            });
+        });
+    });
 </script>
+
 
 <style>
     .alert-container {

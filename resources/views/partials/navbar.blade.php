@@ -23,6 +23,9 @@
                     <li class="nav-item px-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
                         <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
                     </li>
+                    <li class="nav-item px-3 {{ Request::is('materi-belajr') ? 'active' : '' }}">
+                        <a class="nav-link" href="/materi-belajar">Latihan Soal</a>
+                    </li>
                     <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
                         <a class="nav-link" href="/blog">Blog</a>
                     </li>
@@ -34,6 +37,7 @@
                             <li><a class="dropdown-item py-2" href="/wikimedia">Cari Kata</a></li>
                             <li><a class="dropdown-item py-2" href="/kamus">Kamus Bahasa</a></li>
                             <li><a class="dropdown-item py-2" href="#">Buku & Sastra</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Cerpen</a></li>
                             {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
                         </ul>
                     </li>
@@ -63,7 +67,7 @@
                             <img src="{{ asset('img/avatar/' . auth()->user()->avatar) }}" class="rounded-circle" style="width: 36px; height: 36px;" alt=""> 
 
                             <span class="px-1 font-weight-bold">{{  explode(' ', auth()->user()->name)[0] }}</span>
-                            <span class="px-1"><i class="fa-solid fa-coins pe-1 text-warning"></i> {{ auth()->user()->point }} xp</span>
+                            <span class="px-1 small"><i class="fa-solid fa-coins pe-1 text-warning"></i> {{ auth()->user()->point }} xp</span>
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>

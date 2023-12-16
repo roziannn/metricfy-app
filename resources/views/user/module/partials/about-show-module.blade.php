@@ -5,10 +5,20 @@
       <p class="text-justify">
           {{ $show_module->description }} <br>
       </p>
+      <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped" id="progress-bar-inner"></div>
+      </div>
     </div>
-    {{-- <div class="col-sm-6 text-end">
-      <img src="{{ asset('img/module/' . $show_module->thumbnail) }}" class="img-fluid rounded-5" width="300" height="300" alt="">
-    </div> --}}
   </div>
-    
 </div>
+
+{{-- kalkulasi hitung progress belajar user dalam module --}}
+<script>
+  var totalSubmodules = {{ $totalCurrentSub }};
+  var userProgress = @json($userProgress);
+
+  var readSubmodules = userProgress.length;
+
+  var barProgress = (readSubmodules/totalSubmodules) * 100;
+  document.getElementById('progress-bar-inner').style.width = barProgress + '%';
+</script>

@@ -111,11 +111,14 @@ class ModuleController extends Controller
             $totalCurrentSub = 0; 
         }
 
+
         // get user progress by current modul 
         $userProgress = UserProgress::where([
             'user_id' => auth()->user()->id,
             'module_id' => $show_module->id,
         ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
+
+        
 
         // Menentukan status kunci untuk setiap submodul
         $submodules = $show_module->submodules;
@@ -130,7 +133,7 @@ class ModuleController extends Controller
             $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($prevSubmodule->id, $userProgress);
         }
 
-        return view('user.module.show', compact('show_module', 'totalCurrentSub'));
+        return view('user.module.show', compact('show_module', 'totalCurrentSub', 'userProgress'));
     }
 
 
@@ -194,9 +197,6 @@ class ModuleController extends Controller
         //
     }
 
-    /**
-     * update data-module
-     */
     public function update(Request $request, $id)
     {
         $module = Module::find($id);
@@ -235,12 +235,9 @@ class ModuleController extends Controller
         return redirect('/dashboard-admin/data-module')->with('successUpdate', 'Module berhasil diperbarui!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
     }
+
 }
