@@ -67,6 +67,10 @@ class ExerciseController extends Controller
 
         $exerciseModule = $module->exercises;
 
+        // $userExerciseAnswers = UserExerciseAnswer::where('user_id', auth()->user()->id)
+        // ->where('module_id', $module->id)
+        // ->pluck('exercise_id');
+
         $breadcrumbs = [
             'Materi' => route('materi'),
             $module->title => route('user.module.show', ['slug' => $module->slug]),

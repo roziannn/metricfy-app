@@ -22,7 +22,6 @@
                 @endforeach
             </div>
         </div>
-        
 
         <div class="col-md-9">
             @foreach ($exerciseModule as $item)

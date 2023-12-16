@@ -23,8 +23,8 @@
                     <li class="nav-item px-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
                         <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
                     </li>
-                    <li class="nav-item px-3 {{ Request::is('materi-belajr') ? 'active' : '' }}">
-                        <a class="nav-link" href="/materi-belajar">Latihan Soal</a>
+                    <li class="nav-item px-3 {{ Request::is('banksoal') ? 'active' : '' }}">
+                        <a class="nav-link" href="/banksoal">Banksoal</a>
                     </li>
                     <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
                         <a class="nav-link" href="/blog">Blog</a>

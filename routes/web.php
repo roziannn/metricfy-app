@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BanksoalController;
 use App\Models\Blog;
 use App\Models\Module;
 use App\Models\Exercise;
@@ -99,5 +100,9 @@ Route::get('/wikimedia/search',[PojokLiterasiController::class, 'wikiSearch'])->
 Route::get('/wikimedia',[PojokLiterasiController::class, 'wikiIndex']);
 Route::get('/kamus/search',[PojokLiterasiController::class, 'kamusSearch'])->name('kamus-search');
 Route::get('/kamus',[PojokLiterasiController::class, 'kamusIndex']);
+
+//Banksoal - USER
+Route::get('/banksoal', [BanksoalController::class, 'index'])->name('banksoal');
+Route::get('/banksoal/mulai', [BanksoalController::class, 'show']);
 
 

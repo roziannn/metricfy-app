@@ -48,7 +48,7 @@ class ModuleController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:120',
-            'content' => 'required|max:255',
+            'content' => 'required|max:1000',
             'video_embed' => 'nullable|string'
         ]);
         $module = Module::where('id', $id)->first();
