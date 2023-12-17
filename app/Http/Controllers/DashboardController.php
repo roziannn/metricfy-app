@@ -35,4 +35,10 @@ class DashboardController extends Controller
         
          return view('admin.dashboard-admin.dataBlog.index', compact('data_blog'));
     }
+
+    public function adminDashboardDataBanksoal(){ //view
+        $data_banksoal = Blog::orderBy('created_at', 'asc')->get();
+        
+         return view('admin.dashboard-admin.dataBanksoal.index', compact('data_banksoal'));
+    }
 }

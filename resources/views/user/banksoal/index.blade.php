@@ -13,11 +13,12 @@
                         <div class="my-3">
                             <span class="badge badge-warning badge-pill p-2 mr-2 text-white">10 Soal</span>
                             <span class="badge badge-warning badge-pill p-2 mr-2 text-white">Mudah</span>
-                            <span class="badge badge-warning badge-pill p-2 mr-2 text-white"><i class="fa-solid fa-coins pe-1"></i>500 XP</span>
+                            <span class="badge badge-warning badge-pill p-2 mr-2 text-white"><i
+                                    class="fa-solid fa-coins pe-1"></i>500 XP</span>
                         </div>
                         <a href="/banksoal/mulai">
-                        <button class="btn btn-m btn-primary w-100">Kerjakan</button>
-                    </a>
+                            <button class="btn btn-m btn-primary w-100">Kerjakan</button>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title fs-5 font-weight-bold">Literasi Pendahuluan - 1</h5>
-                            <a href="" class="btn btn-outline-light "><i class="fa-solid fa-download me-2"></i>Download
+                            <a href="" class="btn btn-sm btn-outline-light "><i class="fa-solid fa-download me-2"></i>Download
                                 Soal</a>
                         </div>
                         <P>Basic pengantar literasi</P>

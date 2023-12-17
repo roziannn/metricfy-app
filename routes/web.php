@@ -101,6 +101,10 @@ Route::get('/wikimedia',[PojokLiterasiController::class, 'wikiIndex']);
 Route::get('/kamus/search',[PojokLiterasiController::class, 'kamusSearch'])->name('kamus-search');
 Route::get('/kamus',[PojokLiterasiController::class, 'kamusIndex']);
 
+//Banksoal - ADMIN
+Route::get('/dashboard-admin/data-banksoal', [DashboardController::class, 'adminDashboardDataBanksoal'])->name('admin-banksoal');
+Route::get('/dashboard-admin/banksoal/create', [BanksoalController::class, 'create']);
+
 //Banksoal - USER
 Route::get('/banksoal', [BanksoalController::class, 'index'])->name('banksoal');
 Route::get('/banksoal/mulai', [BanksoalController::class, 'show']);

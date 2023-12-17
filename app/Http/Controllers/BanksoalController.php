@@ -9,7 +9,7 @@ class BanksoalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() //-USER
     {
         return view('user.banksoal.index');
     }
@@ -17,9 +17,9 @@ class BanksoalController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() //-ADMIN
     {
-        //
+      return view('admin.dashboard-admin.dataBanksoal.create');
     }
 
     /**
