@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Module;
+use App\Models\Banksoal;
 use Illuminate\Http\Request;
 
 class BanksoalController extends Controller
@@ -19,7 +22,10 @@ class BanksoalController extends Controller
      */
     public function create() //-ADMIN
     {
-      return view('admin.dashboard-admin.dataBanksoal.create');
+    
+        $topic = Module::all();
+
+      return view('admin.dashboard-admin.dataBanksoal.create', compact('topic'));
     }
 
     /**
@@ -27,23 +33,29 @@ class BanksoalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        Banksoal::create($request->all());
+
+        $request->accepts('session');
+        session()->flash('successStore', 'Berhasil menambahkan data!');
+
+        return redirect('/dashboard-admin/data-banksoal');
     }
 
     /**
      * Display the specified resource.
      */
+    public function showAdmin($slug)
+    {
+        $banksoal = Banksoal::where('slug', $slug)->first();
+        $topic = Module::all();
+
+        return view('admin.dashboard-admin.dataBanksoal.show', compact('banksoal', 'topic'));
+    }
+
     public function show()
     {
         return view('user.banksoal.show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

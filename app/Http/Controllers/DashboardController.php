@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banksoal;
 use App\Models\Blog;
 use App\Models\Module;
 use App\Models\User;
@@ -37,7 +38,7 @@ class DashboardController extends Controller
     }
 
     public function adminDashboardDataBanksoal(){ //view
-        $data_banksoal = Blog::orderBy('created_at', 'asc')->get();
+        $data_banksoal = Banksoal::orderBy('created_at', 'asc')->get();
         
          return view('admin.dashboard-admin.dataBanksoal.index', compact('data_banksoal'));
     }

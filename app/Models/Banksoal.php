@@ -24,4 +24,8 @@ class Banksoal extends Model
             $banksoal->slug = Str::slug($banksoal->title);
         });
     }
+
+    public function banksoalQuestions(){
+        return $this->hasMany(BanksoalQuestion::class);
+    }
 }

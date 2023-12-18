@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BanksoalController;
 use App\Models\Blog;
 use App\Models\Module;
 use App\Models\Exercise;
@@ -11,11 +10,14 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\BanksoalController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PojokLiterasiController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\BanksoalQuestionController;
+use App\Models\BanksoalQuestion;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -104,6 +106,13 @@ Route::get('/kamus',[PojokLiterasiController::class, 'kamusIndex']);
 //Banksoal - ADMIN
 Route::get('/dashboard-admin/data-banksoal', [DashboardController::class, 'adminDashboardDataBanksoal'])->name('admin-banksoal');
 Route::get('/dashboard-admin/banksoal/create', [BanksoalController::class, 'create']);
+Route::post('/dashboard-admin/banksoal/store', [BanksoalController::class, 'store']);
+Route::get('/dashboard-admin/banksoal/{slug}', [BanksoalController::class, 'showAdmin']);
+
+//BanksoalQuestion - ADMIN
+Route::get('/dashboard-admin/banksoal/{slug}/create', [BanksoalQuestionController::class, 'create']);
+Route::post('/dashboard-admin/banksoal/{slug}/store', [BanksoalQuestionController::class, 'store']);
+Route::get('/dashboard-admin/banksoal/{id}/delete', [BanksoalQuestionController::class, 'delete']);
 
 //Banksoal - USER
 Route::get('/banksoal', [BanksoalController::class, 'index'])->name('banksoal');

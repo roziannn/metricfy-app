@@ -14,17 +14,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($data_blog as $blog)
+                    @foreach ($data_banksoal as $banksoal)
                         <tr>
-                            <td>{{ $blog->title }}</td>
-                            <td>{{ Str::limit($blog->content,100) }}
+                            <td>{{ $banksoal->title }}</td>
+                            <td>{{ Str::limit($banksoal->content,100) }}
                             </td>
                             <td>
-                                <a href="/dashboard-admin/blog/{{ $blog->slug }}" class="btn btn-success btn-sm"><i class="bi bi-eye"></i>
+                                <a href="/dashboard-admin/banksoal/{{ $banksoal->slug }}" class="btn btn-success btn-sm"><i class="bi bi-eye"></i>
                                 </a>
                             </td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>
