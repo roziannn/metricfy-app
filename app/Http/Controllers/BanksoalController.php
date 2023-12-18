@@ -60,9 +60,15 @@ class BanksoalController extends Controller
     public function showUser($slug)
     {
         $banksoal = Banksoal::where('slug', $slug)->first();
+        
         $topic = Module::all();
 
-        return view('user.banksoal.show', compact('banksoal', 'topic'));
+        $breadcrumbs = [
+            'Banksoal' => route('banksoal'),
+            $banksoal->title => ''
+        ];
+
+        return view('user.banksoal.show', compact('banksoal', 'topic', 'breadcrumbs'));
     }
 
     public function exercise($slug)
@@ -70,7 +76,14 @@ class BanksoalController extends Controller
         $banksoal = Banksoal::where('slug', $slug)->first();
         $estimatedDuration = $banksoal->estimated_duration;
 
-        return view('user.banksoal.exercise', compact('banksoal', 'estimatedDuration'));
+        
+        $breadcrumbs = [
+            'Banksoal' => route('banksoal'),
+            $banksoal->title => route('user.banksoal.show', ['slug' => $banksoal->slug]),
+            'Pengerjaan' => ''
+        ];
+
+        return view('user.banksoal.exercise', compact('banksoal', 'estimatedDuration', 'breadcrumbs'));
     }
 
     /**
