@@ -116,6 +116,7 @@ Route::get('/dashboard-admin/banksoal/{id}/delete', [BanksoalQuestionController:
 
 //Banksoal - USER
 Route::get('/banksoal', [BanksoalController::class, 'index'])->name('banksoal');
-Route::get('/banksoal/mulai', [BanksoalController::class, 'show']);
+Route::get('/banksoal/{slug}', [BanksoalController::class, 'showUser']);
+Route::get('/banksoal/{slug}/exercise', [BanksoalController::class, 'exercise']);
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Module;
 use App\Models\Banksoal;
+use App\Models\BanksoalQuestion;
 use Illuminate\Http\Request;
 
 class BanksoalController extends Controller
@@ -14,7 +15,10 @@ class BanksoalController extends Controller
      */
     public function index() //-USER
     {
-        return view('user.banksoal.index');
+        $banksoal = Banksoal::all();
+    
+    
+        return view('user.banksoal.index', compact('banksoal'));
     }
 
     /**
@@ -22,10 +26,10 @@ class BanksoalController extends Controller
      */
     public function create() //-ADMIN
     {
-    
+
         $topic = Module::all();
 
-      return view('admin.dashboard-admin.dataBanksoal.create', compact('topic'));
+        return view('admin.dashboard-admin.dataBanksoal.create', compact('topic'));
     }
 
     /**
@@ -33,7 +37,7 @@ class BanksoalController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         Banksoal::create($request->all());
 
         $request->accepts('session');
@@ -53,9 +57,20 @@ class BanksoalController extends Controller
         return view('admin.dashboard-admin.dataBanksoal.show', compact('banksoal', 'topic'));
     }
 
-    public function show()
+    public function showUser($slug)
     {
-        return view('user.banksoal.show');
+        $banksoal = Banksoal::where('slug', $slug)->first();
+        $topic = Module::all();
+
+        return view('user.banksoal.show', compact('banksoal', 'topic'));
+    }
+
+    public function exercise($slug)
+    {
+        $banksoal = Banksoal::where('slug', $slug)->first();
+        $estimatedDuration = $banksoal->estimated_duration;
+
+        return view('user.banksoal.exercise', compact('banksoal', 'estimatedDuration'));
     }
 
     /**
