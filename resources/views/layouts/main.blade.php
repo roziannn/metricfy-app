@@ -59,16 +59,37 @@
         }
 
         body {
-            margin-top: 30px; //karena fixed-top sticky navbar
-            background-color: #f4f4f4;
+            margin-top: 30px;
+            background-color: #f0f2f7;
+            color: #333;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
+
+
+        .bg-purple {
+            /* background: #6a3093;
+            background: -webkit-linear-gradient(to right, #a044ff, #6a3093);
+            background: linear-gradient(to right, #a044ff, #6a3093); */
+
+            /* biru base
+            background: #00B4DB;
+            background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);
+            background: linear-gradient(to right, #0083B0, #00B4DB);  */
+
+            background: #4e54c8;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #8f94fb, #4e54c8);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #8f94fb, #4e54c8);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+
 
         .nav-logo {
             font-family: 'Jura', sans-serif;
         }
-
-        .bread
     </style>
 </body>
 

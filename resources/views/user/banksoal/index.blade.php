@@ -12,13 +12,17 @@
                             <h5 class="card-title fs-6 font-weight-bold">{{ $item->title }}</h5>
                             <P>{!! $item->desc !!}</P>
                             <div class="my-3">
-                                <span class="badge badge-warning badge-pill p-2 mr-2 text-white"> {{ $item->banksoalQuestions->count() }}</span>
-                                <span class="badge badge-warning badge-pill p-2 mr-2 text-white">{{ $item->level }}</span>
+                                <span class="badge badge-warning badge-pill p-2 mr-2 text-white">
+                                    {{ $item->banksoalQuestions->count() }} Soal</span>
+                                <span class="badge badge-warning badge-pill p-2 mr-2 text-white">
+                                    {{ $item->level == 1 ? 'Mudah' : ($item->level == 2 ? 'Medium' : 'Sulit') }}
+                                </span>
                                 <span class="badge badge-warning badge-pill p-2 mr-2 text-white"><i
-                                        class="fa-solid fa-coins pe-1"></i> {{ $item->banksoalQuestions->sum('point') }}</span>
+                                        class="fa-solid fa-coins pe-1"></i>
+                                    {{ $item->banksoalQuestions->sum('point') }}</span>
                             </div>
                             <a href="/banksoal/{{ $item->slug }}">
-                                <button class="btn btn-m btn-primary w-100">Kerjakan</button>
+                                <button class="btn btn-m btn-warning text-white w-100">Kerjakan</button>
                             </a>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-<div class="py-4">
+<div class="py-3">
     <div class="container">
         <div class="text-center">
             <h3>Buat apa sih, kita belajar numerasi - literasi?</h3>
@@ -10,21 +10,23 @@
 
     <div class="row py-2 align-items-center">
         <div class="col-lg-6">
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
+            <div class="accordion accordion-flush shadow-sm" id="accordionFlushExample">
+                <div class="accordion-item p-2">
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed text-accordion-head" type="button"
                             data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
                             aria-controls="flush-collapseOne">
-                            Melatih kemampuan analisis data
+                            <p class="m-0">Melatih kemampuan analisis data</p>
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Latihan analisis data mengasah kemampuan menganalisis pola, mengekstrak informasi, dan membuat keputusan berbasis data, meningkatkan keahlian dalam pengolahan dan interpretasi informasi kuantitatif.</div>
+                        <div class="accordion-body">Latihan analisis data mengasah kemampuan menganalisis pola,
+                            mengekstrak informasi, dan membuat keputusan berbasis data, meningkatkan keahlian dalam
+                            pengolahan dan interpretasi informasi kuantitatif.</div>
                     </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item p-2">
                     <h2 class="accordion-header" id="flush-headingTwo">
                         <button class="accordion-button collapsed text-accordion-head" type="button"
                             data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
@@ -39,7 +41,7 @@
                             body. Let's imagine this being filled with some actual content.</div>
                     </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item p-2">
                     <h2 class="accordion-header" id="flush-headingThree">
                         <button class="accordion-button collapsed text-accordion-head" type="button"
                             data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false"
@@ -67,7 +69,7 @@
 
 <style>
     .text-accordion-head {
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 600;
     }
 </style>

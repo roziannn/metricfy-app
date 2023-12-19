@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2 fixed-top" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-2 fixed-top" aria-label="Offcanvas navbar large">
     <div class="container">
         <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="/">METRICFY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
@@ -59,7 +59,7 @@
                 <div class="nav-item">
                     <a class="nav-link p-0 dropdown" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="username-name text-light">Halo, {{ explode(' ', auth()->user()->name)[0] }}</span>
+                        <span class="username-name text-dark font-weight-bold">Halo, {{ explode(' ', auth()->user()->name)[0] }}</span>
                     </a>
 
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -90,9 +90,9 @@
                     </ul>
                 </div>
             @else
-                <div class="nav-item shadow">
-                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                        data-bs-target="#loginModal">Login</button>
+                <div class="nav-item">
+                    <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal"
+                        data-bs-target="#loginModal">Masuk/Daftar</button>
                 </div>
             </div>
         @endauth

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @include('partials.navbar')
+@include('partials.hero-preview')
 @section('container')
 
 @if (session()->has('loginError'))
@@ -38,11 +39,11 @@
 
 @endforeach --}}
 
-@include('partials.hero-preview')
+{{-- @include('partials.hero-preview') --}}
 {{-- @include('partials.feature-preview') --}}
 @include('partials.intro-preview')
 @include('partials.materi-preview')
-@include('partials.leaderboard-preview')
 @include('partials.program-preview')
+@include('partials.leaderboard-preview')
 @include('partials.blog-preview')
 @endsection

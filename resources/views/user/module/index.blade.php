@@ -6,8 +6,8 @@
             <h4 class="font-weight-bolder py-3">Materi Belajar #PaduanLiterasi</h4>
             @foreach ($data_module as $module)
                 <div class="col-12 col-md-3 mb-4">
-                    <div class="card border-0">
-                        <img src="{{ asset('img/module/' . $module->thumbnail) }}" class="card-img-top rounded-5" alt="...">
+                    <div class="card rounded-3 border-0">
+                        <img src="{{ asset('img/module/' . $module->thumbnail) }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <a href="/materi-belajar/{{ $module->slug }}" class="card-title-name text-decoration-none">
                                 <h5 class="card-title font-weight-bold text-dark">{{ $module->title }}</h5>

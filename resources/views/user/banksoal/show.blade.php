@@ -11,11 +11,11 @@
             @endif
         @endforeach
     </ol>
-    
+
     <div class="pb-5">
         <div class="row py-3">
             <div class="col-12">
-                <div class="card p-4 bg-primary bg-gradient mb-3 text-white">
+                <div class="card p-4 bg-primary mb-3 text-white">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title fs-5 font-weight-bold">{{ $banksoal->title }}</h5>
@@ -27,8 +27,10 @@
                         <span
                             class="badge badge-warning badge-pill p-2 mr-2 text-white">{{ $banksoal->banksoalQuestions->count() }}
                             soal</span>
-                        <span class="badge badge-warning badge-pill p-2 mr-2 text-white">{{ $banksoal->level }}</span>
-                        <span class="badge badge-warning badge-pill p-2 mr-2 text-white"><i
+                            <span class="badge badge-warning badge-pill p-2 mr-2 text-white">
+                                {{ $banksoal->level == 1 ? 'Mudah' : ($banksoal->level == 2 ? 'Medium' : 'Sulit') }}
+                            </span>
+                            <span class="badge badge-warning badge-pill p-2 mr-2 text-white"><i
                                 class="fa-solid fa-coins pe-1"></i>{{ $banksoal->banksoalQuestions->sum('point') }}
                             XP</span>
                     </div>
@@ -62,7 +64,7 @@
                 </div>
             </div>
             <div class="col-12 pt-5">
-                <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-dark w-100">Mulai mengerjakan</a>
+                <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-warning py-2 w-100 shadow">Mulai mengerjakan</a>
             </div>
         </div>
     </div>
