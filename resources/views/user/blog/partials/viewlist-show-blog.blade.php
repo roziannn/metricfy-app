@@ -7,7 +7,7 @@
                 <img src="{{ asset('img/blog/' . $item->thumbnail) }}" class="rounded img-fluid" alt="">
             </div>
             <div class="col-sm-8 col-md-6 px-0">
-                <a href="/blog/{{ $item->slug }}" class="text-decoration-none">{{ $item->title }}</a>
+                <a href="/blog/{{ $item->slug }}" class="text-decoration-none text-black">{{ $item->title }}</a>
             </div>
         </div>
     @endforeach

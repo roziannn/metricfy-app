@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-    <ol class="breadcrumb bg-light px-0">
+    <ol class="breadcrumb bg-light px-3">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
                 <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
@@ -13,17 +13,33 @@
     </ol>
 
     <div class="pb-5">
-        <div class="d-flex align-items-center justify-content-between py-3">
+        {{-- <div class="d-flex align-items-center justify-content-between pt-2">
             <h5 class="font-weight-bolder"><a href="/banksoal/{{ $banksoal->slug }}"><i
                         class="fa-solid fa-arrow-left me-3"></i></a>{{ $banksoal->title }}</h5>
-            <a href="#" class="btn btn-m btn-danger" data-bs-toggle="modal" data-bs-target="#submitModal">Kumpulkan</a>
+            <a href="#" class="btn btn-sm btn-danger px-3" data-bs-toggle="modal" data-bs-target="#submitModal">Kumpulkan</a>
         </div>
-
         <div class="d-flex bg-body-secondary justify-content-between align-items-center my-3 rounded-3 p-3">
             <p class="currentSoal m-0">Soal 1/20</p>
             <p id="timer-display" class="fs-5 m-0 font-weight-bold">{{ $banksoal->estimated_duration }}</p>
-        </div>
+        </div> --}}
 
+        <div class="d-flex flex-column flex-sm-row p-2">
+            <div class="order-sm-1 mr-auto p-2">
+                <h5 class="font-weight-bolder">
+                    <a href="/banksoal/{{ $banksoal->slug }}" class="text-decoration-none">
+                        <i class="fa-solid fa-arrow-left me-3"></i>
+                    </a>
+                    {{ $banksoal->title }}
+                </h5>
+            </div>
+            <div class="order-sm-2 p-2">
+                <p id="timer-display" class="fs-5 m-0 font-weight-bold">{{ $banksoal->estimated_duration }}</p>
+            </div>
+            <div class="order-sm-3 p-2">
+                <a href="#" class="btn btn-sm btn-danger px-3" data-bs-toggle="modal"
+                    data-bs-target="#submitModal">Kumpulkan</a>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-3 mb-3">
@@ -56,8 +72,8 @@
                             @endforeach
                             <div class="d-flex justify-content-between mt-5">
                                 <button type="submit"
-                                    class="btn btn-m btn-outline-secondary btn-back col-md-2 me-5">Kembali</button>
-                                <button type="submit" class="btn btn-m btn-primary btn-next col-md-2">Lanjut</button>
+                                    class="btn btn-sm btn-outline-secondary btn-back col-md-2 me-5">Kembali</button>
+                                <button type="submit" class="btn btn-sm btn-primary btn-next col-md-2">Lanjut</button>
                             </div>
                             </form>
                         </div>
@@ -67,23 +83,23 @@
         </div>
     </div>
 
-    {{--modal for submit/kumpulkan jawaban --}}
+    {{-- modal for submit/kumpulkan jawaban --}}
     <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $banksoal->title }}</h1>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $banksoal->title }}</h1>
+                </div>
+                <div class="modal-body">
+                    Yakin ingin mengumpulkan jawaban?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-sm btn-primary">Kumpulkan Jawaban</button>
+                </div>
             </div>
-            <div class="modal-body">
-              Yakin ingin mengumpulkan jawaban?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-              <button type="button" class="btn btn-primary">Kumpulkan Jawaban</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
     <script>
         function startTimer() {

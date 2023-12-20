@@ -6,7 +6,7 @@
             <h4 class="font-weight-bolder py-3">Artikel Terbaru</h4>
             @foreach ($data_blog as $blog)
                 <div class="col-sm-12 col-md-4 mb-4">
-                    <div class="card border-0">
+                    <div class="card border-0 rounded-4">
                         <img src="{{ asset('img/blog/' . $blog->thumbnail) }}" class="card-img-top rounded-4" alt="..."
                             height="200" width="200">
                         <div class="card-body ">

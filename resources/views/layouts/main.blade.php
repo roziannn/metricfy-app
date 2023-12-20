@@ -85,7 +85,9 @@
 
         }
 
-
+        .breadcrumb{
+            font-size: 15px;
+        }
 
         .nav-logo {
             font-family: 'Jura', sans-serif;
