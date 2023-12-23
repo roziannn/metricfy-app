@@ -21,7 +21,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-start align-items-center">
                                 <div class="list-ava">
-                                    <img src="{{ asset('img/avatar/' . $item->avatar) }}" class="rounded-circle" width="36px" height="36px" alt="">
+                                    @php
+                                    $avatar_url = $item->avatar ? asset('img/avatar/' . $item->avatar) : 'https://ui-avatars.com/api/?size=128&background=random&name=' . $item->name;
+                                @endphp
+                                    <img src="{{ $avatar_url }}" class="rounded-circle" width="36px" height="36px" alt="">
                                 </div>
                                 <div class="list-name ps-3">
                                     {{ $item->name }}</div></div>

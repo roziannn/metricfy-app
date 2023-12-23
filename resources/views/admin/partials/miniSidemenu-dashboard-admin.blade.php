@@ -5,13 +5,11 @@
 
     <div class="card profile-settings d-none d-lg-flex border-0">
 
-        <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none">Overview</a>
-        <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none"> Data User</a>
-        <a href="/dashboard-admin/data-module" class="profile-settings-item text-decoration-none">Data Module</a>
-        <a href="/dashboard-admin/data-blog" class="profile-settings-item text-decoration-none">Data Blog</a>
-        <a href="/dashboard-admin/data-banksoal" class="profile-settings-item text-decoration-none">Data Banksoal</a>
-
-
+        <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none px-3">Overview</a>
+        <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none px-3"> Data User</a>
+        <a href="/dashboard-admin/data-module" class="profile-settings-item text-decoration-none px-3">Data Module</a>
+        <a href="/dashboard-admin/data-blog" class="profile-settings-item text-decoration-none px-3">Data Blog</a>
+        <a href="/dashboard-admin/data-banksoal" class="profile-settings-item text-decoration-none px-3">Data Banksoal</a>
     </div>
 
     <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar-profile-settings"

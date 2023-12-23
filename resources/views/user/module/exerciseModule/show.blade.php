@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-    <ol class="breadcrumb bg-light px-0">
+    <ol class="breadcrumb bg-light px-2">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
                 <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>

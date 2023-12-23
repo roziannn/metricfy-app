@@ -85,12 +85,16 @@
 
         }
 
-        .breadcrumb{
+        .breadcrumb {
             font-size: 15px;
         }
-
+        
         .nav-logo {
             font-family: 'Jura', sans-serif;
+        }
+
+        .nav-item.dropdown  .dropdown-item:active{
+            background-color: rgb(68, 158, 254) !important;
         }
     </style>
 </body>

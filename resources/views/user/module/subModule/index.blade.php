@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-    <ol class="breadcrumb bg-light px-0">
+    <ol class="breadcrumb bg-light px-3">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
                 <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
@@ -13,10 +13,6 @@
     </ol>
 
 
-    <h5>
-        {{ $submodule->title }}
-    </h5>
-
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-md-8 my-3 pr-3 p-0">
@@ -26,15 +22,17 @@
 
                     $url = $embed . $youtube;
                 @endphp
-
+                <h5>
+                    {{ $submodule->title }}
+                </h5>
                 @if ($submodule->video_embed != null && $submodule->video_embed !== '')
                     <iframe width="100%" height="360" src="{{ $url }}" title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen class="rounded-5"></iframe>
-                    <p class="pt-3 text-justify">{{ $submodule->content }}</p>
+                        allowfullscreen class="rounded-4"></iframe>
+                    <p class="text-justify pt-3">{{ $submodule->content }}</p>
                 @else
-                    <p class="pt-3 text-justify">{{ $submodule->content }}</p>
+                    <p class="text-justify">{{ $submodule->content }}</p>
                 @endif
 
             </div>

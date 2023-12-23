@@ -30,7 +30,8 @@
                         <a class="nav-link" href="/blog">Blog</a>
                     </li>
                     <li class="nav-item dropdown px-3">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             Pojok Literasi
                         </a>
                         <ul class="dropdown-menu border-0 shadow">
@@ -59,15 +60,21 @@
                 <div class="nav-item">
                     <a class="nav-link p-0 dropdown" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="username-name text-dark font-weight-bold">Halo, {{ explode(' ', auth()->user()->name)[0] }}</span>
+                        <span class="username-name text-dark font-weight-bold">Halo,
+                            {{ explode(' ', auth()->user()->name)[0] }}</span>
                     </a>
 
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li class="m-3 pb-2 border-bottom">
-                            <img src="{{ asset('img/avatar/' . auth()->user()->avatar) }}" class="rounded-circle" style="width: 36px; height: 36px;" alt=""> 
+                            @php
+                                $avatar_url = auth()->user()->avatar ? asset('img/avatar/' . auth()->user()->avatar) : 'https://ui-avatars.com/api/?size=128&background=random&name=' . auth()->user()->name;
+                            @endphp
+                            <img src="{{ $avatar_url }}" class="rounded-circle" style="width: 36px; height: 36px;"
+                                alt="">
 
-                            <span class="px-1 font-weight-bold">{{  explode(' ', auth()->user()->name)[0] }}</span>
-                            <span class="px-1 small"><i class="fa-solid fa-coins pe-1 text-warning"></i> {{ auth()->user()->point }} xp</span>
+                            <span class="px-1 font-weight-bold">{{ explode(' ', auth()->user()->name)[0] }}</span>
+                            <span class="px-1 small"><i class="fa-solid fa-coins pe-1 text-warning"></i>
+                                {{ auth()->user()->point }} xp</span>
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>
@@ -78,13 +85,13 @@
 
                         @if (auth()->user()->roles === 'ADMIN')
                             {{-- <li class="header px-3 small text-muted">Admin</li> --}}
-                            <li><a class="dropdown-item px-3 py-2" href="/main-dashboard-admin">
+                            <li><a class="dropdown-item px-3" href="/main-dashboard-admin">
                                     Dashboard</a></li>
                             <li>
                         @endif
-                        <form action="/logout" method="post" class="px-3 pt-4">
+                        <form action="/logout" method="post" class="px-3 pt-3">
                             @csrf
-                            <button type="submit" class="btn btn-sm btn-danger w-100">Logout</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger w-100">Logout</button>
                         </form>
                         </li>
                     </ul>
@@ -110,7 +117,8 @@
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
                         {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
                     </div>
                 @endif
                 <form action="/login" method="post">

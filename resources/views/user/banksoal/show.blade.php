@@ -19,9 +19,10 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title fs-5 font-weight-bold">{{ $banksoal->title }}</h5>
-                            <a href="" class="btn btn-sm btn-outline-light "><i
+                            <small><a href="" class="btn btn-sm btn-outline-light"><i
                                     class="fa-solid fa-download me-2"></i>Download
                                 Soal</a>
+                            </small>
                         </div>
                         <p class="m-0 p-0">{!! $banksoal->desc !!}</p>
                         <span

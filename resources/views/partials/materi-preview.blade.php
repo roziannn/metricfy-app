@@ -66,12 +66,11 @@ Kemampuan peserta didik untuk memahami, menggunakan, merefleksi, dan berinteraks
 <div class="container px-2 py-5" id="icon-grid">
     <h2 class="pb-2 border-bottom">Literasi dan #AKM</h2>
   
-    <div class="row align-items-md-stretch my-3">
+    <div class="row align-items-md-stretch mt-3">
         <div class="col-md-6">
             <div class="h-100 p-4 bg-body-tertiary border shadow-sm rounded-3">
                 <h5>Literasi</h5>
-                <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look.
-                    Then, mix and match with additional component themes and more.</p>
+                <p class="m-0">Dengan membangun literasi, seseorang dapat menjadi pembaca yang cerdas, penulis yang efektif, dan komunikator yang baik. Literasi membuka pintu untuk pengetahuan yang lebih luas dan memberdayakan individu untuk menghadapi tantangan dalam kehidupan modern. </p>
             </div>
         </div>
         <div class="col-md-6">

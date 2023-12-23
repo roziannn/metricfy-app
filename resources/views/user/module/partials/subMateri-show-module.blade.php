@@ -17,7 +17,7 @@
                                 class="fa-solid fa-lock"></i></button>
                     @else
                         <a href="/materi-belajar/{{ $show_module->slug }}/{{ $submodule->slug }}"
-                            class="btn btn-outline-danger btn-sm ml-auto">Mulai</a>
+                            class="btn btn-outline-primary btn-sm ml-auto">Mulai</a>
                     @endif
                 </div>
             </div>
