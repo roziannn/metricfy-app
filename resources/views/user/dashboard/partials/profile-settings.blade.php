@@ -11,18 +11,19 @@
                 <p class="font-weight-bold"> <i class="fa-solid fa-gear pe-2 text-primary"></i> Pengaturan Akun</p>
                 <div class="px-4">
                     <div class="d-flex justify-content-between">
-                        <a href="#" class="pb-3 text-decoration-none text-secondary"
-                            onclick="toggleEditProfile()">Ubah Profil</a>
+                        <a href="#" class="pb-3 text-decoration-none text-dark" onclick="toggleEditProfile()">Ubah
+                            Profil</a>
                         <i class="fa-solid fa-angle-right"></i>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <p>Ubah Password</p>
+                        <a href="#" class="pb-3 text-decoration-none text-dark"
+                            onclick="toggleEditPassword()">Ubah Kata Sandi</a>
                         <i class="fa-solid fa-angle-right"></i>
                     </div>
                     <div class="d-flex justify-content-between">
                         <a href="/logout"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                            class="text-decoration-none text-secondary">
+                            class="text-decoration-none text-dark">
                             Keluar
                         </a>
                         <i class="fa-solid fa-angle-right"></i>
@@ -105,6 +106,36 @@
             </form>
         </div>
     </div>
+
+    <div id="editPasswordCard" class="card border-1" style="display: none;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between pb-3">
+                <h6>Ubah Kata Sandi</h6>
+                <button type="button" class="btn-close" aria-label="Close" onclick="closeEditPassword()"></button>
+            </div>
+
+            <form action="/profile/update" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="col-sm-12 col-md-6 mb-2 m-0 p-0">
+                    <label for="name" class="text-muted form-control-sm p-0 m-0">Kata Sandi Baru</label>
+                    <div class="input-group">
+                        <input type="name" name="name" class="form-control form-control-sm" id="name"
+                            placeholder="Masukkan kata sandi di sini">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-2  m-0 p-0">
+                    <label for="name" class="text-muted form-control-sm p-0 m-0">Konfirmasi Kata Sandi</label>
+                    <div class="input-group">
+                        <input type="name" name="name" class="form-control form-control-sm" id="name"
+                            placeholder="Masukkan kata sandi di sini">
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-m btn-primary mt-3">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -119,6 +150,23 @@
 
     function closeEditProfile() {
         var editProfileCard = document.getElementById('editProfileCard');
+        var accountSettingsCard = document.getElementById('accountSettings');
+
+        editProfileCard.style.display = 'none';
+        accountSettingsCard.style.display = 'block';
+    }
+
+    function toggleEditPassword() {
+        var editProfileCard = document.getElementById('editPasswordCard');
+        var accountSettingsCard = document.getElementById('accountSettings');
+
+        editProfileCard.style.display = (editProfileCard.style.display === 'none' || editProfileCard.style.display ===
+            '') ? 'block' : 'none';
+        accountSettingsCard.style.display = (editProfileCard.style.display === 'none') ? 'block' : 'none';
+    }
+
+    function closeEditPassword() {
+        var editProfileCard = document.getElementById('editPasswordCard');
         var accountSettingsCard = document.getElementById('accountSettings');
 
         editProfileCard.style.display = 'none';
