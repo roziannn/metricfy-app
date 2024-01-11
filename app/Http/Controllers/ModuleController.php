@@ -107,7 +107,7 @@ class ModuleController extends Controller
         if ($show_module) {
             $totalCurrentSub = $show_module->submodules->count();
         } else {
-            $totalCurrentSub = 0; 
+            $totalCurrentSub = 0;
         }
 
 
@@ -117,7 +117,7 @@ class ModuleController extends Controller
             'module_id' => $show_module->id,
         ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
 
-        
+
 
         // Menentukan status kunci untuk setiap submodul
         $submodules = $show_module->submodules;
@@ -161,7 +161,7 @@ class ModuleController extends Controller
             'module_id' => $module->id,
         ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
 
-        // Filter playlist based on user progress
+        // ini filter playlist based on user progress nya sampe mana
         $playlist = $module->submodules;
 
         foreach ($playlist as $key => $playlistItem) {
@@ -182,6 +182,60 @@ class ModuleController extends Controller
 
         return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'exerciseModule', 'userProgressList'));
     }
+
+    // public function subModuleShowUser($moduleSlug, $submoduleSlug)
+    // {
+    //     $user = auth()->user();
+
+    //     $module = Module::where('slug', $moduleSlug)
+    //         ->with(['submodules' => function ($query) {
+    //             $query->orderBy('id', 'asc');
+    //         }])->first();
+
+    //     $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
+
+    //     // Check if the submodule contains a video_embed
+    //     $containsVideo = !empty($submodule->video_embed);
+
+    //     if ($containsVideo) {
+    //         $userProgressList = UserProgress::where([
+    //             'user_id' => $user->id,
+    //             'module_id' => $module->id,
+    //         ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
+
+    //         // Filter playlist based on user progress
+    //         $playlist = $module->submodules;
+
+    //         foreach ($playlist as $key => $playlistItem) {
+    //             if ($key === 0) {
+    //                 $playlistItem->locked = false;
+    //             } else {
+    //                 $playlistItem->locked = !in_array($playlistItem->id, $userProgressList) && !in_array($playlist[$key - 1]->id, $userProgressList);
+    //             }
+    //         }
+
+    //         $breadcrumbs = [
+    //             'Materi' => route('materi'),
+    //             $module->title => route('user.module.show', ['slug' => $module->slug]),
+    //             $submodule->title => ''
+    //         ];
+
+    //         return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'userProgressList', 'containsVideo'));
+    //     } else {
+    //         // If there is no video, update user progress
+    //         UserProgress::updateOrCreate(
+    //             [
+    //                 'user_id' => $user->id,
+    //                 'submodule_id' => $submodule->id,
+    //                 'module_id' => $module->id,
+    //             ]
+    //         );
+
+    //         // Redirect to the next submodule
+    //         return redirect()->route('next.submodule', ['moduleSlug' => $moduleSlug, 'submoduleSlug' => $submoduleSlug]);
+    //     }
+    // }
+
 
     public function showAdmin($slug)
     {
@@ -238,5 +292,4 @@ class ModuleController extends Controller
     {
         //
     }
-
 }

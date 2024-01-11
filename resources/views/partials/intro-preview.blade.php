@@ -36,9 +36,9 @@
                     </h2>
                     <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Placeholder content for this accordion, which is intended to
-                            demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion
-                            body. Let's imagine this being filled with some actual content.</div>
+                        <div class="accordion-body">Keterampilan menulis dan membaca membantu seseorang menyampaikan
+                            ide, pemikiran, dan informasi secara jelas dan efektif. Kemampuan menyusun kalimat dan
+                            paragraf dengan benar memungkinkan komunikasi yang lebih jelas dan dapat dimengerti.</div>
                     </div>
                 </div>
                 <div class="accordion-item p-2">
@@ -51,11 +51,9 @@
                     </h2>
                     <div id="flush-collapseThree" class="accordion-collapse collapse"
                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Placeholder content for this accordion, which is intended to
-                            demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion
-                            body. Nothing more exciting happening here in terms of content, but just filling up the
-                            space to make it look, at least at first glance, a bit more representative of how this would
-                            look in a real-world application.</div>
+                        <div class="accordion-body">Literasi membantu melatih keterampilan berpikir kritis, termasuk
+                            kemampuan untuk menilai informasi, menganalisis argumen, dan mengidentifikasi kesalahan
+                            logika. Ini sangat penting dalam menyelesaikan masalah sehari-hari yang kompleks.</div>
                     </div>
                 </div>
             </div>

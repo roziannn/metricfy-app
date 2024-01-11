@@ -99,9 +99,9 @@ Route::post('/profile/update', [UserDashboardController::class, 'profileUpdate']
 
 //Pojok-literasi - Page (user)
 Route::get('/wikimedia/search', [PojokLiterasiController::class, 'wikiSearch'])->name('wikimedia-search');
-Route::get('/wikimedia', [PojokLiterasiController::class, 'wikiIndex']);
+Route::get('/wikimedia', [PojokLiterasiController::class, 'wikiIndex'])->name('wikimedia');
 Route::get('/kamus/search', [PojokLiterasiController::class, 'kamusSearch'])->name('kamus-search');
-Route::get('/kamus', [PojokLiterasiController::class, 'kamusIndex']);
+Route::get('/kamus', [PojokLiterasiController::class, 'kamusIndex'])->name('kamus');
 
 //Banksoal - ADMIN
 Route::get('/dashboard-admin/data-banksoal', [DashboardController::class, 'adminDashboardDataBanksoal'])->name('admin-banksoal');

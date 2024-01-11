@@ -1,7 +1,8 @@
 <div class="py-2">
     <div class="d-flex justify-content-between">
         <h5 class="col-sm-6 font-weight-bold px-0">Pembahasan</h5>
-        <div class="col-sm-3  px-0 text-end"><span class="badge bg-dark-subtle p-2 text-dark"><i class="fa-solid fa-list-check pe-2"></i> {{ $totalCurrentSub }} Sub Materi</span></div>
+        <div class="col-sm-3  px-0 text-end"><span class="badge bg-dark-subtle p-2 text-dark"><i
+                    class="fa-solid fa-list-check pe-2"></i> {{ $totalCurrentSub }} Sub Materi</span></div>
     </div>
 
     @php

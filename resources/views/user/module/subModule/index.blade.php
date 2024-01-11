@@ -27,17 +27,15 @@
                 </h5>
                 @if ($submodule->video_embed != null && $submodule->video_embed !== '')
                     <iframe width="100%" height="360" src="{{ $url }}" title="YouTube video player"
-                        frameborder="0"
+                        frameborder="0" id="player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen class="rounded-4"></iframe>
                     <p class="text-justify pt-3">{{ $submodule->content }}</p>
                 @else
                     <p class="text-justify">{{ $submodule->content }}</p>
                 @endif
-
             </div>
 
-            {{-- partials next-preview/playlist --}}
             @include('user.module.partials.subMateri-playlist-module')
         </div>
     </div>
