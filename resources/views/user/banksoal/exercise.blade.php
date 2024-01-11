@@ -13,16 +13,6 @@
     </ol>
 
     <div class="pb-5">
-        {{-- <div class="d-flex align-items-center justify-content-between pt-2">
-            <h5 class="font-weight-bolder"><a href="/banksoal/{{ $banksoal->slug }}"><i
-                        class="fa-solid fa-arrow-left me-3"></i></a>{{ $banksoal->title }}</h5>
-            <a href="#" class="btn btn-sm btn-danger px-3" data-bs-toggle="modal" data-bs-target="#submitModal">Kumpulkan</a>
-        </div>
-        <div class="d-flex bg-body-secondary justify-content-between align-items-center my-3 rounded-3 p-3">
-            <p class="currentSoal m-0">Soal 1/20</p>
-            <p id="timer-display" class="fs-5 m-0 font-weight-bold">{{ $banksoal->estimated_duration }}</p>
-        </div> --}}
-
         <div class="d-flex flex-column flex-sm-row p-2">
             <div class="order-sm-1 mr-auto p-2">
                 <h5 class="font-weight-bolder">
@@ -70,10 +60,14 @@
                                         </label>
                                     </div>
                             @endforeach
-                            <div class="d-flex justify-content-between mt-5">
-                                <button type="submit"
-                                    class="btn btn-sm btn-outline-secondary btn-back col-md-2 me-5">Kembali</button>
-                                <button type="submit" class="btn btn-sm btn-primary btn-next col-md-2">Lanjut</button>
+                            <div class="d-flex  mt-5">
+                                @unless ($loop->first)
+                                    <button type="submit"
+                                        class="btn btn-sm btn-outline-secondary btn-back col-md-2 me-3">Kembali</button>
+                                @endunless
+                                @unless ($loop->last)
+                                    <button type="submit" class="btn btn-sm btn-primary btn-next col-md-2">Lanjut</button>
+                                @endunless
                             </div>
                             </form>
                         </div>
@@ -91,6 +85,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $banksoal->title }}</h1>
                 </div>
                 <div class="modal-body">
+                    <b> <span class="text-danger"> 20</span>/20 </b> Soal terjawab.
                     Yakin ingin mengumpulkan jawaban?
                 </div>
                 <div class="modal-footer">

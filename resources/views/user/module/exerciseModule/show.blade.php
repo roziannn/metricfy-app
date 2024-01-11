@@ -55,15 +55,14 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
 
+                        <div class="d-flex align-items-center justify-content-between">
                             <h5 class="col-sm-3 px-0 card-title font-weight-bold">Soal {{ $loop->index + 1 }}</h5>
                             <div class="col-sm-3 px-0 card-title text-end"> <span
-                                    class="badge badge-pill bg-warning p-2 small"><i
+                                    class="badge badge-pill {{ isset($userAlreadyAnswer[$item->id]) ? 'bg-danger' : 'bg-warning' }} p-2 small"><i
                                         class="fa-solid fa-coins pe-1"></i>{{ $item->point }} xp</span></div>
                         </div>
                         <p class="card-text">{{ $item->question }}</p>
-                        {{-- @if (in_array($item->id, $userAlreadyAnswer)) --}}
                         @if (isset($userAlreadyAnswer[$item->id]))
                             <div class="alert alert-success">
                                 @foreach (json_decode($item->options) as $option)
@@ -111,33 +110,6 @@
         </div>
     </div>
 @endsection
-
-{{-- <script>
-    function showQuestion(index) {
-        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-        document.getElementById('item' + index).style.display =
-            'block'; // show specific question card by index
-
-        sessionStorage.setItem('selectedCardIndex',
-            index); // Store the selected card index in a session or localStorage
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
-
-        showQuestion(selectedCardIndex);
-
-        document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
-            button.addEventListener('click', function() {
-                showQuestion(index);
-
-                document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList
-                    .remove('active'));
-                button.classList.add('active');
-            });
-        });
-    });
-</script> --}}
 
 <script>
     function showQuestion(index) {
