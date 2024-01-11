@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Module;
 use App\Models\Exercise;
-use App\Models\User;
-use App\Models\UserExerciseAnswer;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Models\UserExerciseAnswer;
+use Illuminate\Support\Facades\Auth;
 
 class ExerciseController extends Controller
 {
@@ -71,13 +72,20 @@ class ExerciseController extends Controller
         // ->where('module_id', $module->id)
         // ->pluck('exercise_id');
 
+        $user = Auth::user();
+
+        //cek pertanyaannya dah pernah dijawab blm, trs betul or not
+        $userAlreadyAnswer = UserExerciseAnswer::where('user_id', $user->id)->where('is_correct', true)->pluck('user_answer', 'exercise_id')->toArray();
+        // dd($userAlreadyAnswer);
+
+
         $breadcrumbs = [
             'Materi' => route('materi'),
             $module->title => route('user.module.show', ['slug' => $module->slug]),
             'Latihan Soal' => ''
         ];
 
-        return view('user.module.exerciseModule.show', compact('module', 'exerciseModule', 'breadcrumbs'));
+        return view('user.module.exerciseModule.show', compact('module', 'exerciseModule', 'breadcrumbs', 'userAlreadyAnswer'));
     }
 
     public function submitAnswer(Request $request, $slug, $exerciseId)
@@ -88,28 +96,28 @@ class ExerciseController extends Controller
                 Rule::in(['A', 'B', 'C', 'D', 'E']),
             ]
         ]);
-    
+
         $userAnswer = strtoupper($request->input('answer'));
-    
+
         $exercise = Exercise::findOrFail($exerciseId);
-    
+
         $correctAnswer = strtoupper($exercise->answer);
         $isCorrect = ($userAnswer === $correctAnswer);
 
         $pointsEarn = 0;
 
-        if ( $isCorrect === true){
+        if ($isCorrect === true) {
             $pointsEarn = $exercise->point;
         } else {
             $exercise->point = 0;
         }
-    
+
         UserExerciseAnswer::create([
             'user_id' => auth()->user()->id,
             'module_id' => $exercise->module_id,
             'exercise_id' => $exercise->id,
             'user_answer' => $userAnswer,
-            'point'=> $exercise->point,
+            'point' => $exercise->point,
             'is_correct' => $isCorrect,
         ]);
 
@@ -119,7 +127,7 @@ class ExerciseController extends Controller
 
 
         $message = $isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
-    
+
         return back()->with(['message' => $message]);
     }
 
