@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserExerciseAnswer::class);
     }
+
+    public function userExamBanksoals()
+    {
+        return $this->hasMany(UserExamBanksoal::class);
+    }
 }

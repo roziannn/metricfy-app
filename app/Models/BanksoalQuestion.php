@@ -15,7 +15,18 @@ class BanksoalQuestion extends Model
         'options' => 'json',
     ];
 
-    public function banksoal(){
+    public function banksoal()
+    {
         return $this->belongsTo(Banksoal::class);
+    }
+
+    public function userExamBanksoals()
+    {
+        return $this->hasMany(UserExamBanksoal::class, 'question_id');
+    }
+
+    public function banksoalQuestions()
+    {
+        return $this->hasMany(BanksoalQuestion::class, '');
     }
 }

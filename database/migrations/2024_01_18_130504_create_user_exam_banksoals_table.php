@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('banksoal_id')->constrained();
             $table->json('response_data');
+            $table->time('timed');
+            $table->integer('pointGet');
             $table->timestamps();
         });
     }

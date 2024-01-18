@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->foreignId('exercise_id')->constrained()->onDelete('cascade');
-            $table->string('user_answer',1);
+            $table->string('user_answer', 1);
             $table->boolean('is_correct')->default(false);
             $table->integer('point');
             $table->timestamps();

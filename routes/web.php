@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PojokLiterasiController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\BanksoalQuestionController;
+use App\Models\Banksoal;
 use App\Models\BanksoalQuestion;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -98,10 +99,10 @@ Route::get('/profile', [UserDashboardController::class, 'profile']); //profile
 Route::post('/profile/update', [UserDashboardController::class, 'profileUpdate']); //profile
 
 //Pojok-literasi - Page (user)
-Route::get('/wikimedia/search', [PojokLiterasiController::class, 'wikiSearch'])->name('wikimedia-search');
-Route::get('/wikimedia', [PojokLiterasiController::class, 'wikiIndex'])->name('wikimedia');
-Route::get('/kamus/search', [PojokLiterasiController::class, 'kamusSearch'])->name('kamus-search');
-Route::get('/kamus', [PojokLiterasiController::class, 'kamusIndex'])->name('kamus');
+// Route::get('/wikimedia/search', [PojokLiterasiController::class, 'wikiSearch'])->name('wikimedia-search');
+// Route::get('/wikimedia', [PojokLiterasiController::class, 'wikiIndex'])->name('wikimedia');
+// Route::get('/kamus/search', [PojokLiterasiController::class, 'kamusSearch'])->name('kamus-search');
+// Route::get('/kamus', [PojokLiterasiController::class, 'kamusIndex'])->name('kamus');
 
 //Banksoal - ADMIN
 Route::get('/dashboard-admin/data-banksoal', [DashboardController::class, 'adminDashboardDataBanksoal'])->name('admin-banksoal');
@@ -119,4 +120,5 @@ Route::get('/banksoal', [BanksoalController::class, 'index'])->name('banksoal');
 Route::middleware('auth')->group(function () {
     Route::get('/banksoal/{slug}', [BanksoalController::class, 'showUser'])->name('user.banksoal.show');
     Route::get('/banksoal/{slug}/exercise', [BanksoalController::class, 'exercise']);
+    Route::post('/submit-exam-banksoal/{id}', [BanksoalController::class, 'submitExam']);
 }); //add auth login first

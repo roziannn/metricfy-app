@@ -29,7 +29,10 @@
                     <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
                         <a class="nav-link" href="/blog">Blog</a>
                     </li>
-                    <li
+                    <li class="nav-item px-3 {{ Request::is('games') ? 'active' : '' }}">
+                        <a class="nav-link" href="/blog">Daily Games</a>
+                    </li>
+                    {{-- <li
                         class="nav-item dropdown px-3 {{ Request::is('wikimedia') || Request::is('kamus') ? 'active' : '' }}
                     ">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -43,16 +46,15 @@
                                     href="/kamus">Kamus Bahasa</a></li>
                             <li><a class="dropdown-item py-2" href="#">Buku & Sastra</a></li>
                             <li><a class="dropdown-item py-2" href="#">Strategi Membaca</a></li>
-                            {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-item dropdown px-3">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Pojok Numerasi
                         </a>
                         <ul class="dropdown-menu border-0 shadow">
-                            <li><a class="dropdown-item py-2" href="#">Peta Konsep</a></li>
+                            <li><a class="dropdown-item py-2" href="#">Alur Belajar</a></li>
                             <li><a class="dropdown-item py-2" href="#">Fungsi Logika</a></li>
                             <li><a class="dropdown-item py-2" href="#">Perhitungan Matriks</a></li>
                             <li><a class="dropdown-item py-2" href="#">Modus Hitungan</a></li>

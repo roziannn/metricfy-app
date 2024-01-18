@@ -44,35 +44,39 @@
             </div>
 
             <div class="col-md-9">
-                @foreach ($banksoal->banksoalQuestions as $item)
-                    <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
-                        <input type="hidden" name="exercise_id" value="{{ $item->id }}">
-                        <div class="card-body">
-                            <p class="card-text">{{ $item->question }}</p>
-                            @foreach (json_decode($item->options) as $option)
-                                <form>
-                                    @csrf
+                <form action="/submit-exam-banksoal/{{ $banksoal->id }}" method="POST" id="examForm">
+                    @csrf
+                    <input type="hidden" name="timed" id="timedInput" value="">
+                    @foreach ($banksoal->banksoalQuestions as $item)
+                        <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
+                            <input type="text" name="answers[{{ $item->id }}][question_id]"
+                                value="{{ $item->id }}">
+                            <div class="card-body">
+                                <p class="card-text">{{ $item->question }}</p>
+                                @foreach (json_decode($item->options) as $option)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="answer"
-                                            id="answer{{ $loop->index + 1 }}" value="{{ chr(64 + $loop->index + 1) }}">
-                                        <label class="form-check-label" for="answer{{ $loop->index + 1 }}">
+                                        <input class="form-check-input" type="radio"
+                                            name="answers[{{ $item->id }}][answer]"
+                                            value="{{ chr(64 + $loop->index + 1) }}">
+                                        {{-- hasil input berupa array dgn pasangan jawaban dan jawaban untuk pertanyaan dgn id berapa --}}
+                                        <label class="form-check-label">
                                             {{ chr(64 + $loop->index + 1) }} . {{ $option }}
                                         </label>
                                     </div>
-                            @endforeach
-                            <div class="d-flex  mt-5">
-                                @unless ($loop->first)
-                                    <button type="submit"
-                                        class="btn btn-sm btn-outline-secondary btn-back col-md-2 me-3">Kembali</button>
-                                @endunless
-                                @unless ($loop->last)
-                                    <button type="submit" class="btn btn-sm btn-primary btn-next col-md-2">Lanjut</button>
-                                @endunless
+                                @endforeach
+                                <div class="d-flex  mt-5">
+                                    @unless ($loop->first)
+                                        <button type="button"
+                                            class="btn btn-sm btn-outline-secondary btn-back col-md-2 me-3">Kembali</button>
+                                    @endunless
+                                    @unless ($loop->last)
+                                        <button type="button" class="btn btn-sm btn-primary btn-next col-md-2">Lanjut</button>
+                                    @endunless
+                                </div>
                             </div>
-                            </form>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </form>
             </div>
         </div>
     </div>
@@ -90,16 +94,80 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-sm btn-primary">Kumpulkan Jawaban</button>
+                    <button type="submit" form="examForm" class="btn btn-sm btn-primary" id="btn-submit">Kumpulkan
+                        Jawaban</button>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalQuestions = {{ count($banksoal->banksoalQuestions) }};
+            let currentQuestionIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
+            let initialDuration = parseDuration('{{ $banksoal->estimated_duration }}');
+            let remaining = initialDuration;
+
+            function showQuestion(index) {
+                document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+                document.getElementById('item' + index).style.display = 'block';
+
+                sessionStorage.setItem('selectedCardIndex', index);
+
+                document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('button' + index).classList.add('active');
+
+                currentQuestionIndex = index;
+            }
+
+            function goToNextQuestion() {
+                const nextIndex = (currentQuestionIndex + 1) % totalQuestions;
+                showQuestion(nextIndex);
+            }
+
+            function goToPreviousQuestion() {
+                const prevIndex = (currentQuestionIndex - 1 + totalQuestions) % totalQuestions;
+                showQuestion(prevIndex);
+            }
+
+            function submitForm(index) {
+                var answer = document.querySelector('input[name="answers[' + index + ']"]:checked');
+            }
+
+            document.querySelectorAll('.btn-next').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submitForm(currentQuestionIndex); // Simpan jawaban saat lanjut
+                    goToNextQuestion();
+                });
+            });
+
+            document.querySelectorAll('.btn-back').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submitForm(currentQuestionIndex); // Simpan jawaban saat kembali
+                    goToPreviousQuestion();
+                });
+            });
+
+            showQuestion(currentQuestionIndex);
+
+            document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
+                button.addEventListener('click', function() {
+                    showQuestion(index);
+                });
+            });
+        });
+    </script>
+
     <script>
         function startTimer() {
             var timerDisplay = document.getElementById('timer-display');
             var estimatedDuration = '{{ $banksoal->estimated_duration }}';
+            // add buat ambil durasi yang dipakai ketika kumpulin jawaban
+            var initialDuration = parseDuration(estimatedDuration);
+            var remaining = initialDuration;
 
             // Parse hours, minutes, and seconds dari estimated_duration string
             var parts = estimatedDuration.split(':');
@@ -128,7 +196,29 @@
 
             updateTimer(); //update setiap detik
             var intervalId = setInterval(updateTimer, 1000);
+
+            //handle btn-kumpulkan ketika click
+            var submitBtn = document.getElementById('btn-submit');
+            submitBtn.addEventListener('click', function() {
+
+                clearInterval(intervalId);
+
+                remaining = totalSeconds;
+
+                var waktuDigunakanDetik = initialDuration - remaining;
+                var waktuDigunakan = pad(Math.floor(waktuDigunakanDetik / 60)) + ':' +
+                    pad(waktuDigunakanDetik % 60);
+
+                document.getElementById('timedInput').value = waktuDigunakan;
+                document.getElementById('examForm').submit();
+            });
         }
+
+        function parseDuration(duration) {
+            var parts = duration.split(':');
+            return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+        }
+
         document.addEventListener('DOMContentLoaded', startTimer);
     </script>
 
@@ -147,58 +237,6 @@
             const selectedCardIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
 
             showQuestion(selectedCardIndex);
-
-            document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
-                button.addEventListener('click', function() {
-                    showQuestion(index);
-                });
-            });
-        });
-    </script>
-
-    {{-- temporary answer user --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const totalQuestions = {{ count($banksoal->banksoalQuestions) }};
-            let currentQuestionIndex = parseInt(sessionStorage.getItem('selectedCardIndex')) || 0;
-
-            function showQuestion(index) {
-                document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-                document.getElementById('item' + index).style.display = 'block';
-
-                sessionStorage.setItem('selectedCardIndex', index);
-
-                document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList.remove('active'));
-                document.getElementById('button' + index).classList.add('active');
-
-                currentQuestionIndex = index;
-            }
-
-            function goToNextQuestion() {
-                const nextIndex = (currentQuestionIndex + 1) % totalQuestions;
-                showQuestion(nextIndex);
-            }
-
-            function goToPreviousQuestion() {
-                const prevIndex = (currentQuestionIndex - 1 + totalQuestions) % totalQuestions;
-                showQuestion(prevIndex);
-            }
-
-            document.querySelectorAll('.btn-next').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    goToNextQuestion();
-                });
-            });
-
-            document.querySelectorAll('.btn-back').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    goToPreviousQuestion();
-                });
-            });
-
-            showQuestion(currentQuestionIndex);
 
             document.querySelectorAll('.btn-outline-primary').forEach(function(button, index) {
                 button.addEventListener('click', function() {

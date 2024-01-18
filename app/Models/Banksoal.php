@@ -25,7 +25,13 @@ class Banksoal extends Model
         });
     }
 
-    public function banksoalQuestions(){
+    public function banksoalQuestions()
+    {
         return $this->hasMany(BanksoalQuestion::class);
+    }
+
+    public function userExamBanksoals()
+    {
+        return $this->hasMany(UserExamBanksoal::class);
     }
 }

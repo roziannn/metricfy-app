@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Module;
 use App\Models\Banksoal;
 use App\Models\BanksoalQuestion;
+use App\Models\UserExamBanksoal;
 use Illuminate\Http\Request;
 
 class BanksoalController extends Controller
@@ -16,8 +17,8 @@ class BanksoalController extends Controller
     public function index() //-USER
     {
         $banksoal = Banksoal::all();
-    
-    
+
+
         return view('user.banksoal.index', compact('banksoal'));
     }
 
@@ -60,7 +61,7 @@ class BanksoalController extends Controller
     public function showUser($slug)
     {
         $banksoal = Banksoal::where('slug', $slug)->first();
-        
+
         $topic = Module::all();
 
         $breadcrumbs = [
@@ -76,7 +77,7 @@ class BanksoalController extends Controller
         $banksoal = Banksoal::where('slug', $slug)->first();
         $estimatedDuration = $banksoal->estimated_duration;
 
-        
+
         $breadcrumbs = [
             'Banksoal' => route('banksoal'),
             $banksoal->title => route('user.banksoal.show', ['slug' => $banksoal->slug]),
@@ -94,9 +95,42 @@ class BanksoalController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+    public function submitExam(Request $request, $id)
+    {
+        $user = auth()->user();
+        $banksoal = Banksoal::where('id', $id)->first();
+        $questions = $banksoal->banksoalQuestions;
+
+        $answers = $request->input('answers');
+        $timed = $request->input('timed');
+
+        $totalScore = 0;
+
+        foreach ($questions as $question) {
+            $correctJawaban = $question->answer;
+            $point = $question->point;
+
+            $userAnswer = $answers[$question->id]['answer']  ?? null;
+            $isCorrect = ($userAnswer === $correctJawaban);
+
+            if ($isCorrect) {
+                $totalScore += $point;
+            }
+        }
+
+
+        UserExamBanksoal::updateOrCreate(
+            ['banksoal_id' => $banksoal->id, 'user_id' => $user->id],
+            [
+                'response_data' => is_array($answers) ? json_encode($answers) : $answers,
+                'timed' => $timed, 'pointGet' => $totalScore
+            ]
+        );
+        return response()->json(['message' => 'Jawaban berhasil disimpan'], 200);
+    }
+
+
     public function destroy(string $id)
     {
         //
