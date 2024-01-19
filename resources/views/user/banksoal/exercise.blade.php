@@ -64,7 +64,7 @@
                                         </label>
                                     </div>
                                 @endforeach
-                                <div class="d-flex  mt-5">
+                                <div class="d-flex mt-5">
                                     @unless ($loop->first)
                                         <button type="button"
                                             class="btn btn-sm btn-outline-secondary btn-back col-md-2 me-3">Kembali</button>

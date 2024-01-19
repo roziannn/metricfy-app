@@ -8,6 +8,7 @@ use App\Models\Banksoal;
 use App\Models\BanksoalQuestion;
 use App\Models\UserExamBanksoal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BanksoalController extends Controller
 {
@@ -61,15 +62,44 @@ class BanksoalController extends Controller
     public function showUser($slug)
     {
         $banksoal = Banksoal::where('slug', $slug)->first();
-
         $topic = Module::all();
+        $user = Auth::user();
+
+        //ambil jawaban terakhir dari user
+        $latestExam = UserExamBanksoal::where('user_id', $user->id)->where('banksoal_id', $banksoal->id)
+            ->first();
+
+        //cek benar salah riwayat pengerjaan terakhir
+        if ($latestExam) {
+            $response_data = json_decode($latestExam->response_data, true);
+
+            $benarCount = 0;
+            $salahCount = 0;
+
+            foreach ($response_data as $questionId => $response) {
+                //hitung based on jawaban yang benar
+                $isCorrect = ($response['answer'] === $banksoal->banksoalQuestions->find($questionId)->answer);
+                if ($isCorrect) {
+                    $benarCount++;
+                } else {
+                    $salahCount++;
+                }
+            }
+
+            //add ke latestExam buat di blade
+            $latestExam->benarCount = $benarCount;
+            $latestExam->salahCount = $salahCount;
+            $latestExam->nilai = $benarCount * 10;
+
+            //nilai latihan
+        }
 
         $breadcrumbs = [
             'Banksoal' => route('banksoal'),
             $banksoal->title => ''
         ];
 
-        return view('user.banksoal.show', compact('banksoal', 'topic', 'breadcrumbs'));
+        return view('user.banksoal.show', compact('banksoal', 'topic', 'breadcrumbs', 'latestExam'));
     }
 
     public function exercise($slug)
@@ -113,6 +143,8 @@ class BanksoalController extends Controller
 
             $userAnswer = $answers[$question->id]['answer']  ?? null;
             $isCorrect = ($userAnswer === $correctJawaban);
+
+            $answers[$question->id]['isCorrect'] = $isCorrect;
 
             if ($isCorrect) {
                 $totalScore += $point;
