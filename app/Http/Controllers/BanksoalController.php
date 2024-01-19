@@ -91,7 +91,19 @@ class BanksoalController extends Controller
             $latestExam->salahCount = $salahCount;
             $latestExam->nilai = $benarCount * 10;
 
-            //nilai latihan
+            //info nilai
+            $totalSoal = count($response_data);
+            $rataRata = ($benarCount / $totalSoal) * 100;
+
+            $evaluasiExam = '';
+
+            if ($rataRata <= 70) {
+                $evaluasiExam =  "Nilaimu berada di bawah rata-rata. Kamu dapat mencoba kembali dan memperbaiki hasil latihanmu! 💪";
+            } else {
+                $evaluasiExam =  "Nilaimu berada di atas rata-rata. Kerja yang bagus! 😍";
+            }
+
+            $latestExam->evaluasiExam = $evaluasiExam;
         }
 
         $breadcrumbs = [

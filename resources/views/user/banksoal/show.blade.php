@@ -19,8 +19,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title fs-5 font-weight-bold">{{ $banksoal->title }}</h5>
-                            <small><a href="" class="btn btn-sm btn-outline-light"><i
-                                        class="fa-solid fa-download me-2"></i>Download
+                            <small><a href="" class="text-white">Download
                                     Soal</a>
                             </small>
                         </div>
@@ -71,11 +70,12 @@
                 <div class="col-md-6">
                     <div class="card rounded-4">
                         <div class="card-body">
-                            Nilaimu berada <span class="font-weight-bold"> di bawah rata-rata</span>.
-                            Kamu dapat mencoba kembali dan memperbaiki hasil latihanmu!
+                            {{ $latestExam->evaluasiExam }}
                             <div class="col-12 pt-3 d-flex justify-content-end mt-4">
-                                <button class="btn btn-m btn-secondary rounded-4 me-2">Ulangi Latihan</button>
-                                <button class="btn btn-m btn-primary rounded-4">Lihat Pembahasan</button>
+                                <button class="btn btn-m btn-secondary rounded-4 me-2" data-bs-toggle="modal"
+                                    data-bs-target="#ulangiModal">Ulangi Latihan</button>
+                                <button class="btn btn-m btn-primary rounded-4" data-bs-toggle="modal"
+                                    data-bs-target="#pembahasanModal">Lihat Pembahasan</button>
                             </div>
                         </div>
                     </div>
@@ -137,6 +137,51 @@
                         class="btn btn-primary rounded-4 font-weight-bold py-2 w-100 shadow">Mulai mengerjakan</a>
                 </div>
             @endif
+        </div>
+    </div>
+
+
+    {{-- ulangi latihan modal --}}
+    <div class="modal fade" id="ulangiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ulangi Latihan</h1>
+                </div>
+                <div class="modal-body">
+
+                    Kerjakan lagi paket soal ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+
+                    <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-sm btn-primary">
+                        Ya,
+                        ulangi</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- lihat pembahasan latihan modal --}}
+    <div class="modal fade" id="pembahasanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ulangi Latihan</h1>
+                </div>
+                <div class="modal-body">
+
+                    Kerjakan lagi paket soal ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+
+                    <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-sm btn-primary">
+                        Ya,
+                        ulangi</a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
