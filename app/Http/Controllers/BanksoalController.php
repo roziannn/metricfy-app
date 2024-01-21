@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Models\Blog;
 use App\Models\Module;
 use App\Models\Banksoal;
+use Illuminate\Http\Request;
 use App\Models\BanksoalQuestion;
 use App\Models\UserExamBanksoal;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BanksoalController extends Controller
@@ -95,6 +96,8 @@ class BanksoalController extends Controller
             $totalSoal = count($response_data);
             $rataRata = ($benarCount / $totalSoal) * 100;
 
+            $latestExam->totalSoal = $totalSoal * 10;
+
             $evaluasiExam = '';
 
             if ($rataRata <= 70) {
@@ -145,6 +148,7 @@ class BanksoalController extends Controller
         $questions = $banksoal->banksoalQuestions;
 
         $answers = $request->input('answers');
+
         $timed = $request->input('timed');
 
         $totalScore = 0;
@@ -171,6 +175,11 @@ class BanksoalController extends Controller
                 'timed' => $timed, 'pointGet' => $totalScore
             ]
         );
+
+        //tambah point yg terakhir didapat
+        $user->point += $totalScore;
+        $user->save();
+
         return response()->json(['message' => 'Jawaban berhasil disimpan'], 200);
     }
 

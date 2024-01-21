@@ -58,7 +58,7 @@
                                     <div class="count-benar">Salah<span class="text-danger font-weight-bold">
                                             {{ $latestExam->salahCount ?? 0 }}</span></div>
                                     <div class="pointGet">Nilai <span class="font-weight-bold">
-                                            {{ $latestExam->nilai }}</span>
+                                            {{ $latestExam->nilai }}/{{ $latestExam->totalSoal }}</span>
                                     </div>
                                 </div>
                             @else

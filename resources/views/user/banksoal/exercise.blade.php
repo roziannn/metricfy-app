@@ -49,7 +49,7 @@
                     <input type="hidden" name="timed" id="timedInput" value="">
                     @foreach ($banksoal->banksoalQuestions as $item)
                         <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
-                            <input type="text" name="answers[{{ $item->id }}][question_id]"
+                            <input type="hidden" name="answers[{{ $item->id }}][question_id]"
                                 value="{{ $item->id }}">
                             <div class="card-body">
                                 <p class="card-text">{{ $item->question }}</p>
@@ -57,7 +57,8 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio"
                                             name="answers[{{ $item->id }}][answer]"
-                                            value="{{ chr(64 + $loop->index + 1) }}">
+                                            value="{{ chr(64 + $loop->index + 1) }}"
+                                            data-question-number="{{ $loop->index }}">
                                         {{-- hasil input berupa array dgn pasangan jawaban dan jawaban untuk pertanyaan dgn id berapa --}}
                                         <label class="form-check-label">
                                             {{ chr(64 + $loop->index + 1) }} . {{ $option }}
@@ -89,9 +90,33 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $banksoal->title }}</h1>
                 </div>
                 <div class="modal-body">
-                    <b> <span class="text-danger"> 20</span>/20 </b> Soal terjawab.
-                    Yakin ingin mengumpulkan jawaban?
+                    <b> <span class="text-danger" id="answered">0</span>/{{ count($banksoal->banksoalQuestions) }} </b>
+                    Soal terjawab. Yakin ingin mengumpulkan jawaban?
                 </div>
+                {{-- script additional info/soal terjawab - blm terjawab --}}
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        //get all radio buttons di form
+                        const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+                        // Update number of answered questions when radio button is clicked
+                        radioButtons.forEach(function(radioButton) {
+                            radioButton.addEventListener('change', function() {
+                                updateAnsweredCount();
+                            });
+                        });
+
+                        // Func update answered count
+                        function updateAnsweredCount() {
+                            const answeredCount = document.querySelectorAll('input[type="radio"]:checked').length;
+                            document.getElementById('answered').textContent = answeredCount;
+                        }
+
+                        // Call funct u/ di awal sblm jawab apapun/ (dari 0/.. soal)
+                        updateAnsweredCount();
+                    });
+                </script>
+                {{-- end js --}}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" form="examForm" class="btn btn-sm btn-primary" id="btn-submit">Kumpulkan
@@ -100,7 +125,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -222,6 +246,7 @@
         document.addEventListener('DOMContentLoaded', startTimer);
     </script>
 
+    {{-- mini-button list question -> klik -> munculin card questionnya --}}
     <script>
         function showQuestion(index) {
             document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
