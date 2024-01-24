@@ -17,6 +17,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PojokLiterasiController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\BanksoalQuestionController;
+use App\Http\Controllers\GamesController;
+use App\Http\Controllers\PojokNumerasiController;
 use App\Models\Banksoal;
 use App\Models\BanksoalQuestion;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -122,3 +124,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/banksoal/{slug}/exercise', [BanksoalController::class, 'exercise']);
     Route::post('/submit-exam-banksoal/{id}', [BanksoalController::class, 'submitExam']);
 }); //add auth login first
+
+//Games - USER
+Route::get('/games', [GamesController::class, 'showAll'])->name('daily-games');
+Route::get('/games/guess-the-number', [GamesController::class, 'gameGuessTheNumber'])->name('game-1');
+
+//Games 
+Route::get('/apa-itu-numerasi', [PojokNumerasiController::class, 'infografisNumerasi'])->name('infografis');

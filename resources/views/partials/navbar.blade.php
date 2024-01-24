@@ -26,12 +26,6 @@
                     <li class="nav-item px-3 {{ Request::is('banksoal') ? 'active' : '' }}">
                         <a class="nav-link" href="/banksoal">Banksoal</a>
                     </li>
-                    <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item px-3 {{ Request::is('games') ? 'active' : '' }}">
-                        <a class="nav-link" href="/blog">Daily Games</a>
-                    </li>
                     {{-- <li
                         class="nav-item dropdown px-3 {{ Request::is('wikimedia') || Request::is('kamus') ? 'active' : '' }}
                     ">
@@ -48,18 +42,27 @@
                             <li><a class="dropdown-item py-2" href="#">Strategi Membaca</a></li>
                         </ul>
                     </li> --}}
-                    <li class="nav-item dropdown px-3">
+                    <li
+                        class="nav-item dropdown px-3 {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Pojok Numerasi
                         </a>
                         <ul class="dropdown-menu border-0 shadow">
-                            <li><a class="dropdown-item py-2" href="#">Alur Belajar</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Fungsi Logika</a></li>
+                            <li><a class="dropdown-item py-2 {{ Route::is('infografis') ? 'active' : '' }}"
+                                    href="/apa-itu-numerasi">Numerasi itu apa? </a></li>
+                            <li><a class="dropdown-item py-2 {{ Request::is('fungsi-logika') ? 'active' : '' }}"
+                                    href="#">Fungsi Logika</a></li>
                             <li><a class="dropdown-item py-2" href="#">Perhitungan Matriks</a></li>
                             <li><a class="dropdown-item py-2" href="#">Modus Hitungan</a></li>
                             {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
                         </ul>
+                    </li>
+                    <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item px-3 {{ Request::is('games') ? 'active' : '' }}">
+                        <a class="nav-link" href="/games">Games</a>
                     </li>
                 </ul>
             </div>
