@@ -2,7 +2,7 @@
 @include('partials.navbar')
 @section('container')
     <div class="pb-5">
-        <div class="row py-3">
+        <div class="row py-3" style="line-height: 32px;">
             <div class="col-12 text-center">
                 <div class="section section-1">
                     <h2 class="font-weight-bolder">Pembelajaran Numerasi</h2>
@@ -179,7 +179,7 @@
     .text-mark-greyBaby {
         background-color: rgb(198, 203, 207);
         /* color: #fff; */
-        padding: 0 2px;
+        padding: 5px;
     }
 
     .text-sub-point {
