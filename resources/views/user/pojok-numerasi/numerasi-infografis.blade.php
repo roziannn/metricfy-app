@@ -53,12 +53,12 @@
                     </div>
                 </div>
 
-                <div class="section section-3">
+                <div class="section section-3 mb-5">
                     <div class="col-md-9 text-justify mx-auto">
                         <h4 class="py-2 font-weight-bold" style="line-height: 1.5;">
                             Lalu, kapan keduanya digunakan?
                         </h4>
-                        <div class="d-flex justify-content-between">
+                        {{-- <div class="d-flex justify-content-between">
                             <div class="col-4 p-0">
                                 <h5 class="text-mark-greyBaby text-sub-point text-uppercase">Menggunakan numerasi</h5>
                                 <p>halo Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe vero laborum rerum
@@ -72,6 +72,107 @@
                                     laboriosam
                                     ipsum velit deleniti, hic esse ea quod, fuga, ipsa accusamus eum debitis.
                                 </p>
+                            </div>
+                        </div> --}}
+                        <div class="d-flex justify-content-center gap-3">
+
+                            <button class="btn btn-m btn-primary shadow" data-bs-toggle="modal"
+                                data-bs-target="#modalUsingNum">
+                                Menggunakan Numerasi
+                            </button>
+                            <button class="btn btn-m btn-warning shadow" data-bs-toggle="modal"
+                                data-bs-target="#modalUsingMath">
+                                Menggunakan Matematika
+                            </button>
+
+                            <div class="modal fade" id="modalUsingNum" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Penggunaan Numerasi</h1>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            Penghitungan Barang: Saat kita pergi ke toko dan menghitung berapa banyak barang
+                                            yang akan kita beli, seperti jumlah buah-buahan atau mainan.
+                                            Menentukan Waktu: Ketika kita melihat jam dan mengidentifikasi pukul berapa
+                                            sekarang atau berapa lama waktu yang telah berlalu.
+                                            Mengukur Jarak: Misalnya, ketika kita menggunakan langkah-langkah untuk mengukur
+                                            jarak dari satu tempat ke tempat lainnya.
+                                            Mengatur Kegiatan: Saat membuat jadwal atau mengatur waktu untuk berbagai
+                                            kegiatan, seperti berapa lama waktu belajar dan berapa lama istirahat.
+
+                                        </div>
+                                        {{-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Ok</button>
+
+                                        </div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="modalUsingMath" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Penggunaan Matematika</h1>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- carousel -->
+                                            <div id='carouselInf' class='carousel slide' data-ride='carousel'>
+
+                                                <div class='carousel-inner'>
+                                                    <div class='carousel-item active'>
+                                                        <img class='img-size'
+                                                            src='{{ asset('img/module/paragraf-1703045992.png') }}'
+                                                            alt='First slide' />
+                                                        <p class="cr-item-text"> <b>Penyelesaian Masalah</b>
+                                                            <br>Saat kita menggunakan rumus dan operasi
+                                                            matematika untuk menyelesaikan masalah yang lebih kompleks,
+                                                            seperti menghitung luas sebuah bangun datar atau menyelesaikan
+                                                            persamaan.
+                                                        </p>
+                                                    </div>
+                                                    <div class='carousel-item'>
+                                                        <img class='img-size'
+                                                            src='https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+                                                            alt='Second slide' />
+                                                        <p class="cr-item-text"> <b>Analisis Data</b>
+                                                            <br>Ketika kita menggunakan statistik untuk menganalisis data,
+                                                            seperti menghitung rata-rata, median, atau membuat grafik.
+                                                        </p>
+                                                    </div>
+                                                    <div class='carousel-item'>
+                                                        <img class='img-size'
+                                                            src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+                                                            alt='Second slide' />
+                                                        <p class="cr-item-text"><b>Pengukuran yang Tepat</b> <br>
+                                                            Saat kita menggunakan satuan pengukuran yang tepat, seperti
+                                                            meter, liter, atau kilogram untuk mengukur benda-benda dalam
+                                                            kehidupan sehari-hari.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <a class='carousel-control-prev' href='#carouselInf' role='button'
+                                                    data-slide='prev'>
+                                                    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                                    <span class='sr-only'>Previous</span>
+                                                </a>
+                                                <a class='carousel-control-next' href='#carouselInf' role='button'
+                                                    data-slide='next'>
+                                                    <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                                    <span class='sr-only'>Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Ok</button>
+
+                                        </div> --}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -185,5 +286,17 @@
     .text-sub-point {
         font-size: 16px;
         font-weight: 700;
+    }
+
+    .img-size {
+        height: 300px;
+        width: 500px;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    .cr-item-text {
+        padding: 0;
+        margin: 0;
     }
 </style>

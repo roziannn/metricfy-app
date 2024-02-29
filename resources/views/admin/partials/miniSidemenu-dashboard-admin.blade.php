@@ -4,12 +4,17 @@
             class="bi bi-gear-fill"></i></button>
 
     <div class="card profile-settings d-none d-lg-flex border-0">
-
-        <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none px-3">Overview</a>
-        <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none px-3"> Data User</a>
-        <a href="/dashboard-admin/data-module" class="profile-settings-item text-decoration-none px-3">Data Module</a>
-        <a href="/dashboard-admin/data-blog" class="profile-settings-item text-decoration-none px-3">Data Blog</a>
-        <a href="/dashboard-admin/data-banksoal" class="profile-settings-item text-decoration-none px-3">Data Banksoal</a>
+        <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none px-3"><i
+                class="fa-solid fa-table mr-2"></i>Overview</a>
+        <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none px-3"><i
+                class="fa-solid fa-users mr-2"></i> Data User</a>
+        <a href="/dashboard-admin/data-module" class="profile-settings-item text-decoration-none px-3">
+            <i class="fa-solid fa-book mr-2"></i>Data Module</a>
+        <a href="/dashboard-admin/data-blog" class="profile-settings-item text-decoration-none px-3">
+            <i class="fa-solid fa-newspaper mr-2"></i>Data Blog</a>
+        <a href="/dashboard-admin/data-banksoal" class="profile-settings-item text-decoration-none px-3">
+            <i class="fa-solid fa-list mr-2"></i>Data
+            Banksoal</a>
     </div>
 
     <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar-profile-settings"
@@ -83,5 +88,9 @@
         .sidebar-profile-settings-btn {
             display: block;
         }
+    }
+
+    .profile-settings {
+        padding: 4px;
     }
 </style>

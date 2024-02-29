@@ -8,11 +8,13 @@
         </div>
     @endif
 
-    <button class="btn btn-sm btn-secondary"> <a href="/dashboard-admin/data-module"
-            class="text-decoration-none text-white">Back</a></button>
-    <div class="d-flex justify-content-between align-items-center">
-        <h5 class="py-3">Latihan Soal Module : {{ $module->title }}</h5>
-        <button class="btn btn-m btn-primary" data-bs-toggle="modal" data-bs-target="#modal">+</button>
+    <div class="d-flex justify-content-between ">
+        <div class="d-flex justify-content-start align-items-center">
+            <a href="/dashboard-admin/data-module" class="text-decoration-none text-dark"><i
+                    class="fa-solid fa-chevron-left me-3"></i></a>
+            <h5 class="p-0 m-0">Latihan Soal Module : {{ $module->title }}</h5>
+        </div>
+        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal">+ Tambah soal</button>
     </div>
 
     <div class="modal" id="modal">
@@ -86,48 +88,51 @@
         </div>
     </div>
 
-    <h6>Available</h6>
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Pertanyaan</th>
-                <th scope="col">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php $i=1 @endphp
-            @foreach ($available_questions as $item)
+    <h6 class="mt-4">Daftar Soal</h6>
+    <div class="card border-0 shadow-sm p-3 mb-5">
+        <table class="table">
+            <thead class="table-dark">
                 <tr>
-                    <th scope="row">{{ $i++ }}</th>
-                    <td>{{ Str::limit($item->question, 80) }}</td>
-                    <td>
-                        <a href="/dashboard-admin/data-module//edit" class="btn btn-warning btn-sm">
-                            <i class="fas fa-pen-to-square text-white"></i>
-                        </a>
-                        <a href="/dashboard-admin/data-module/{{ $item->id }}/delete-exercise"
-                            class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-danger"><i
-                                class="fa fa-trash"></i>
-                        </a>
-                    </td>
+                    <th width="5%">No</th>
+                    <th scope="col">Pertanyaan</th>
+                    <th scope="col">Aksi</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @php $i=1 @endphp
+                @foreach ($available_questions as $item)
+                    <tr>
+                        <td>{{ $i++ }}</td>
+                        <td>{{ Str::limit($item->question, 80) }}</td>
+                        <td>
+                            <a href="/dashboard-admin/data-module//edit" class="btn btn-warning btn-sm">
+                                <i class="fas fa-pen-to-square text-white"></i>
+                            </a>
+                            <a href="/dashboard-admin/data-module/{{ $item->id }}/delete-exercise"
+                                class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-danger"><i
+                                    class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <!-- Modal Danger Delete-->
-    <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLabel">Konfirmasi</h6>
-                </div>
-                <div class="modal-body">
-                    Hapus Pertanyaan?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger">Hapus</button>
+        <!-- Modal Danger Delete-->
+        <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h6 class="modal-title" id="exampleModalLabel">Konfirmasi</h6>
+                    </div>
+                    <div class="modal-body py-0">
+                        Hapus Pertanyaan?
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </div>
                 </div>
             </div>
         </div>

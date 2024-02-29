@@ -32,7 +32,7 @@
                         allowfullscreen class="rounded-4"></iframe>
                     <p class="text-justify pt-3">{{ $submodule->content }}</p>
                 @else
-                    <p class="text-justify">{{ $submodule->content }}</p>
+                    <p class="text-justify ">{!! $submodule->content !!}</p>
                 @endif
             </div>
 

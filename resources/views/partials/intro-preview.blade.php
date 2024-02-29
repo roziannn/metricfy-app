@@ -1,10 +1,9 @@
 <div class="py-3">
     <div class="container">
         <div class="text-center">
-            <h3>Buat apa sih, kita belajar numerasi - literasi?</h3>
-            <p>Menggabungkan numerasi dan literasi, kita jadi lebih siap <br> untuk menghadapi dunia ini dengan percaya
-                diri
-                dan cerdas lho! </p>
+            <h3>Buat apa sih, kita belajar literasi numerasi?</h3>
+            <p>Yuk, pelajari numerasi untuk memahami dunia dengan lebih baik! Dengan numerasi, kamu bisa mengasah <br>
+                keterampilan matematika yang berguna dikehidupan sehari - harimu☀️ </p>
         </div>
     </div>
 

@@ -21,7 +21,9 @@
                             class="btn btn-outline-primary btn-sm ml-auto">Mulai</a>
                     @endif
                 </div>
+
             </div>
         </div>
     @endforeach
+
 </div>

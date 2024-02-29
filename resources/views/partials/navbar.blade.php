@@ -108,7 +108,7 @@
                         @if (auth()->user()->roles === 'ADMIN')
                             {{-- <li class="header px-3 small text-muted">Admin</li> --}}
                             <li><a class="dropdown-item px-3" href="/main-dashboard-admin">
-                                    Dashboard</a></li>
+                                    Admin</a></li>
                             <li>
                         @endif
                         <form action="/logout" method="post" class="px-3 pt-3">

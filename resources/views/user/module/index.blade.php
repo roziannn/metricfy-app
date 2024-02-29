@@ -3,7 +3,7 @@
 @section('container')
     <div class="pb-5">
         <div class="row py-3">
-            <h4 class="font-weight-bolder py-3">Materi Belajar #PaduanLiterasi</h4>
+            <h4 class="font-weight-bolder py-3">Materi Belajar Numerasi</h4>
             @foreach ($data_module as $module)
                 <div class="col-12 col-md-3 mb-4">
                     <a href="/materi-belajar/{{ $module->slug }}">

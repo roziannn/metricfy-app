@@ -42,7 +42,9 @@
         @yield('container')
 
 
-        @include('partials.footer')
+        @if (auth()->user()->roles === 'USER')
+            @include('partials.footer')
+        @endif
     </div>
 
 
@@ -88,12 +90,12 @@
         .breadcrumb {
             font-size: 15px;
         }
-        
+
         .nav-logo {
             font-family: 'Jura', sans-serif;
         }
 
-        .nav-item.dropdown  .dropdown-item:active{
+        .nav-item.dropdown .dropdown-item:active {
             background-color: rgb(68, 158, 254) !important;
         }
     </style>

@@ -2,7 +2,7 @@
 @include('partials.navbar')
 @section('container')
     <div class="pb-5">
-        <div class="row p-3 rounded-3 shadow-lg" style="background:#7294ec;">
+        <div class="row p-3 rounded-3 shadow-lg" style="background:#97cdff;">
             <div class="col-12 m-0">
                 <div class="alert-container alert-info-guess">
                     <!-- Container menampilkan pesan hasil -->
@@ -35,7 +35,7 @@
             <div class="col-12 col-md-6 mb-4">
                 <div class="card rounded-4 border-0" style="height: 364px;">
                     <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
                             <h5 class="card-title mb-0">Riwayat Tebakan</h5>
                             <p class="mb-0 "> <span id="remaining"></span></p>
                         </div>
@@ -148,9 +148,9 @@
                         <div>
                             ${isSuccess ? '' : '<i class="fas fa-triangle-exclamation"></i>'}
                             ${message}
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>  
                     `;
+
 
                     // Hapus semua elemen dalam container
                     alertContainer.innerHTML = '';
@@ -165,7 +165,8 @@
 
                     const historyList = document.getElementById('historyList');
                     const historyItem = document.createElement('li');
-                    historyItem.className = `list-group-item ${isSuccess ? 'list-group-item-success' : 'list-group-item-danger'}`;
+                    historyItem.className =
+                        `list-group-item ${isSuccess ? 'list-group-item-success' : 'list-group-item-secondary'}`;
                     historyItem.textContent = `${text} ${comparison} ${lastGuess}`;
                     historyList.appendChild(historyItem);
 
@@ -183,9 +184,10 @@
 
 <style>
     .alert-info-guess {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
     }
 </style>

@@ -21,10 +21,7 @@
             @php
                 function allSubmodulesDone($userProgressList, $playlist)
                 {
-                    return collect($playlist)
-                        ->pluck('id')
-                        ->diff($userProgressList)
-                        ->isEmpty();
+                    return collect($playlist)->pluck('id')->diff($userProgressList)->isEmpty();
                 }
 
                 $allSubmodulesAccessed = count($userProgressList) === count($playlist) && allSubmodulesDone($userProgressList, $playlist);
@@ -34,11 +31,11 @@
                 @if ($allSubmodulesAccessed)
                     <a href="/{{ $module->slug }}/latihan-soal" class="text-decoration-none text-dark">
                         <i class="fa-solid fa-dumbbell px-2"></i>
-                        Latihan Soal {{ $module->title }}
+                        Latihan {{ $module->title }}
                     </a>
                 @else
-                    <span class="text-muted">
-                        <i class="fa-solid fa-lock px-2"></i>Latihan Soal {{ $module->title }}
+                    <span class="text-muted text-light">
+                        <i class="fa-solid fa-lock px-2"></i>Latihan {{ $module->title }}
                     </span>
                 @endif
             </li>
