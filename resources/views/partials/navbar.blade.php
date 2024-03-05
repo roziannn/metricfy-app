@@ -101,7 +101,7 @@
 
                         @if (auth()->user()->roles === 'ADMIN')
                             {{-- <li class="header px-3 small text-muted">Admin</li> --}}
-                            <li><a class="dropdown-item px-3" href="/main-dashboard-admin">
+                            <li><a class="dropdown-item px-3" href="/dashboard-admin">
                                     Admin</a></li>
                             <li>
                         @endif

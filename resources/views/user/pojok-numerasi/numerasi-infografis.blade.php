@@ -93,14 +93,53 @@
 
                                         </div>
                                         <div class="modal-body">
-                                            Penghitungan Barang: Saat kita pergi ke toko dan menghitung berapa banyak barang
-                                            yang akan kita beli, seperti jumlah buah-buahan atau mainan.
-                                            Menentukan Waktu: Ketika kita melihat jam dan mengidentifikasi pukul berapa
-                                            sekarang atau berapa lama waktu yang telah berlalu.
-                                            Mengukur Jarak: Misalnya, ketika kita menggunakan langkah-langkah untuk mengukur
-                                            jarak dari satu tempat ke tempat lainnya.
-                                            Mengatur Kegiatan: Saat membuat jadwal atau mengatur waktu untuk berbagai
-                                            kegiatan, seperti berapa lama waktu belajar dan berapa lama istirahat.
+                                            <div class="modal-body">
+                                                <!-- carousel -->
+                                                <div id='carouselInf' class='carousel slide' data-ride='carousel'>
+
+                                                    <div class='carousel-inner'>
+                                                        <div class='carousel-item active'>
+                                                            <img class='img-size'
+                                                                src='https://images.pexels.com/photos/5094486/pexels-photo-5094486.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                                                                alt='First slide' />
+                                                            <p class="cr-item-text"> <b>Penghitungan Barang</b>
+                                                                <br> Saat kita pergi ke toko dan menghitung berapa banyak
+                                                                barang
+                                                                yang akan kita beli, seperti jumlah buah-buahan atau mainan.
+                                                        </div>
+                                                        <div class='carousel-item'>
+                                                            <img class='img-size'
+                                                                src='https://images.pexels.com/photos/7129700/pexels-photo-7129700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'>
+                                                            <p class="cr-item-text"> <b> Menentukan Waktu</b>
+                                                                <br>Ketika kita melihat jam dan mengidentifikasi pukul
+                                                                berapa
+                                                                sekarang atau berapa lama waktu yang telah berlalu.
+                                                            </p>
+                                                        </div>
+                                                        <div class='carousel-item'>
+                                                            <img class='img-size'
+                                                                src='https://images.pexels.com/photos/3867001/pexels-photo-3867001.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                                                                alt='Second slide' />
+                                                            <p class="cr-item-text"><b>Mengatur Kegiatan</b> <br>
+                                                                Saat membuat jadwal atau mengatur waktu untuk berbagai
+                                                                kegiatan, seperti berapa lama waktu belajar dan berapa lama
+                                                                istirahat.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <a class='carousel-control-prev' href='#carouselInf' role='button'
+                                                        data-slide='prev'>
+                                                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                                        <span class='sr-only'>Previous</span>
+                                                    </a>
+                                                    <a class='carousel-control-next' href='#carouselInf' role='button'
+                                                        data-slide='next'>
+                                                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                                        <span class='sr-only'>Next</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+
 
                                         </div>
                                         {{-- <div class="modal-footer">
@@ -125,7 +164,7 @@
                                                 <div class='carousel-inner'>
                                                     <div class='carousel-item active'>
                                                         <img class='img-size'
-                                                            src='{{ asset('img/module/paragraf-1703045992.png') }}'
+                                                            src='https://images.pexels.com/photos/3380743/pexels-photo-3380743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                                             alt='First slide' />
                                                         <p class="cr-item-text"> <b>Penyelesaian Masalah</b>
                                                             <br>Saat kita menggunakan rumus dan operasi
@@ -136,8 +175,7 @@
                                                     </div>
                                                     <div class='carousel-item'>
                                                         <img class='img-size'
-                                                            src='https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
-                                                            alt='Second slide' />
+                                                            src='https://images.pexels.com/photos/669621/pexels-photo-669621.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'>
                                                         <p class="cr-item-text"> <b>Analisis Data</b>
                                                             <br>Ketika kita menggunakan statistik untuk menganalisis data,
                                                             seperti menghitung rata-rata, median, atau membuat grafik.
@@ -145,7 +183,7 @@
                                                     </div>
                                                     <div class='carousel-item'>
                                                         <img class='img-size'
-                                                            src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+                                                            src='https://images.pexels.com/photos/1005731/pexels-photo-1005731.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                                             alt='Second slide' />
                                                         <p class="cr-item-text"><b>Pengukuran yang Tepat</b> <br>
                                                             Saat kita menggunakan satuan pengukuran yang tepat, seperti
