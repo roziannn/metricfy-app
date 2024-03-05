@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
 
-    public function index(){ //view both user,admin, (+)guest
-
+    public function index()
+    { //view both user,admin, (+)guest
         $data_blog = Blog::OrderBy('updated_at', 'desc')->get();
 
         return view('user.blog.index', compact('data_blog'));
@@ -62,7 +62,8 @@ class BlogController extends Controller
         return view('admin.dashboard-admin.dataBlog.show', compact('blog'));
     }
 
-    public function showUser($slug){
+    public function showUser($slug)
+    {
         $blog = Blog::where('slug', $slug)->first();
 
         $breadcrumbs = [
@@ -74,7 +75,7 @@ class BlogController extends Controller
         $kataCount = str_word_count(strip_tags($blog->content));
         $avrgUserReading = 300;
 
-        $estimatedReadingTime = ceil($kataCount / $avrgUserReading); 
+        $estimatedReadingTime = ceil($kataCount / $avrgUserReading);
 
         //artikel lainnya side-right list
         $viewlist = Blog::orderBy('created_at', 'asc')->limit(5)->get();
@@ -113,8 +114,15 @@ class BlogController extends Controller
             $blog->thumbnail = $thumbnailName;
             $blog->save();
         }
-
-
         return redirect('/dashboard-admin/data-blog')->with('successUpdate', 'Module berhasil diperbarui!');
+    }
+
+    public function delete($slug)
+    {
+        $blog = Blog::where('slug', $slug)->firstOrFail();
+        $blog->delete();
+
+
+        return redirect('/dashboard-admin/data-blog');
     }
 }

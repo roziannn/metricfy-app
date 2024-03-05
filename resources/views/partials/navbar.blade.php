@@ -3,7 +3,12 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-2 fixed-top" aria-label="Offcanvas navbar large">
     <div class="container">
-        <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="/">METRICFY</a>
+        @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
+            <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="/">METRICFY</a>
+        @else
+            <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="">METRICFY</a>
+        @endif
+
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
             aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -15,57 +20,43 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-                    <li class="nav-item px-3 {{ Request::is('/') ? 'active' : '' }}">
+            @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                        {{-- <li class="nav-item px-3 {{ Request::is('/') ? 'active' : '' }}">
                         <a class="nav-link" href="/">Beranda</a>
-                    </li>
-                    <li class="nav-item px-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
-                        <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
-                    </li>
-                    <li class="nav-item px-3 {{ Request::is('banksoal') ? 'active' : '' }}">
-                        <a class="nav-link" href="/banksoal">Banksoal</a>
-                    </li>
-                    {{-- <li
-                        class="nav-item dropdown px-3 {{ Request::is('wikimedia') || Request::is('kamus') ? 'active' : '' }}
-                    ">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Pojok Literasi
-                        </a>
-                        <ul class="dropdown-menu border-0 shadow">
-                            <li><a class="dropdown-item py-2 {{ Request::is('wikimedia') ? 'active' : '' }}"
-                                    href="/wikimedia">Cari Kata</a></li>
-                            <li><a class="dropdown-item py-2 {{ Request::is('kamus') ? 'active' : '' }}"
-                                    href="/kamus">Kamus Bahasa</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Buku & Sastra</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Strategi Membaca</a></li>
-                        </ul>
                     </li> --}}
-                    <li
-                        class="nav-item dropdown px-3 {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Pojok Numerasi
-                        </a>
-                        <ul class="dropdown-menu border-0 shadow">
-                            <li><a class="dropdown-item py-2 {{ Route::is('infografis') ? 'active' : '' }}"
-                                    href="/apa-itu-numerasi">Numerasi itu apa? </a></li>
-                            <li><a class="dropdown-item py-2 {{ Request::is('fungsi-logika') ? 'active' : '' }}"
-                                    href="#">Fungsi Logika</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Perhitungan Matriks</a></li>
-                            <li><a class="dropdown-item py-2" href="#">Modus Hitungan</a></li>
-                            {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
-                        </ul>
-                    </li>
-                    <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item px-3 {{ Request::is('games') ? 'active' : '' }}">
-                        <a class="nav-link" href="/games">Games</a>
-                    </li>
-                </ul>
-            </div>
+                        <li class="nav-item px-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
+                            <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
+                        </li>
+                        <li class="nav-item px-3 {{ Request::is('banksoal') ? 'active' : '' }}">
+                            <a class="nav-link" href="/banksoal">Banksoal</a>
+                        </li>
+                        <li
+                            class="nav-item dropdown px-3 {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Pojok Numerasi
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow">
+                                <li><a class="dropdown-item py-2 {{ Route::is('infografis') ? 'active' : '' }}"
+                                        href="/apa-itu-numerasi">Apa Itu Numerasi</a></li>
+                                <li><a class="dropdown-item py-2 {{ Request::is('fungsi-logika') ? 'active' : '' }}"
+                                        href="#">Fungsi Logika</a></li>
+                                {{-- <li><a class="dropdown-item py-2" href="#">Perhitungan Matriks</a></li>
+                                <li><a class="dropdown-item py-2" href="#">Modus Hitungan</a></li> --}}
+                                {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
+                            </ul>
+                        </li>
+                        <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
+                            <a class="nav-link" href="/blog">Blog</a>
+                        </li>
+                        <li class="nav-item px-3 {{ Request::is('games') ? 'active' : '' }}">
+                            <a class="nav-link" href="/games">Permainan</a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
         </div>
 
         {{-- @auth
@@ -89,7 +80,10 @@
                     <ul class="dropdown-menu border-0 shadow-sm dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li class="m-3 pb-2 border-bottom">
                             @php
-                                $avatar_url = auth()->user()->avatar ? asset('img/avatar/' . auth()->user()->avatar) : 'https://ui-avatars.com/api/?size=128&background=random&name=' . auth()->user()->name;
+                                $avatar_url = auth()->user()->avatar
+                                    ? asset('img/avatar/' . auth()->user()->avatar)
+                                    : 'https://ui-avatars.com/api/?size=128&background=random&name=' .
+                                        auth()->user()->name;
                             @endphp
                             <img src="{{ $avatar_url }}" class="rounded-circle" style="width: 36px; height: 36px;"
                                 alt="">
@@ -100,10 +94,10 @@
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>
-                        @if (auth()->user()->roles === 'USER')
+                        {{-- @if (auth()->user()->roles === 'USER')
                             <li><a class="dropdown-item px-3" href="/dashboard/posts">Dashboard</a>
                             </li>
-                        @endif
+                        @endif --}}
 
                         @if (auth()->user()->roles === 'ADMIN')
                             {{-- <li class="header px-3 small text-muted">Admin</li> --}}
@@ -111,10 +105,10 @@
                                     Admin</a></li>
                             <li>
                         @endif
-                        <form action="/logout" method="post" class="px-3 pt-3">
+                        {{-- <form action="/logout" method="post" class="px-3 pt-3">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-outline-danger w-100">Logout</button>
-                        </form>
+                        </form> --}}
                         </li>
                     </ul>
                 </div>
@@ -139,8 +133,7 @@
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
                         {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
                 <form action="/login" method="post">

@@ -7,9 +7,33 @@
                     class="fa-solid fa-chevron-left me-3 text-dark"></i></a>
             <h5 class="p-0 m-0">Blog : {{ $blog->title }} </h5>
         </div>
-        <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash me-2" data-bs-target="modal"></i>Hapus
+        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
+                class="fa-solid fa-trash me-2"></i>Hapus
             Artikel</button>
     </div>
+
+    {{-- Modal delete-confirm --}}
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ url('/dashboard-admin/blog/' . $blog->slug . '/delete') }}">
+                    @csrf
+                    <div class="modal-body py-0">
+                        <p>Yakin ingin menghapus module <b>{{ $blog->title }}</b> ?</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Ya, Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal delete-confirm --}}
 
     <div class="card p-3 my-4">
         <form action="/dashboard-admin/blog/{{ $blog->id }}/update" method="post" enctype="multipart/form-data">

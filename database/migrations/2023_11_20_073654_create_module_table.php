@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique()->after('title');
             $table->text('description')->nullable();
-            $table->longText('content');
-            $table->unsignedBigInteger('parent_id')->nullable(); 
+            //  $table->longText('content');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
-        
+
             $table->foreign('parent_id')->references('id')->on('modules')->onDelete('cascade');
         });
     }

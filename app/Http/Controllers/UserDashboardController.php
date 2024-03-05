@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserDashboardController extends Controller
 {
-    public function profile(){
+    public function profile()
+    {
 
         $user = Auth::user();
 
         return view('user.dashboard.profile', compact('user'));
     }
 
-    public function profileUpdate(Request $request){
+    public function profileUpdate(Request $request)
+    {
         $user = Auth::user();
 
         $request->validate([
@@ -28,14 +32,14 @@ class UserDashboardController extends Controller
 
         $imageName = $user->avatar;
 
-        if ($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             $avatar_img = $request->file('avatar');
-            $imageName = $user->name . '-' . time() . '.' . $avatar_img->extension();   
+            $imageName = $user->name . '-' . time() . '.' . $avatar_img->extension();
             $avatar_img->move(public_path('img/avatar'), $imageName);
 
             //if user update avatar, delete last photo and replace new one
             $oldImg_path = public_path('img/avatar') . '/' . $user->avatar;
-            if ($user->avatar && file_exists($oldImg_path)){
+            if ($user->avatar && file_exists($oldImg_path)) {
                 unlink($oldImg_path);
             }
         }
@@ -54,5 +58,22 @@ class UserDashboardController extends Controller
         session()->flash('successUpdate', 'Berhasil mengubah profil!');
 
         return redirect()->back();
+    }
+
+    public function profilePasswordUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'new_password' => 'required|confirmed|min:8|string'
+        ], [
+            'new_password.confirmed' => 'Password konfirmasi tidak cocok.'
+        ]);
+
+        $auth = Auth::user();
+
+        $user = User::find($auth->id);
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('successUpdatePassword', "Password berhasil diubah!");
     }
 }

@@ -54,6 +54,10 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            if (auth()->user()->roles === 'ADMIN') {
+                return redirect()->route('dashboard.admin');
+            }
+
             // return redirect()->back();
             return redirect()->route('home');
         }

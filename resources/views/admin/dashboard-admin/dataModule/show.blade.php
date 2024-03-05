@@ -7,6 +7,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if (session()->has('successDelete'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
+            {{ session('successDelete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-start align-items-center">
@@ -41,13 +47,16 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body py-0">
-                    <p>Yakin ingin menghapus module <b>{{ $module->title }}</b> ?</p>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-sm btn-danger">Ya, Hapus</button>
-                </div>
+                <form method="POST" action="{{ url('/dashboard-admin/module/' . $module->slug . '/delete') }}">
+                    @csrf
+                    <div class="modal-body py-0">
+                        <p>Yakin ingin menghapus module <b>{{ $module->title }}</b> ?</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Ya, Hapus</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -88,12 +97,7 @@
                             <textarea class="form-control" name="description" id="description" placeholder="Ketik di sini" rows="4">{{ $module->description }}</textarea>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="content" class="text-muted form-control-sm p-0 m-0">Content</label>
-                        <div class="input-group">
-                            <textarea class="form-control" id="content" name="content" placeholder="Ketik di sini" rows="4">{{ $module->content }}</textarea>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="d-flex justify-content-end py-3">
@@ -119,59 +123,62 @@
                 Soal</a>
         </div> --}}
 
-    <div class="card border-0 shadow-sm p-3 mb-5">
-        <table class="table">
-            <thead class="table-dark">
-                <tr>
-                    <th width="5%">No</th>
-                    <th scope="col" width="80%">Title</th>
-                    {{-- <th scope="col">Created at</th> --}}
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $i = 1;
-                @endphp
-                @foreach ($module->submodules as $sub)
-                    <tr>
-                        <td>{{ $i++ }}</td>
-                        <td>{{ $sub->title }}</td>
-                        {{-- <td>{{ $sub->created_at }}</td> --}}
-                        <td>
-                            <a href="/dashboard-admin/data-module/{{ $module->slug }}/{{ $sub->slug }}/edit"
-                                class="btn btn-warning btn-sm">
-                                <i class="fas fa-pen-to-square text-white"></i>
-                            </a>
-                            <a href="/dashboard-admin/data-module/{moduleSlug}/{submoduleSlug}/edit"
-                                class="btn btn-danger btn-sm"data-bs-toggle="modal" data-bs-target="#deleteSubModal"><i
-                                    class="fa-solid fa-trash"></i>
-                            </a>
 
-                            <div class="modal" id="deleteSubModal">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th width="5%">No</th>
+                <th scope="col" width="80%">Title</th>
+                {{-- <th scope="col">Created at</th> --}}
+                <th scope="col">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $i = 1;
+            @endphp
+            @foreach ($module->submodules as $sub)
+                <tr>
+                    <td>{{ $i++ }}</td>
+                    <td>{{ $sub->title }}</td>
+                    {{-- <td>{{ $sub->created_at }}</td> --}}
+                    <td>
+                        <a href="/dashboard-admin/data-module/{{ $module->slug }}/{{ $sub->slug }}/edit"
+                            class="btn btn-warning btn-sm">
+                            <i class="fas fa-pen-to-square text-white"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm"data-bs-toggle="modal"
+                            data-bs-target="#deleteSubModal{{ $sub->slug }}"><i class="fa-solid fa-trash"></i>
+                        </a>
+
+                        <div class="modal" id="deleteSubModal{{ $sub->slug }}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST"
+                                        action="{{ '/dashboard-admin/data-module/' . $module->slug . '/' . $sub->slug . '/delete' }}">
+                                        @csrf
                                         <div class="modal-body">
                                             <p>Yakin ingin menghapus Submodule <b>{{ $sub->title }}</b> ?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-sm btn-light"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="button" class="btn btn-sm btn-danger">Ya,
+                                            <button type="submit" class="btn btn-sm btn-danger">Ya,
                                                 Hapus</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
     </div>
 @endsection

@@ -5,6 +5,19 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if (session()->has('successUpdatePassword'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
+            {{ session('successUpdatePassword') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if ($errors->has('new_password'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width:100%;">
+            {{ $errors->first('new_password') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="card border-0">
         <div class="card-body" id="accountSettings">
             <div class="account-settings">
@@ -114,20 +127,24 @@
                 <button type="button" class="btn-close" aria-label="Close" onclick="closeEditPassword()"></button>
             </div>
 
-            <form action="/profile/update" method="post" enctype="multipart/form-data">
+            <form action="/profile/password/update" method="post">
                 @csrf
-                <div class="col-sm-12 col-md-6 mb-2 m-0 p-0">
-                    <label for="name" class="text-muted form-control-sm p-0 m-0">Kata Sandi Baru</label>
-                    <div class="input-group">
-                        <input type="name" name="name" class="form-control form-control-sm" id="name"
-                            placeholder="Masukkan kata sandi di sini">
+                <div class="row">
+                    <div class="col-12 col-sm-6 mb-2">
+
+                        <label for="new_password" class="text-muted form-control-sm">Kata Sandi
+                            Baru</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password">
+
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-6 mb-2  m-0 p-0">
-                    <label for="name" class="text-muted form-control-sm p-0 m-0">Konfirmasi Kata Sandi</label>
-                    <div class="input-group">
-                        <input type="name" name="name" class="form-control form-control-sm" id="name"
-                            placeholder="Masukkan kata sandi di sini">
+                    <div class="col-12 col-sm-6 mb-2">
+                        <label for="new_password_confirmation" class="text-muted form-control-sm">Konfirmasi Kata
+                            Sandi</label>
+                        <input type="password" class="form-control" id="new_password_confirmation"
+                            name="new_password_confirmation">
+                        @error('new_password_confirmation')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="text-end">

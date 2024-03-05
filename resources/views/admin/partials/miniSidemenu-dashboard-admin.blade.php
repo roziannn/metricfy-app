@@ -4,7 +4,7 @@
             class="bi bi-gear-fill"></i></button>
 
     <div class="card profile-settings d-none d-lg-flex border-0">
-        <a href="/main-dashboard-admin" class="profile-settings-item text-decoration-none px-3"><i
+        <a href="/dashboard-admin" class="profile-settings-item text-decoration-none px-3"><i
                 class="fa-solid fa-table mr-2"></i>Overview</a>
         <a href="/dashboard-admin/data-user" class="profile-settings-item text-decoration-none px-3"><i
                 class="fa-solid fa-users mr-2"></i> Data User</a>

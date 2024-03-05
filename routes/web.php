@@ -54,12 +54,13 @@ Route::post('/register-store', [RegisterController::class, 'store']);
 Route::get('/materi-belajar', [ModuleController::class, 'index'])->name('materi');
 Route::get('/materi-belajar/{slug}', [ModuleController::class, 'showUser'])->name('user.module.show')->middleware('auth');
 
-Route::get('/main-dashboard-admin', [DashboardController::class, 'adminDashboard']);
+Route::get('/dashboard-admin', [DashboardController::class, 'adminDashboard'])->name('dashboard.admin');
 Route::get('/dashboard-admin/data-user', [DashboardController::class, 'adminDashboardDataUser']);
 Route::get('/dashboard-admin/data-module', [DashboardController::class, 'adminDashboardDataModule']);
 Route::get('/dashboard-admin/module/create', [ModuleController::class, 'create']);
 Route::post('/dashboard-admin/module/store', [ModuleController::class, 'store']);
 Route::post('/dashboard-admin/module/{id}/update', [ModuleController::class, 'update']);
+Route::post('/dashboard-admin/module/{slug}/delete', [ModuleController::class, 'delete']);
 
 // Slug modul
 Route::get('/module/{slug}', 'ModuleController@show'); // Contoh route untuk modul
@@ -71,12 +72,14 @@ Route::get('/dashboard-admin/data-module/{slug}/create-sub-module', [ModuleContr
 Route::post('/dashboard-admin/data-module/{id}/store-sub-module', [ModuleController::class, 'storeSubModule']);
 Route::get('/dashboard-admin/data-module/{moduleSlug}/{submoduleSlug}/edit', [ModuleController::class, 'editSubModule']);
 Route::post('/dashboard-admin/data-module/{slug}/update', [ModuleController::class, 'updateSubModule']);
+Route::post('/dashboard-admin/data-module/{moduleSlug}/{submoduleSlug}/delete', [ModuleController::class, 'deleteSubModule']);
 
 //blog ADMIN
 Route::get('/dashboard-admin/data-blog', [DashboardController::class, 'adminDashboardDataBlog'])->name('admin-blog');
 Route::get('/dashboard-admin/blog/create', [BlogController::class, 'create']);
 Route::post('/dashboard-admin/blog/store', [BlogController::class, 'store']);
 Route::post('/dashboard-admin/blog/{slug}/update', [BlogController::class, 'update']);
+Route::post('/dashboard-admin/blog/{slug}/delete', [BlogController::class, 'delete']);
 Route::get('/dashboard-admin/blog/{slug}', [BlogController::class, 'showAdmin']);
 
 //blog USER
@@ -99,6 +102,7 @@ Route::post('/{slug}/latihan-soal/{exerciseId}/submit', [ExerciseController::cla
 //Dashboard user
 Route::get('/profile', [UserDashboardController::class, 'profile']); //profile
 Route::post('/profile/update', [UserDashboardController::class, 'profileUpdate']); //profile
+Route::post('/profile/password/update', [UserDashboardController::class, 'profilePasswordUpdate']); //profile
 
 //Pojok-literasi - Page (user)
 // Route::get('/wikimedia/search', [PojokLiterasiController::class, 'wikiSearch'])->name('wikimedia-search');

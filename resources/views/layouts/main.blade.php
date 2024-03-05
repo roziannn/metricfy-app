@@ -42,9 +42,11 @@
         @yield('container')
 
 
-        @if (auth()->user()->roles === 'USER')
+        @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
             @include('partials.footer')
         @endif
+
+
     </div>
 
 

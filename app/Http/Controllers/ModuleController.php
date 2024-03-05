@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\Module;
 use App\Models\Submodule;
 use Illuminate\Support\Str;
@@ -74,6 +75,7 @@ class ModuleController extends Controller
 
         $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
 
+
         return view('admin.dashboard-admin.dataModule.SubModule.edit', compact('module', 'submodule'));
     }
 
@@ -81,6 +83,7 @@ class ModuleController extends Controller
     {
         $rules = ([
             'title' => 'required',
+            'video_embed' => 'nullable',
             'content' => 'required|max:1000',
         ]);
 
@@ -257,7 +260,6 @@ class ModuleController extends Controller
         $rules = ([
             'title' => 'required|max:30',
             'description' => 'required|max:255',
-            'content' => 'required|max:500',
             'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -267,7 +269,6 @@ class ModuleController extends Controller
         $module->update([
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
-            'content' => $validatedData['content'],
         ]);
 
         if ($request->hasFile('thumbnail')) {
@@ -288,8 +289,23 @@ class ModuleController extends Controller
         return redirect('/dashboard-admin/data-module')->with('successUpdate', 'Module berhasil diperbarui!');
     }
 
-    public function destroy(string $id)
+    public function delete($slug)
     {
-        //
+        $module = Module::where('slug', $slug)->firstOrFail();
+        $module->delete();
+
+        return redirect('/dashboard-admin/data-module');
+    }
+
+    public function deleteSubModule($moduleSlug, $submoduleSlug)
+    {
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+
+        $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
+
+
+        $submodule->delete();
+
+        return back()->with('successDelete', 'Berhasil menghapus data!');
     }
 }
