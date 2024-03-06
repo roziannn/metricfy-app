@@ -93,7 +93,8 @@ Route::get('/materi-belajar/{moduleSlug}/{submoduleSlug}', [ModuleController::cl
 //ExerciseModule by Admin
 Route::get('/dashboard-admin/data-module/{slug}/create-exercise', [ExerciseController::class, 'create'])->name('admin.dashboard-admin.dataModule.exerciseModule');
 Route::post('/dashboard-admin/data-module/{id}/store-exercise', [ExerciseController::class, 'store']);
-Route::get('/dashboard-admin/data-module/{id}/delete-exercise', [ExerciseController::class, 'delete']);
+Route::post('/dashboard-admin/data-module/{moduleSlug}/exercise/{exerciseId}/update', [ExerciseController::class, 'update']);
+Route::post('/dashboard-admin/data-module/{moduleSlug}/exercise/{exerciseId}/delete', [ExerciseController::class, 'delete']);
 
 //ExerciseModule by User
 Route::get('/{slug}/latihan-soal', [ExerciseController::class, 'show']);
@@ -114,11 +115,14 @@ Route::post('/profile/password/update', [UserDashboardController::class, 'profil
 Route::get('/dashboard-admin/data-banksoal', [DashboardController::class, 'adminDashboardDataBanksoal'])->name('admin-banksoal');
 Route::get('/dashboard-admin/banksoal/create', [BanksoalController::class, 'create']);
 Route::post('/dashboard-admin/banksoal/store', [BanksoalController::class, 'store']);
+Route::post('/dashboard-admin/banksoal/{id}/update', [BanksoalController::class, 'update']);
 Route::get('/dashboard-admin/banksoal/{slug}', [BanksoalController::class, 'showAdmin']);
+Route::post('/dashboard-admin/banksoal/{slug}/delete', [BanksoalController::class, 'delete']);
 
 //BanksoalQuestion - ADMIN
 Route::get('/dashboard-admin/banksoal/{slug}/create', [BanksoalQuestionController::class, 'create']);
 Route::post('/dashboard-admin/banksoal/{slug}/store', [BanksoalQuestionController::class, 'store']);
+Route::post('/dashboard-admin/banksoal/{id}/update', [BanksoalQuestionController::class, 'update']);
 Route::get('/dashboard-admin/banksoal/{id}/delete', [BanksoalQuestionController::class, 'delete']);
 
 //Banksoal - USER

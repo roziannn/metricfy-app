@@ -139,14 +139,42 @@ class ExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $moduleSlug, $exerciseId)
     {
-        //
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+
+        $question = $module->exercises()->where('id', $exerciseId)->firstOrFail();
+
+        $rules = ([
+            'question' => 'required',
+            'options' => 'required|array|min:1',
+            'answer' => 'required|in:' . implode(',', range('A', 'E')),
+        ]);
+
+        $validatedData = $request->validate($rules);
+
+
+        $question->update([
+            'question' => $validatedData['question'],
+            'options' => json_encode($validatedData['options']),
+            'answer' => $validatedData['answer'],
+        ]);
+
+        $question->save();
+
+        $request->accepts('session');
+        session()->flash('successUpdatePertanyaan', 'Berhasil mengubah exercise!');
+        return back();
     }
 
-    public function delete(string $id)
+    public function delete($moduleSlug, $exerciseId)
     {
-        $question = Exercise::find($id);
+
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+
+        $question = $module->exercises()->where('id', $exerciseId)->firstOrFail();
+
+
         $question->delete();
 
         return back()->with('successDelete', 'Berhasil menghapus data!');

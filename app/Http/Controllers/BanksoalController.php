@@ -49,6 +49,15 @@ class BanksoalController extends Controller
         return redirect('/dashboard-admin/data-banksoal');
     }
 
+    public function delete($slug)
+    {
+
+        $banksoal = Banksoal::where('slug', $slug)->firstOrFail();
+        $banksoal->delete();
+
+        return redirect('/dashboard-admin/data-banksoal')->with('successDelete', 'Berhasil menghapus data!');;
+    }
+
     /**
      * Display the specified resource.
      */
@@ -135,9 +144,37 @@ class BanksoalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+    public function update(Request $request, $id)
     {
-        //
+        $banksoal = Banksoal::find($id);
+
+        $rules = ([
+            'title' => 'required|max:30',
+            'estimated_duration' => 'required',
+            'level' => 'required',
+            'topic' => 'required',
+            'desc' => 'required'
+
+        ]);
+
+        $validatedData = $request->validate($rules);
+
+
+        $banksoal->update([
+            'title' => $validatedData['title'],
+            'estimated_duration' => $validatedData['estimated_duration'],
+            'level' => $validatedData['level'],
+            'topic' => $validatedData['topic'],
+            'desc' => $validatedData['desc'],
+        ]);
+
+        $banksoal->save();
+
+        $request->accepts('session');
+        session()->flash('successUpdate', 'Berhasil mengubah data banksoal!');
+
+        return redirect('/dashboard-admin/data-banksoal');
     }
 
 

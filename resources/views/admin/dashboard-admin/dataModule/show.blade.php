@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="row justify-content between pb-3">
-                    <div class="col-sm-6">
+                    <div class="col-12">
                         <label for="description" class="text-muted form-control-sm p-0 m-0">Deskripsi</label>
                         <div class="input-group">
                             <textarea class="form-control" name="description" id="description" placeholder="Ketik di sini" rows="4">{{ $module->description }}</textarea>

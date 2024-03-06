@@ -8,6 +8,21 @@
         </div>
     @endif
 
+    @if (session()->has('successUpdatePertanyaan'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
+            {{ session('successUpdatePertanyaan') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session()->has('successStore'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
+            {{ session('successStore') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
     <div class="d-flex justify-content-between ">
         <div class="d-flex justify-content-start align-items-center">
             <a href="/dashboard-admin/data-module" class="text-decoration-none text-dark"><i
@@ -59,13 +74,15 @@
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer" value="C">
+                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                    value="C">
                                 <label class="form-check-label" for="answer">
                                     C
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer" value="D">
+                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                    value="D">
                                 <label class="form-check-label" for="answer">
                                     D
                                 </label>
@@ -105,36 +122,104 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ Str::limit($item->question, 80) }}</td>
                         <td>
-                            <a href="/dashboard-admin/data-module//edit" class="btn btn-warning btn-sm">
+                            <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#modal-update{{ $item->id }}">
                                 <i class="fas fa-pen-to-square text-white"></i>
                             </a>
-                            <a href="/dashboard-admin/data-module/{{ $item->id }}/delete-exercise"
-                                class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-danger"><i
-                                    class="fa fa-trash"></i>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#modal-danger{{ $item->id }}"><i class="fa fa-trash"></i>
                             </a>
+
+                            <!-- Modal Danger Delete-->
+                            <div class="modal fade" id="modal-danger{{ $item->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h6 class="modal-title">Konfirmasi</h6>
+                                        </div>
+                                        <form method="post"
+                                            action="{{ '/dashboard-admin/data-module/' . $module->slug . '/' . 'exercise/' . $item->id . '/delete' }}">
+                                            @csrf
+                                            <div class="modal-body py-0">
+                                                Hapus Pertanyaan?
+                                            </div>
+                                            <div class="modal-footer border-0">
+                                                <button type="button" class="btn btn-sm btn-light"
+                                                    data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Update -->
+                            <div class="modal" id="modal-update{{ $item->id }}">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="model-title mb-0">Paket soal: {{ $item->question }}</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="close"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <form
+                                                action="/dashboard-admin/data-module/{{ $module->slug }}/exercise/{{ $item->id }}/update"
+                                                method="post">
+                                                @csrf
+                                                <div class="form-group mb-3">
+                                                    <label for="question">Pertanyaan</label>
+                                                    <textarea class="form-control" name="question" id="question" cols="10" rows="3" autofocus>{{ $item->question }}
+                                                    </textarea>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="options">Jawaban <small class="text-danger">*Minimal 1
+                                                            Opsi
+                                                            Jawaban</small></label>
+                                                    @php
+                                                        $options = json_decode($item->options);
+                                                    @endphp
+                                                    @foreach ($options as $key => $option)
+                                                        <input class="form-control my-2" type="text"
+                                                            id="options_{{ $key }}" name="options[]"
+                                                            placeholder="Opsi {{ $key + 1 }}"
+                                                            value="{{ $option }}">
+                                                    @endforeach
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="question">Jawaban Benar</label> <br>
+                                                    <div class="form-check form-check-inline">
+                                                        @foreach ($options as $key => $option)
+                                                            <input class="form-check-input" type="radio" name="answer"
+                                                                id="answer_{{ $key }}"
+                                                                value="{{ chr(65 + $key) }}"
+                                                                @if ($item->answer === chr(65 + $key)) checked @endif>
+                                                            <label class="form-check-label"
+                                                                for="answer_{{ $key }}">
+                                                                {{ chr(65 + $key) }}
+                                                            </label>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-right justify-content-around mt-3">
+                                                    <button type="submit" class="btn btn-primary w-100">Buat
+                                                        Pertanyaan</a></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        <!-- Modal Danger Delete-->
-        <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header border-0">
-                        <h6 class="modal-title" id="exampleModalLabel">Konfirmasi</h6>
-                    </div>
-                    <div class="modal-body py-0">
-                        Hapus Pertanyaan?
-                    </div>
-                    <div class="modal-footer border-0">
-                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 @endsection

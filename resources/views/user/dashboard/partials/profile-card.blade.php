@@ -16,9 +16,9 @@
                 <small class="card-title text-muted">Phone
                 </small>
                 <p>{{ auth()->user()->phone }}</p>
-                <small class="card-title text-muted">Roles
+                {{-- <small class="card-title text-muted">Roles
                 </small>
-                <p>{{ auth()->user()->roles }}</p>
+                <p>{{ auth()->user()->roles }}</p> --}}
             </div>
         </div>
     </div>

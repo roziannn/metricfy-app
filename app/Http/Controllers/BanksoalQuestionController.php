@@ -73,9 +73,31 @@ class BanksoalQuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $question = BanksoalQuestion::find($id);
+
+        $rules = ([
+            'question' => 'required',
+            'options' => 'required|array|min:1',
+            'answer' => 'required|in:' . implode(',', range('A', 'E')),
+        ]);
+
+        $validatedData = $request->validate($rules);
+
+
+        $question->update([
+            'question' => $validatedData['question'],
+            'options' => json_encode($validatedData['options']),
+            'answer' => $validatedData['answer'],
+        ]);
+
+        $question->save();
+
+        $request->accepts('session');
+        session()->flash('successUpdatePertanyaan', 'Berhasil mengubah data banksoal!');
+
+        return back();
     }
 
     /**

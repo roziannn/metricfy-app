@@ -67,7 +67,7 @@
 
             </div>
             <div class="d-flex justify-content-end">
-                <button class="btn btn-m btn-success col-md-3 col-sm-12" type="submit">Buat Paket Soal</button>
+                <button class="btn btn-sm col-md-2 btn-success col-sm-12" type="submit">Buat Paket Soal</button>
             </div>
         </form>
     </div>

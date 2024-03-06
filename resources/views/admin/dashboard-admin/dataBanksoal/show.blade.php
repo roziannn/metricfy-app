@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-
     @if (session()->has('successStore'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
             {{ session('successStore') }}
@@ -16,6 +15,13 @@
         </div>
     @endif
 
+    @if (session()->has('successUpdatePertanyaan'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
+            {{ session('successUpdatePertanyaan') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @if (session()->has('successDelete'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
             {{ session('successDelete') }}
@@ -23,70 +29,128 @@
         </div>
     @endif
 
-    <button class="btn btn-sm btn-secondary"> <a href="/dashboard-admin/data-banksoal"
-            class="text-decoration-none text-white">Back</a></button>
-    <form method="POST" action="/dashboard-admin/banksoal/store">
-        @csrf
-        <h5 class="py-3">Paket Soal: {{ $banksoal->title }}</h5>
-        <div class="row justify-content between pb-3">
-            <div class="col-sm-6">
-                <label for="title" class="text-muted form-control-sm p-0 m-0">Judul</label>
-                <input type="text" name="title" id="title" class="form-control" value="{{ $banksoal->title }}"
-                    placeholder="Ketik di sini">
+    {{-- <button class="btn btn-sm btn-secondary"> <a href="/dashboard-admin/data-banksoal"
+            class="text-decoration-none text-white">Back</a></button> --}}
+    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-start align-items-center">
+            <a href="/dashboard-admin/data-banksoal"><i class="fa-solid fa-chevron-left me-3 text-dark"
+                    aria-hidden="true"></i></a>
+            <h5 class="p-0 m-0">Paket Soal: {{ $banksoal->title }}</h5>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Opsi Paket Soal
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#banksoalDaftarSoal">Daftar Soal</a></li>
+                <li><a class="dropdown-item border-top" href="#" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">Hapus Paket Soal</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    {{-- Modal delete-confirm --}}
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ url('/dashboard-admin/banksoal/' . $banksoal->slug . '/delete') }}">
+                    @csrf
+                    <div class="modal-body py-0">
+                        <p>Yakin ingin menghapus module <b>{{ $banksoal->title }}</b> ?</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Ya, Hapus</button>
+                    </div>
+                </form>
             </div>
-            <div class="col-sm-3">
+        </div>
+    </div>
+    {{-- Modal delete-confirm --}}
+
+
+    <form method="POST" action="/dashboard-admin/banksoal/{{ $banksoal->id }}/update" class="mt-3">
+        @csrf
+        <div class="card border-0 shadow-sm p-3">
+            <div class="row justify-content between pb-3">
+                <div class="col-sm-4">
+                    <label for="title" class="text-muted form-control-sm p-0 m-0">Judul</label>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ $banksoal->title }}"
+                        placeholder="Ketik di sini">
+                </div>
+                <div class="col-sm-4" hidden>
+                    <label for="slug" class="text-muted form-control-sm p-0 m-0">Slug</label>
+                    <input type="text" name="slug" id="slug" class="form-control" value="{{ $banksoal->slug }}"
+                        placeholder="Ketik di sini" readonly>
+                </div>
+                {{-- <div class="col-sm-3">
                 <label for="title" class="text-muted form-control-sm p-0 m-0">Token</label>
                 <input type="text" name="token" id="token" class="form-control" placeholder="Ketik di sini">
-            </div>
-            <div class="col-sm-3">
-                <label for="estimated_duration" class="text-muted form-control-sm p-0 m-0">Durasi (dalam menit)</label>
-                <input type="text" name="estimated_duration" id="estimated_duration" class="form-control">
-            </div>
+            </div> --}}
+                <div class="col-sm-2">
+                    <label for="estimated_duration" class="text-muted form-control-sm p-0 m-0">Durasi (dalam menit)</label>
+                    <input type="text" name="estimated_duration" id="estimated_duration" class="form-control"
+                        @if (isset($banksoal->estimated_duration)) value="{{ $banksoal->estimated_duration }}" @endif>
+                </div>
+
+                <script>
+                    // Pastikan nilai value sudah ada sebelum inisialisasi picker
+                    var estimatedDurationValue = @json($banksoal->estimated_duration ?? ''); // Jika data tidak ada, inisialisasi dengan string kosong
+
+                    // Aktifkan flatpickr dengan mode "duration"
+                    flatpickr("#estimated_duration", {
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i",
+                        time_24hr: true,
+                        minuteIncrement: 5, // Atur langkah waktu, misalnya 10 menit
+                        defaultDate: estimatedDurationValue, // Tetapkan nilai value sebagai defaultDate
+                        allowInput: true
+                    });
+                </script>
 
 
-            <script>
-                // Aktifkan flatpickr dengan mode "duration"
-                flatpickr("#estimated_duration", {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    minuteIncrement: 5, // Atur langkah waktu, misalnya 10 menit
-                    defaultDate: "00:00", // Waktu default
-                    allowInput: true
-                });
-            </script>
+                <div class="col-sm-2">
+                    <label for="title" class="text-muted form-control-sm p-0 m-0">Level (tingkat kesulitan)</label>
+                    <select class="form-select" id="level" name="level" aria-label="Small select example">
+                        <option selected>{{ $banksoal->level }}</option>
+                        <option disabled><small>Pilih level</small></option>
+                        <option value="1">Mudah</option>
+                        <option value="2">Menengah</option>
+                        <option value="3">Sulit</option>
+                    </select>
+                </div>
 
-        </div>
-        <div class="row justify-content pb-3">
-            <div class="col-sm-6">
-                <label for="title" class="text-muted form-control-sm p-0 m-0">Deskripsi Paket</label>
-                <input id="desc" type="hidden" name="desc" value="{{ old('desc', $banksoal->desc) }}">
-                <trix-editor input="desc"></trix-editor>
+                <div class="col-sm-4">
+                    <label for="topic" class="text-muted form-control-sm p-0 m-0">Topik yang diujikan</label>
+                    <select class="form-select" id="topic" name="topic" aria-label="Small select example">
+                        <option selected>{{ $banksoal->topic }}</option>
+                        <option disabled><small>Pilih topik</small></option>
+                        @foreach ($topic as $item)
+                            <option value="{{ $item->title }}">{{ $item->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <label for="title" class="text-muted form-control-sm p-0 m-0">Level (tingkat kesulitan)</label>
-                <select class="form-select" id="level" name="level" aria-label="Small select example">
-                    <option selected>{{ $banksoal->level }}</option>
-                    <option disabled><small>Pilih level</small></option>
-                    <option value="1">Mudah</option>
-                    <option value="2">Menengah</option>
-                    <option value="3">Sulit</option>
-                </select>
+            <div class="row justify-content pb-3">
+                <div class="col-12">
+                    <label for="title" class="text-muted form-control-sm p-0 m-0">Deskripsi Paket</label>
+                    <input id="desc" type="hidden" name="desc" value="{{ old('desc', $banksoal->desc) }}">
+                    <trix-editor class="bg-white" input="desc"></trix-editor>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <label for="title" class="text-muted form-control-sm p-0 m-0">Topik yang diujikan</label>
-                <select class="form-select" id="topic" name="topic" aria-label="Small select example">
-                    <option selected>{{ $banksoal->topic }}</option>
-                    <option disabled><small>Pilih topik</small></option>
-                    @foreach ($topic as $item)
-                        <option value="{{ $item->title }}">{{ $item->title }}</option>
-                    @endforeach
-                </select>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-sm btn-success" type="submit"><i
+                        class="fa-solid fa-floppy-disk me-2"></i>Simpan</button>
             </div>
-        </div>
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-m btn-success col-md-3 col-sm-12" type="submit">Simpan Perubahan</button>
         </div>
     </form>
 
@@ -98,30 +162,33 @@
             </h5>
         </div>
         <div class="col text-right">
-            <a href="#" class="btn btn-m btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Tambah
-                Soal</a>
+            <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Buat
+                pertanyaan
+                baru
+            </a>
             {{-- <a href="/dashboard-admin/banksoal/{{ $banksoal->slug }}/create" class="btn btn-m btn-primary">Tambah
                 Soal</a> --}}
         </div>
     </div>
 
     <div class="bd-example">
-        <table class="table">
+        <table class="table" id="banksoalDaftarSoal">
             <thead class="table-light">
                 <tr>
                     <th scope="col">Pertanyaan</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" class="text-end">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($banksoal->banksoalQuestions as $soal)
                     <tr>
                         <td>{{ $soal->question }}</td>
-                        <td>
-                            {{-- <a href="/dashboard-admin/banksoal/{{ $banksoal->slug }}/{{ $soal->slug }}/edit"
-                                class="btn btn-warning btn-sm">
-                                <i class="fas fa-pen-to-square text-white"></i>
-                            </a> --}}
+                        <td class="text-end">
+                            <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#modal-edit{{ $soal->id }}">
+                                <i class="fas
+                                fa-pen-to-square text-white"></i>
+                            </a>
                             <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-danger{{ $soal->id }}"><i class="fa fa-trash"></i>
                             </a>
@@ -229,6 +296,59 @@
                         <button type="submit" class="btn btn-danger">Hapus</button>
                     </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    <!-- Modal Edit-->
+    @foreach ($banksoal->banksoalQuestions as $soal)
+        <div class="modal" id="modal-edit{{ $soal->id }}">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="model-title mb-0">Paket soal: {{ $banksoal->title }}</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/dashboard-admin/banksoal/{{ $soal->id }}/update" method="post">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label for="question">Pertanyaan</label>
+                                <textarea class="form-control" name="question" id="question" cols="10" rows="3" autofocus>{{ $soal->question }}
+                                </textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="options">Jawaban <small class="text-danger">*Minimal 1 Opsi
+                                        Jawaban</small></label>
+                                @php
+                                    $options = json_decode($soal->options);
+                                @endphp
+                                @foreach ($options as $key => $option)
+                                    <input class="form-control my-2" type="text" id="options_{{ $key }}"
+                                        name="options[]" placeholder="Opsi {{ $key + 1 }}"
+                                        value="{{ $option }}">
+                                @endforeach
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="question">Jawaban Benar</label> <br>
+                                <div class="form-check form-check-inline">
+                                    @foreach ($options as $key => $option)
+                                        <input class="form-check-input" type="radio" name="answer"
+                                            id="answer_{{ $key }}" value="{{ chr(65 + $key) }}"
+                                            @if ($soal->answer === chr(65 + $key)) checked @endif>
+                                        <label class="form-check-label" for="answer_{{ $key }}">
+                                            {{ chr(65 + $key) }}
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="text-right justify-content-around mt-3">
+                                <button type="submit" class="btn btn-primary w-100">Buat Pertanyaan</a></button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
