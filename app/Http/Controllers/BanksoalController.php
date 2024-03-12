@@ -182,6 +182,7 @@ class BanksoalController extends Controller
     {
         $user = auth()->user();
         $banksoal = Banksoal::where('id', $id)->first();
+        $slug = $banksoal->slug;
         $questions = $banksoal->banksoalQuestions;
 
         $answers = $request->input('answers');
@@ -217,7 +218,9 @@ class BanksoalController extends Controller
         $user->point += $totalScore;
         $user->save();
 
-        return response()->json(['message' => 'Jawaban berhasil disimpan'], 200);
+        // return response()->json(['message' => 'Jawaban berhasil disimpan'], 200);
+
+        return redirect('banksoal/' . $slug);
     }
 
 

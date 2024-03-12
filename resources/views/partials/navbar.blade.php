@@ -4,36 +4,38 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-2 fixed-top" aria-label="Offcanvas navbar large">
     <div class="container">
         @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
-            <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="/">METRICFY</a>
+            <a class="navbar-brand nav-logo font-weight-bold ms-1" style="margin-right: 50px;" href="/">METRICFY</a>
         @else
-            <a class="navbar-brand nav-logo" style="margin-right: 50px;" href="">METRICFY</a>
+            <a class="navbar-brand nav-logo font-weight-bold ms-1" style="margin-right: 50px;"
+                href="">METRICFY</a>
         @endif
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
-            aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
+        <div class="offcanvas offcanvas-start text-bg-light" tabindex="-1" id="offcanvasNavbar2"
             aria-labelledby="offcanvasNavbar2Label">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbar2Label"><strong>Metricfy</strong></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                <h5 class="offcanvas-title nav-logo" id="offcanvasNavbar2Label"><strong>METRICFY</strong></h5>
+                <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
             @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
                 <div class="offcanvas-body">
+                    <div class="nav-item mb-3 bg-body-secondary p-3 d-flex justify-content-center d-lg-none">
+                        <button type="button" class="btn btn-md btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Masuk / Daftar Akun</button>
+                    </div>
                     <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-                        {{-- <li class="nav-item px-3 {{ Request::is('/') ? 'active' : '' }}">
-                        <a class="nav-link" href="/">Beranda</a>
-                    </li> --}}
-                        <li class="nav-item px-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
+                        <li class="nav-item  px-lg-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
                             <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
                         </li>
-                        <li class="nav-item px-3 {{ Request::is('banksoal') ? 'active' : '' }}">
+                        <li class="nav-item px-lg-3 {{ Request::is('banksoal') ? 'active' : '' }}">
                             <a class="nav-link" href="/banksoal">Banksoal</a>
                         </li>
                         <li
-                            class="nav-item dropdown px-3 {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
+                            class="nav-item px-lg-3 dropdown {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 Pojok Numerasi
@@ -43,31 +45,18 @@
                                         href="/apa-itu-numerasi">Apa Itu Numerasi</a></li>
                                 <li><a class="dropdown-item py-2 {{ Request::is('fungsi-logika') ? 'active' : '' }}"
                                         href="#">Fungsi Logika</a></li>
-                                {{-- <li><a class="dropdown-item py-2" href="#">Perhitungan Matriks</a></li>
-                                <li><a class="dropdown-item py-2" href="#">Modus Hitungan</a></li> --}}
-                                {{-- <li><a class="dropdown-item py-2" href="#">Something else here</a></li> --}}
                             </ul>
                         </li>
-                        <li class="nav-item px-3 {{ Request::is('blog') ? 'active' : '' }}">
+                        <li class="nav-item px-lg-3  {{ Request::is('blog') ? 'active' : '' }}">
                             <a class="nav-link" href="/blog">Blog</a>
                         </li>
-                        <li class="nav-item px-3 {{ Request::is('games') ? 'active' : '' }}">
+                        {{-- <li class="nav-item px-lg-3 {{ Request::is('games') ? 'active' : '' }}">
                             <a class="nav-link" href="/games">Permainan</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             @endif
         </div>
-
-        {{-- @auth
-            <span class="username-name text-light">Halo, {{ explode(' ', auth()->user()->name)[0] }}</span>
-            <form class="mb-0" action="/logout" method="post">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-danger">Logout</button>
-            </form>
-        @else
-            <button class="btn btn-sm btn-primary px-3" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-        @endauth --}}
         @auth
             <div class="navbar ms-auto">
                 <div class="nav-item">
@@ -94,28 +83,19 @@
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>
-                        {{-- @if (auth()->user()->roles === 'USER')
-                            <li><a class="dropdown-item px-3" href="/dashboard/posts">Dashboard</a>
-                            </li>
-                        @endif --}}
-
                         @if (auth()->user()->roles === 'ADMIN')
                             {{-- <li class="header px-3 small text-muted">Admin</li> --}}
                             <li><a class="dropdown-item px-3" href="/dashboard-admin">
                                     Admin</a></li>
                             <li>
                         @endif
-                        {{-- <form action="/logout" method="post" class="px-3 pt-3">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-outline-danger w-100">Logout</button>
-                        </form> --}}
                         </li>
                     </ul>
                 </div>
             @else
-                <div class="nav-item">
-                    <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal"
-                        data-bs-target="#loginModal">Masuk/Daftar</button>
+                <div class="nav-item d-none d-lg-block">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">Masuk / Daftar</button>
                 </div>
             </div>
         @endauth
@@ -126,7 +106,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="model-title mb-0">Masuk Akun</h4>
+                <h6 class="model-title mb-0">Masuk</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -166,10 +146,14 @@
                         <button type="submit" class="btn btn-primary w-100">Masuk</a></button>
                     </div>
                 </form>
-                <p class="py-3">Belum punya akun?<a href="/register" style=" text-decoration:none;"> Daftar
-                        sekarang</a></p>
-                Dengan masuk atau daftar Metricfy, saya menyetujui <br> Syarat & Ketentuan serta Kebijakan Privasi yang
-                berlaku.
+                <div class="text-center border-top">
+                    <p class="py-3">Belum punya akun?<a href="/register" style=" text-decoration:none;"> Daftar
+                            sekarang</a></p>
+                    <small>
+                        Dengan masuk atau daftar Metricfy, saya menyetujui Syarat & Ketentuan serta Kebijakan
+                        Privasi yang berlaku.
+                    </small>
+                </div>
             </div>
         </div>
     </div>

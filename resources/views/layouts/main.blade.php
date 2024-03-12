@@ -19,11 +19,10 @@
     {{-- google fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -36,6 +35,7 @@
     @stack('styles')
 
 </head>
+
 
 <body>
     <div class="container pt-5">
@@ -64,7 +64,7 @@
 
         body {
             margin-top: 30px;
-            background-color: #f0f2f7;
+            background-color: #f5f6fa;
             color: #333;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
@@ -89,16 +89,35 @@
 
         }
 
+        .text-purple {
+            color: #3b4095;
+        }
+
         .breadcrumb {
             font-size: 15px;
         }
 
         .nav-logo {
-            font-family: 'Jura', sans-serif;
+            font-family: "Alexandria", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: <weight>;
+            font-style: normal;
         }
 
         .nav-item.dropdown .dropdown-item:active {
             background-color: rgb(68, 158, 254) !important;
+        }
+
+        .content-wrapper {
+            margin-top: 100px;
+        }
+
+        .footer {
+            padding: 20px 0px;
+        }
+
+        .btn-primary {
+            padding: 8px
         }
     </style>
 </body>

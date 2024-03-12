@@ -49,7 +49,7 @@ class ModuleController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:120',
-            'content' => 'required|max:1000',
+            'content' => 'required',
             'video_embed' => 'nullable|string'
         ]);
         $module = Module::where('id', $id)->first();
@@ -84,7 +84,7 @@ class ModuleController extends Controller
         $rules = ([
             'title' => 'required',
             'video_embed' => 'nullable',
-            'content' => 'required|max:1000',
+            'content' => 'required',
         ]);
 
         $validatedData = $request->validate($rules);
@@ -260,6 +260,7 @@ class ModuleController extends Controller
         $rules = ([
             'title' => 'required|max:30',
             'description' => 'required|max:255',
+            'category' => 'required|max:100',
             'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -268,6 +269,7 @@ class ModuleController extends Controller
 
         $module->update([
             'title' => $validatedData['title'],
+            'category' => $validatedData['category'],
             'description' => $validatedData['description'],
         ]);
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('banksoal_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('banksoal_id')->constrained();
+            $table->foreignId('banksoal_id')->constrained()->onDelete('cascade');
             $table->text('question');
             $table->json('options');
             $table->integer('point')->default(50);

@@ -3,12 +3,12 @@
 @section('container')
     <div class="pb-5">
         <div class="row py-3">
-            <h5 class="font-weight-bolder py-3">Kumpulan Soal Literasi</h5>
+            <h4 class="font-weight-bolder py-3">Kumpulan Soal Literasi</h4>
             @foreach ($banksoal as $item)
                 <div class="col-sm-12 col-md-4 mb-4">
                     <a href="/banksoal/{{ $item->slug }}" class="text-decoration-none">
-                        <div class="card rounded-4 border-0">
-                            <div class="card-body">
+                        <div class="card rounded-3 shadow border-0">
+                            <div class="card-body ">
                                 <h5 class="card-title fs-6 font-weight-bold">{{ $item->title }}</h5>
                                 <p>{!! $item->desc !!}</p>
                                 <div class="my-3 ">

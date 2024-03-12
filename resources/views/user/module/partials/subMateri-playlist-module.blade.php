@@ -1,5 +1,5 @@
 <div class="col-md-4 m-0 p-0 py-3">
-    <div class="card rounded-5">
+    <div class="card rounded-3">
         <div class="card-body">
             <h6>{{ $module->title }} </h6>
             {{-- <span class="text-muted">(16 menit)</span> --}}
@@ -24,7 +24,8 @@
                     return collect($playlist)->pluck('id')->diff($userProgressList)->isEmpty();
                 }
 
-                $allSubmodulesAccessed = count($userProgressList) === count($playlist) && allSubmodulesDone($userProgressList, $playlist);
+                $allSubmodulesAccessed =
+                    count($userProgressList) === count($playlist) && allSubmodulesDone($userProgressList, $playlist);
             @endphp
 
             <li class="d-flex justify-content-between align-items-center py-2">

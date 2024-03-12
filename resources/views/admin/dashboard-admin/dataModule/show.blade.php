@@ -68,10 +68,26 @@
         @csrf
         <div class="card border-0 shadow-sm">
             <div class="p-3">
-                <div class="col-sm-3 my-3 px-0">
-                    <label for="thumbnail" class="text-muted form-control-sm p-0 m-0">Thumbnail Module</label>
-                    <input class="form-control form-control-sm" type="file" id="thumbnail" name="thumbnail">
-                    <span class="text-secondary small"> Rasio 1 : 1 atau berukuran tidak lebih dari 2MB</span>
+                <div class="row justify-content between pb-3">
+                    <div class="col-sm-6">
+                        <label for="thumbnail" class="text-muted form-control-sm p-0 m-0">Thumbnail Module</label>
+                        <input class="form-control form-control-sm" type="file" id="thumbnail" name="thumbnail">
+                        <span class="text-secondary small"> Rasio 1 : 1 atau berukuran tidak lebih dari 2MB</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="slug" class="text-muted form-control-sm p-0 m-0">Kategori</label>
+                        <div class="input-group">
+                            <select name="category" id="category" class="form-select">
+                                <option class="text-muted" selected>Pilih kategori</option>
+                                <option value="Bilangan" {{ $module->category == 'Bilangan' ? 'selected' : '' }}>Bilangan
+                                </option>
+                                <option value="Geometri" {{ $module->category == 'Geometri' ? 'selected' : '' }}>Geometri
+                                </option>
+                                <option value="Data" {{ $module->category == 'Data' ? 'selected' : '' }}>
+                                    Data</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row justify-content between pb-3">

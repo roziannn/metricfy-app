@@ -32,4 +32,4 @@
     <div class="row">
         @include('admin.partials.miniSidemenu-dashboard-admin')
         @include('admin.partials.dataUser-dashboard-admin')
-@endsection
+    @endsection

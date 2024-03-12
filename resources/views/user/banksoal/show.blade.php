@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-    <ol class="breadcrumb bg-light px-3">
+    <ol class="breadcrumb bg-white px-3">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
                 <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
@@ -13,16 +13,12 @@
     </ol>
 
     <div class="pb-5">
-        <div class="row py-3">
+        <div class="row">
             <div class="col-12">
-                <div class="card p-4 bg-purple border-0 rounded-4 mb-3 text-white">
+                <div class="card bg-purple border-0 rounded-3 py-4 mb-3 text-white">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fs-5 font-weight-bold">{{ $banksoal->title }}</h5>
-                            <small><a href="" class="text-white">Download
-                                    Soal</a>
-                            </small>
-                        </div>
+                        <h5 class="card-title fs-5 font-weight-bold">{{ $banksoal->title }}</h5>
+
                         <p class="m-0 p-0">{!! $banksoal->desc !!}</p>
                         <span
                             class="badge bg-warning badge-pill p-1 px-2 mr-1 text-white">{{ $banksoal->banksoalQuestions->count() }}
@@ -38,8 +34,8 @@
             </div>
 
             @if ($latestExam)
-                <div class="col-md-6">
-                    <div class="card rounded-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
                         <div class="card-body">
                             <p class="card-title border-bottom pb-1 font-weight-bold">Histori Pengerjaan</p>
                             @if ($latestExam)
@@ -68,21 +64,21 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card rounded-4">
+                    <div class="card rounded-3">
                         <div class="card-body">
                             {{ $latestExam->evaluasiExam }}
                             <div class="col-12 pt-3 d-flex justify-content-end mt-4">
-                                <button class="btn btn-m btn-secondary rounded-4 me-2" data-bs-toggle="modal"
+                                <button class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal"
                                     data-bs-target="#ulangiModal">Ulangi Latihan</button>
-                                <button class="btn btn-m btn-primary rounded-4" data-bs-toggle="modal"
+                                <button class="btn btn-sm btn-primary " data-bs-toggle="modal"
                                     data-bs-target="#pembahasanModal">Lihat Pembahasan</button>
                             </div>
                         </div>
                     </div>
                 </div>
             @else
-                <div class="col-md-6">
-                    <div class="card rounded-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card rounded-3">
                         <div class="card-body">
                             <div
                                 class="d-flex justify-content-between align-items-center bg-primary-subtle px-3 py-2 rounded-3">
@@ -146,14 +142,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ulangi Latihan</h1>
+                    <p class="modal-title fs-6 font-weight-bold" id="exampleModalLabel">Ulangi Latihan</p>
                 </div>
                 <div class="modal-body">
 
                     Kerjakan lagi paket soal ini?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-sm btn-light me-3" data-bs-dismiss="modal">Batal</button>
 
                     <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-sm btn-primary">
                         Ya,
@@ -164,22 +160,22 @@
     </div>
 
     {{-- lihat pembahasan latihan modal --}}
-    <div class="modal fade" id="pembahasanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="pembahasanModal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ulangi Latihan</h1>
+                <div class="modal-header border-0">
+                    <p class="modal-title fs-5 font-weight-bold" id="exampleModalLabel">Lihat Pembahasan?</p>
                 </div>
                 <div class="modal-body">
-
-                    Kerjakan lagi paket soal ini?
+                    Kamu tidak bisa mendapatkan poin lagi ketika mengerjakan soal ini jika sudah melihat pembahasan soal.
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-sm me-3 btn-light" data-bs-dismiss="modal">Batal</button>
 
                     <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-sm btn-primary">
                         Ya,
-                        ulangi</a>
+                        lihat pembahasan</a>
                 </div>
             </div>
         </div>

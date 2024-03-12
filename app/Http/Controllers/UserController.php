@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -26,6 +27,27 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function storeUserByAdmin(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            "name" => "required|max:100",
+            "email" => "required|email:dns|unique:users",
+            "roles" => "required|",
+            "password" => "required|min:6|max:100"
+        ]);
+
+        // $validatedData['password'] = bcrypt($validatedData['password']);
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+        User::create($validatedData);
+
+        return redirect()->back()->with(['successRegister' => 'Registration successfull! Please Login']);
+        $request->accepts('session');
+        session()->flash('successUpdate', 'Berhasil mengubah data user!');
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
@@ -34,7 +56,7 @@ class UserController extends Controller
         $data_user = User::find($id);
         $data_user->delete();
 
-        return redirect('/admin/dashboard')->with('successDelete', 'Berhasil menghapus data!');
+        return redirect()->back()->with('successDelete', 'Berhasil menghapus data!');
     }
     /**
      * Remove the specified resource from storage.

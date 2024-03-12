@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique()->after('title');
             $table->text('description')->nullable();
+            $table->string('category')->nullable(); //added 10/3/24
             //  $table->longText('content');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();

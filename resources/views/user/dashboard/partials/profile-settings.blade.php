@@ -1,4 +1,4 @@
-<div class="col-lg-8 p-0">
+<div class="col-lg-8">
     @if (session()->has('successUpdate'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
             {{ session('successUpdate') }}
@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <div class="card border-0">
+    <div class="card">
         <div class="card-body" id="accountSettings">
             <div class="account-settings">
                 <p class="font-weight-bold"> <i class="fa-solid fa-gear pe-2 text-primary"></i> Pengaturan Akun</p>

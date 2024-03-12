@@ -21,12 +21,20 @@
                 <textarea class="form-control" name="description" id="description" placeholder="Ketik di sini" rows="2"></textarea>
             </div>
         </div>
-        {{-- <div class="form-group row">
-            <label for="content" class="col-sm-2 col-form-label">Content</label>
+        <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label">Kategori</label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="content" name="content" placeholder="Ketik di sini" rows="4"></textarea>
+                <select name="category" id="category" class="form-select">
+                    <option class="text-muted" selected>Pilih kategori</option>
+                    <option value="Bilangan">Bilangan
+                    </option>
+                    <option value="Geometri">Geometri
+                    </option>
+                    <option value="Data">
+                        Data</option>
+                </select>
             </div>
-        </div> --}}
+        </div>
         <div class="d-flex justify-content-end">
             <a href="/dashboard-admin/data-module" class="btn btn-sm btn-light text-dark col-md-1 col-sm-12 me-2">Batal</a>
 

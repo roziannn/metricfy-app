@@ -39,55 +39,67 @@
         </div>
     </div>
 
-    <div class="modal" id="createUser">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <div class="fs-5 model-title">Tambah User Baru</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body py-0">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert"
-                            style="width:100% ;">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    @endif
-                    <form action="/login" method="post">
-                        @csrf
-                        <div class="form-group mb-2">
-                            <label for="email">Nama Lengkap</label>
-                            <input type="email" name="email"
-                                class="form-control @error('email') is-invalid @enderror" id="email" required
-                                placeholder="Ketik nama" autofocus required value="{{ old('email') }}">
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="password">Email</label>
-                            <div class="input-group">
-                                <input type="password" name="password" class="form-control" id="password" required
-                                    placeholder="Ketik email" required>
-                            </div>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="password">Roles</label>
-                            <select class="form-select" name="roles" id="roles">
-                                <option value="USER">USER</option>
-                                <option value="ADMIN">ADMIN</option>
-                            </select>
 
-                        </div>
-                        <div class="modal-footer p-0 border-0">
-                            <button type="button" class="btn btn-sm btn-light pull-left"
-                                data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-sm btn-primary">Simpan</a></button>
-                        </div>
-                    </form>
+    <form method="POST" action="/dashboard-admin/data-user/store">
+        @csrf
+        <div class="modal" id="createUser">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <div class="fs-5 model-title">Tambah User Baru</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body py-0">
+                        @if (session()->has('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert"
+                                style="width:100% ;">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+                        <form action="/login" method="post">
+                            @csrf
+                            <div class="form-group mb-2">
+                                <label for="name">Nama Lengkap</label>
+                                <input type="name" name="name" class="form-control" id="name" required
+                                    placeholder="Ketik nama" autofocus required value="{{ old('name') }}">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                    <input type="email" name="email"
+                                        class="form-control  @error('email') is-invalid @enderror" id="email"
+                                        required placeholder="Ketik email" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="password">Password</label>
+                                <div class="input-group">
+                                    <input type="password" name="password"
+                                        class="form-control  @error('password') is-invalid @enderror" id="password"
+                                        required placeholder="Ketik password" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="password">Roles</label>
+                                <select class="form-select" name="roles" id="roles">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+
+                            </div>
+                            <div class="modal-footer p-0 border-0">
+                                <button type="button" class="btn btn-sm btn-light pull-left"
+                                    data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Simpan</a></button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     {{-- MODAL FOR EDIT USER DATA --}}
     @foreach ($data_user as $user)

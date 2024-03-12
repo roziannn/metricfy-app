@@ -13,23 +13,18 @@
     </ol>
 
     <div class="pb-5">
-        <div class="d-flex flex-column flex-sm-row p-2">
-            <div class="order-sm-1 mr-auto p-2">
-                <h5 class="font-weight-bolder">
-                    <a href="/banksoal/{{ $banksoal->slug }}" class="text-decoration-none">
-                        <i class="fa-solid fa-arrow-left me-3"></i>
-                    </a>
-                    {{ $banksoal->title }}
-                </h5>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <a href="/banksoal/{{ $banksoal->slug }}" class="text-decoration-none me-3">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <h5 class="font-weight-bolder">{{ $banksoal->title }}</h5>
             </div>
-            <div class="order-sm-2 p-2">
+            <div class="p-2 text-end">
                 <p id="timer-display" class="fs-5 m-0 font-weight-bold">{{ $banksoal->estimated_duration }}</p>
             </div>
-            <div class="order-sm-3 p-2">
-                <a href="#" class="btn btn-sm btn-danger px-3" data-bs-toggle="modal"
-                    data-bs-target="#submitModal">Kumpulkan</a>
-            </div>
         </div>
+
 
         <div class="row">
             <div class="col-md-3 mb-3">
@@ -73,12 +68,17 @@
                                     @unless ($loop->last)
                                         <button type="button" class="btn btn-sm btn-primary btn-next col-md-2">Lanjut</button>
                                     @endunless
+                                    @if ($loop->last)
+                                        <button type="button" class="btn btn-danger btn-submit col-md-2"
+                                            data-bs-toggle="modal" data-bs-target="#submitModal">Kumpulkan</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </form>
             </div>
+
         </div>
     </div>
 
@@ -87,7 +87,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $banksoal->title }}</h1>
+                    <p class="modal-title fs-6">{{ $banksoal->title }}</p>
                 </div>
                 <div class="modal-body">
                     <b> <span class="text-danger" id="answered">0</span>/{{ count($banksoal->banksoalQuestions) }} </b>
@@ -111,8 +111,6 @@
                             const answeredCount = document.querySelectorAll('input[type="radio"]:checked').length;
                             document.getElementById('answered').textContent = answeredCount;
                         }
-
-                        // Call funct u/ di awal sblm jawab apapun/ (dari 0/.. soal)
                         updateAnsweredCount();
                     });
                 </script>

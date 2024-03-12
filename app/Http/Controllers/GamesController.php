@@ -15,4 +15,9 @@ class GamesController extends Controller
     {
         return view('user.games.game-list.guessTheNumber');
     }
+
+    public function guessMyNumb()
+    {
+        return view('user.games.game-list.guessMyNumb');
+    }
 }

@@ -6,8 +6,8 @@
             <div class="col-md-12 col-lg-8 py-3 pe-5">
                 <div class="head-content row">
                     <h3 class="font-weight-bold">{{ $blog->title }}</h3>
-                    <span class="text-publish-info font-weight-bold text-muted">{{ $blog->updated_at->format('M j, Y') }} <span
-                            class="px-1"> &#8226; </span> {{ $estimatedReadingTime }} minutes read</span>
+                    <span class="text-publish-info font-weight-bold text-muted">{{ $blog->updated_at->format('M j, Y') }}
+                        <span class="px-1"> &#8226; </span> {{ $estimatedReadingTime }} minutes read</span>
                     <img src="{{ asset('img/blog/' . $blog->thumbnail) }}" class="py-4" alt="">
                 </div>
 
@@ -22,9 +22,9 @@
                         <i class="fa-brands fa-square-x-twitter fa-2x me-3"></i>
                         <i class="fa-brands fa-square-whatsapp fa-2x me-3" style="color: #12AF0A"></i>
                         <i class="fa-brands fa-linkedin fa-2x me-3" style="color:#007BB5"></i>
-                        
-                      </div>
-                      
+
+                    </div>
+
                 </div>
             </div>
             @include('user.blog.partials.viewlist-show-blog')
@@ -33,7 +33,7 @@
 @endsection
 
 <style>
-    .text-publish-info{
+    .text-publish-info {
         font-size: 14px;
     }
 </style>
