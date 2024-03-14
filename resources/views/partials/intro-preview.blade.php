@@ -13,14 +13,14 @@
     <div class="col-md-6 mb-3">
         <div class="h-100 p-4 bg-white shadow-sm">
             <h5 class="text-center mb-3 text-purple font-weight-bold">Pentingnya Literasi Numerasi Dalam Pendidikan</h5>
-            <p class="m-0 text-justify">Numerasi adalah kemampuan menggunakan angka dan simbol matematika untuk
+            <p class="m-0 ">Numerasi adalah kemampuan menggunakan angka dan simbol matematika untuk
                 memecahkan masalah
                 dalam kehidupan sehari-hari. Ini melibatkan analisis informasi dalam grafik, tabel, dan bagan, serta
                 membuat prediksi untuk mengambil keputusan. <br> <br> Numerasi membuat kita dapat berpikir rasional,
                 sistematis,
                 dan kritis dalam menghadapi masalah sehari-hari serta membuat keputusan dengan bijaksana. Kemampuan ini
                 penting untuk kita menjadi warga global yang siap menghadapi tantangan abad ke-21. <a href=""
-                    class="ms-2 text-purple">selengkapnya tentang numerasi</a></p>
+                    class="text-purple">selengkapnya tentang numerasi</a></p>
 
         </div>
     </div>

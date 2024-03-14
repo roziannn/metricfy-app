@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -80,11 +81,15 @@ class UserController extends Controller
                 return redirect()->route('dashboard.admin');
             }
 
-            // return redirect()->back();
+
+            Alert::image('Hore!', 'Selamat Belajar 🎉', asset('img/partials/horeLogin.jpg'), '480px', '264px');
+
             return redirect()->route('home');
         }
 
-        return redirect('/')->with('loginError', 'Login failed! Masukkan email dan password dengan benar.');
+        Alert::error('Gagal masuk!', 'Masukkan email dan password dengan benar.');
+
+        return redirect('/');
     }
 
     public function logout(Request $request)

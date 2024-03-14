@@ -1,5 +1,5 @@
 <div class="row bg-white align-items-center shadow-sm">
-    <div class=" col-lg-6 p-5">
+    <div class=" col-lg-6 p-4">
         <h3 class="mb-3 font-weight-bold">Kumpulan Bank Soal</h3>
         <p>Temukan beragam soal menarik dengan tingkat kesulitan yang bervariasi, mulai dari yang mudah, menengah,
             hingga sulit.

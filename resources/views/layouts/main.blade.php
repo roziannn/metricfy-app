@@ -32,12 +32,14 @@
 
     <title>Metricfy Education</title>
 
+
     @stack('styles')
 
 </head>
 
 
 <body>
+    @include('sweetalert::alert')
     <div class="container pt-5">
         @yield('container')
 
@@ -57,6 +59,9 @@
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
     <script type="text/javascript" src="/js/trix.js"></script>
 
+    {{-- <script src="sweetalert2.min.js"></script> --}}
+
+    <script src="sweetalert2.all.min.js"></script>
     <style>
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none;
@@ -64,7 +69,8 @@
 
         body {
             margin-top: 30px;
-            background-color: #f5f6fa;
+            background-color: ##f5f8f9;
+
             color: #333;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
@@ -89,9 +95,9 @@
 
         }
 
-        .text-purple {
-            color: #3b4095;
-        }
+        /* .text-purple {
+            color: #35589A;
+        } */
 
         .breadcrumb {
             font-size: 15px;
@@ -118,6 +124,10 @@
 
         .btn-primary {
             padding: 8px
+        }
+
+        .blog-text {
+            font-size: 14px;
         }
     </style>
 </body>

@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\Module;
 use Illuminate\Http\Request;
+use Alert;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,20 @@ class HomeController extends Controller
 
         $artikel_blog = Blog::OrderBy('updated_at', 'desc')->limit(4)->get();
 
-        return view('home', compact('data', 'leaderboard', 'artikel_blog', 'modules'));
+        $blogs = [];
+
+        foreach ($artikel_blog as $blog) {
+            $kataCount = str_word_count(strip_tags($blog->content));
+            $avrgUserReading = 300;
+
+            $estimatedReadingTime = ceil($kataCount / $avrgUserReading);
+
+            $blogs[] = [
+                'blog' => $blog,
+                'estimatedReadingTime' => $estimatedReadingTime
+            ];
+        }
+
+        return view('home', compact('data', 'leaderboard', 'blogs', 'modules'));
     }
 }

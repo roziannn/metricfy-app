@@ -1,10 +1,10 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
-    <div class="pb-5 text-center">
+    <div class="text-center">
         <h4 class="font-weight-bolder py-3">Materi Belajar Numerasi</h4>
         @foreach (['Bilangan', 'Geometri', 'Data'] as $category)
-            <div class="row rounded-3 p-3 bg-white mb-5">
+            <div class="row rounded-3 p-3 bg-white">
                 <p class="fs-5 font-weight-bold py-3">{{ $category }}</p>
                 @foreach ($data_module as $module)
                     @if ($module->category === $category)

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\BanksoalQuestion;
 use App\Models\UserExamBanksoal;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BanksoalController extends Controller
 {
@@ -86,15 +87,29 @@ class BanksoalController extends Controller
             $benarCount = 0;
             $salahCount = 0;
 
+            // foreach ($response_data as $questionId => $response) {
+            //     //hitung based on jawaban yang benar
+            //     // dd($response['answer']);
+            //     $isCorrect = ($response['answer'] === $banksoal->banksoalQuestions->find($questionId)->answer);
+            //     if ($isCorrect) {
+            //         $benarCount++;
+            //     } else {
+            //         $salahCount++;
+            //     }
+            // }
+
             foreach ($response_data as $questionId => $response) {
-                //hitung based on jawaban yang benar
-                $isCorrect = ($response['answer'] === $banksoal->banksoalQuestions->find($questionId)->answer);
-                if ($isCorrect) {
-                    $benarCount++;
-                } else {
-                    $salahCount++;
+                $question = $banksoal->banksoalQuestions->find($questionId);
+                if ($question) {
+                    $isCorrect = ($response['answer'] === $question->answer);
+                    if ($isCorrect) {
+                        $benarCount++;
+                    } else {
+                        $salahCount++;
+                    }
                 }
             }
+
 
             //add ke latestExam buat di blade
             $latestExam->benarCount = $benarCount;
@@ -214,11 +229,16 @@ class BanksoalController extends Controller
             ]
         );
 
+
         //tambah point yg terakhir didapat
         $user->point += $totalScore;
         $user->save();
 
-        // return response()->json(['message' => 'Jawaban berhasil disimpan'], 200);
+        if ($totalScore <= 70) {
+            Alert::warning("😥", "Nilaimu masih dibawah rata-rata :( Kamu bisa coba kerjakan ulang");
+        } else {
+            Alert::success("Hore!😁", "Nilaimu diatas rata-rata! :)");
+        }
 
         return redirect('banksoal/' . $slug);
     }

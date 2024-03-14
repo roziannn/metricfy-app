@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Module;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class BlogController extends Controller
 {
@@ -14,7 +15,21 @@ class BlogController extends Controller
     { //view both user,admin, (+)guest
         $data_blog = Blog::OrderBy('updated_at', 'desc')->get();
 
-        return view('user.blog.index', compact('data_blog'));
+        $blogs = [];
+
+        foreach ($data_blog as $blog) {
+            $kataCount = str_word_count(strip_tags($blog->content));
+            $avrgUserReading = 300;
+
+            $estimatedReadingTime = ceil($kataCount / $avrgUserReading);
+
+            $blogs[] = [
+                'blog' => $blog,
+                'estimatedReadingTime' => $estimatedReadingTime
+            ];
+        }
+
+        return view('user.blog.index', compact('data_blog', 'blogs'));
     }
 
     public function create()

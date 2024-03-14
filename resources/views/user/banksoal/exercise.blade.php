@@ -86,18 +86,22 @@
     <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header border-0">
                     <p class="modal-title fs-6">{{ $banksoal->title }}</p>
                 </div>
                 <div class="modal-body">
-                    <b> <span class="text-danger" id="answered">0</span>/{{ count($banksoal->banksoalQuestions) }} </b>
-                    Soal terjawab. Yakin ingin mengumpulkan jawaban?
+                    <h5> <span class="text-danger" id="answered">0</span>/{{ count($banksoal->banksoalQuestions) }}
+                        Soal terjawab</h5>
+                    <span id="modalText">Yakin ingin mengumpulkan
+                        jawaban?</span>
                 </div>
                 {{-- script additional info/soal terjawab - blm terjawab --}}
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         //get all radio buttons di form
                         const radioButtons = document.querySelectorAll('input[type="radio"]');
+                        const submitButton = document.getElementById('btn-submit');
+                        const modalText = document.getElementById('modalText');
 
                         // Update number of answered questions when radio button is clicked
                         radioButtons.forEach(function(radioButton) {
@@ -110,14 +114,23 @@
                         function updateAnsweredCount() {
                             const answeredCount = document.querySelectorAll('input[type="radio"]:checked').length;
                             document.getElementById('answered').textContent = answeredCount;
+
+                            // Enable/disable submit button based on answered count
+                            if (answeredCount === {{ count($banksoal->banksoalQuestions) }}) {
+                                submitButton.disabled = false;
+                                modalText.textContent = "Yakin ingin mengumpulkan jawaban?";
+                            } else {
+                                submitButton.disabled = true;
+                                modalText.textContent = "Jawab semua pertanyaan untuk mengumpulkan.";
+                            }
                         }
                         updateAnsweredCount();
                     });
                 </script>
                 {{-- end js --}}
-                <div class="modal-footer">
+                <div class="modal-footer border-0">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" form="examForm" class="btn btn-sm btn-primary" id="btn-submit">Kumpulkan
+                    <button type="submit" form="examForm" class="btn btn-sm btn-primary" id="btn-submit" disabled>Kumpulkan
                         Jawaban</button>
                 </div>
             </div>

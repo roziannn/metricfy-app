@@ -141,14 +141,14 @@
     <div class="modal fade" id="ulangiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header border-0">
                     <p class="modal-title fs-6 font-weight-bold" id="exampleModalLabel">Ulangi Latihan</p>
                 </div>
                 <div class="modal-body">
 
                     Kerjakan lagi paket soal ini?
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer border-0">
                     <button type="button" class="btn btn-sm btn-light me-3" data-bs-dismiss="modal">Batal</button>
 
                     <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-sm btn-primary">

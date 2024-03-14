@@ -4,9 +4,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-2 fixed-top" aria-label="Offcanvas navbar large">
     <div class="container">
         @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
-            <a class="navbar-brand nav-logo font-weight-bold ms-1" style="margin-right: 50px;" href="/">METRICFY</a>
+            <a class="navbar-brand text-purple nav-logo font-weight-bold ms-1 " style="margin-right: 50px;"
+                href="/">METRICFY</a>
         @else
-            <a class="navbar-brand nav-logo font-weight-bold ms-1" style="margin-right: 50px;"
+            <a class="navbar-brand nav-logo font-weight-bold ms-1 text-purple" style="margin-right: 50px;"
                 href="">METRICFY</a>
         @endif
 
@@ -23,10 +24,12 @@
             </div>
             @if (!auth()->check() || (auth()->check() && auth()->user()->roles === 'USER'))
                 <div class="offcanvas-body">
-                    <div class="nav-item mb-3 bg-body-secondary p-3 d-flex justify-content-center d-lg-none">
-                        <button type="button" class="btn btn-md btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#loginModal">Masuk / Daftar Akun</button>
-                    </div>
+                    @if (!auth()->check())
+                        <div class="nav-item mb-3 bg-body-secondary p-3 d-flex justify-content-center d-lg-none">
+                            <button type="button" class="btn btn-md btn-outline-primary" data-bs-toggle="modal"
+                                data-bs-target="#loginModal">Masuk / Daftar Akun</button>
+                        </div>
+                    @endif
                     <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
                         <li class="nav-item  px-lg-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
                             <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
@@ -102,7 +105,7 @@
     </div>
 </nav>
 
-<div class="modal" id="loginModal">
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,7 +116,8 @@
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
                         {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
                     </div>
                 @endif
                 <form action="/login" method="post">

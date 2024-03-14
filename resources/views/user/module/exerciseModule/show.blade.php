@@ -28,31 +28,6 @@
             @foreach ($exerciseModule as $item)
                 <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
                     <input type="hidden" name="exercise_id" value="{{ $item->id }}">
-                    <div class="alert-container">
-                        @if (session('message'))
-                            <div class="alert  alert-dismissible fade show js-alert {{ strpos(session('message'), 'Benar') !== false ? 'alert-success' : 'alert-danger' }} d-flex align-items-center justify-content-between"
-                                id="alert" role="alert">
-                                <div>
-                                    @if (strpos(session('message'), 'Benar') == false)
-                                        <i class="fas fa-triangle-exclamation px-2"></i>
-                                    @endif
-                                    {{ session('message') }}
-                                </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                                <script>
-                                    //otomatis ngeHide alert benar-salah nya
-                                    if (document.querySelector('.js-alert')) {
-                                        document.querySelectorAll('.js-alert').forEach(function($el) {
-                                            setTimeout(() => {
-                                                $el.classList.remove('show');
-                                            }, 2000);
-                                        });
-                                    }
-                                </script>
-                            </div>
-                        @endif
-                    </div>
 
                     <div class="card-body">
 

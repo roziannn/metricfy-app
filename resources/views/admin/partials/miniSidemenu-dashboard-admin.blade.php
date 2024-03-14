@@ -26,12 +26,13 @@
         </div>
         <div class="d-lg-none sidebar-offcanvas sidebar-offcanvas-profile-settings">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                <a class="profile-settings-item m-2" aria-current="page" href="/account/profile">Data Akun</a>
-
-                <a class="profile-settings-item m-2" aria-current="page" href="#">Data Instansi</a>
-
-                <a class="profile-settings-item m-2" href="/account/change-password">Ubah Kata Sandi</a>
+                <a class="profile-settings-item m-2" aria-current="page" href="/dashboard-admin">Overview</a>
+                <a class="profile-settings-item m-2" aria-current="page" href="/dashboard-admin/data-user">Data User</a>
+                <a class="profile-settings-item m-2" aria-current="page" href="/dashboard-admin/data-module">Data
+                    Module</a>
+                <a class="profile-settings-item m-2" aria-current="page" href="/dashboard-admin/data-blog">Data Blog</a>
+                <a class="profile-settings-item m-2" aria-current="page" href="/dashboard-admin/data-banksoal">Data
+                    Banksoal</a>
             </ul>
         </div>
     </div>

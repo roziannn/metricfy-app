@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\UserExerciseAnswer;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ExerciseController extends Controller
 {
@@ -126,9 +127,15 @@ class ExerciseController extends Controller
         $user->save();
 
 
-        $message = $isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+        if ($isCorrect) {
+            Alert::success('Jawaban kamu benar!', 'Kamu mendapatkan 3 poin 🪙');
+        } else {
 
-        return back()->with(['message' => $message]);
+            Alert::error('Jawaban kamu salah!', 'Coba lagi');
+        }
+
+
+        return back();
     }
 
     public function edit(string $id)
