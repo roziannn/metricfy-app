@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+    <div class="pt-5"></div>
     <div class="d-flex justify-content-start align-items-center">
         <a href="/dashboard-admin/data-blog" class="text-decoration-none text-dark"><i
                 class="fa-solid fa-chevron-left me-3"></i></a>

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserDashboardController extends Controller
 {
@@ -24,9 +25,9 @@ class UserDashboardController extends Controller
         $request->validate([
             'name' => 'max:100',
             'email' => 'email',
-            'kelas' => 'string',
+            'kelas' => 'string|nullable',
             'avatar' => 'image|mimes:jpeg,png,jpg',
-            'phone' => 'numeric|regex:/^[0-9]*$/'
+            'phone' => 'numeric|nullable|regex:/^[0-9]*$/'
         ]);
 
 
@@ -54,8 +55,7 @@ class UserDashboardController extends Controller
             ]
         );
 
-        $request->accepts('session');
-        session()->flash('successUpdate', 'Berhasil mengubah profil!');
+        Alert::success("Berhasil!", "Berhasil mengubah profile");
 
         return redirect()->back();
     }
@@ -74,6 +74,8 @@ class UserDashboardController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return back()->with('successUpdatePassword', "Password berhasil diubah!");
+        Alert::success('Berhasil!', 'Berhasil mengubah password!');
+
+        return back();
     }
 }

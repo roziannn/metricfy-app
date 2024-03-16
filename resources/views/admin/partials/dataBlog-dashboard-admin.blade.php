@@ -22,8 +22,6 @@
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $blog->title }}</td>
-                            {{-- <td>{{ Str::limit($blog->content, 100) }} --}}
-                            {{-- <td>{{ $blog->created_at->format('d M Y, H:i') }}</td> --}}
                             </td>
                             <td>
                                 <a href="/dashboard-admin/blog/{{ $blog->slug }}" class="btn btn-success btn-sm"><i

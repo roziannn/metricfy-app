@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+    <div class="pt-5"></div>
     @if (session()->has('successUpdate'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
             {{ session('successUpdate') }}

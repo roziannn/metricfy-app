@@ -1,4 +1,4 @@
-<div class="py-2">
+<div class="py-5">
     <div class="d-flex justify-content-between">
         <h5 class="col-sm-6 font-weight-bold px-0">Pembahasan</h5>
         <div class="col-sm-3  px-0 text-end"><span class="badge bg-dark-subtle p-2 text-dark"><i

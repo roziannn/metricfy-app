@@ -1,4 +1,4 @@
-<div class="row px-0 py-5 mt-5">
+<div class="row px-0 py-5 mt-3">
     <div class="col-lg-5 order-lg-first align-items-center mb-4 mb-lg-0">
         <h3 class="mb-3 font-weight-bold">Peringkat Belajar</h3>
 

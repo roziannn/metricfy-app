@@ -8,6 +8,6 @@
     </div>
 
     <div class="col-lg-6 p-5 ml-auto text-end">
-        <img src="{{ asset('img/partials/banksoal_animatedHome1.png') }}" class="img-fluid" alt="">
+        <img src="{{ asset('img/partials/banksoalHero.png') }}" class="img-fluid" width="60%" alt="">
     </div>
 </div>

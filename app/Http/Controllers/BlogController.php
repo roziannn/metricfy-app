@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Module;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class BlogController extends Controller
@@ -63,8 +64,8 @@ class BlogController extends Controller
             'content' => $validatedData['content'],
         ]);
 
-        $request->accepts('session');
-        session()->flash('successStore', 'Berhasil menambahkan data!');
+
+        Alert::success('Berhasil!', "Berhasil menambahkan data blog!");
 
         return redirect('/dashboard-admin/data-blog');
     }
@@ -129,7 +130,9 @@ class BlogController extends Controller
             $blog->thumbnail = $thumbnailName;
             $blog->save();
         }
-        return redirect('/dashboard-admin/data-blog')->with('successUpdate', 'Module berhasil diperbarui!');
+
+        Alert::success('Berhasil!', "Berhasil mengubah data blog!");
+        return redirect('/dashboard-admin/data-blog');
     }
 
     public function delete($slug)
@@ -138,6 +141,7 @@ class BlogController extends Controller
         $blog->delete();
 
 
+        Alert::success('Berhasil!', "Berhasil menghapus data blog!");
         return redirect('/dashboard-admin/data-blog');
     }
 }

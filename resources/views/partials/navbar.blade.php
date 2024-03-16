@@ -31,11 +31,14 @@
                         </div>
                     @endif
                     <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                        <li class="nav-item  px-lg-3 {{ Request::is('/') ? 'active' : '' }}">
+                            <a class="nav-link" href="/">Beranda</a>
+                        </li>
                         <li class="nav-item  px-lg-3 {{ Request::is('materi-belajar') ? 'active' : '' }}">
                             <a class="nav-link" href="/materi-belajar">Materi Belajar</a>
                         </li>
                         <li class="nav-item px-lg-3 {{ Request::is('banksoal') ? 'active' : '' }}">
-                            <a class="nav-link" href="/banksoal">Banksoal</a>
+                            <a class="nav-link" href="/banksoal">Bank Soal</a>
                         </li>
                         <li
                             class="nav-item px-lg-3 dropdown {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
@@ -45,7 +48,7 @@
                             </a>
                             <ul class="dropdown-menu border-0 shadow">
                                 <li><a class="dropdown-item py-2 {{ Route::is('infografis') ? 'active' : '' }}"
-                                        href="/apa-itu-numerasi">Apa Itu Numerasi</a></li>
+                                        href="/introduction-numerasi">Tentang Numerasi</a></li>
                                 <li><a class="dropdown-item py-2 {{ Request::is('fungsi-logika') ? 'active' : '' }}"
                                         href="#">Fungsi Logika</a></li>
                             </ul>
@@ -81,7 +84,7 @@
                                 alt="">
 
                             <span class="px-1 font-weight-bold">{{ explode(' ', auth()->user()->name)[0] }}</span>
-                            <span class="px-1 small"><i class="fa-solid fa-coins pe-1 text-warning"></i>
+                            <span class="px-1 small font-weight-bold"><i class="fa-solid fa-coins text-warning"></i>
                                 {{ auth()->user()->point }} xp</span>
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
@@ -108,18 +111,11 @@
 <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="model-title mb-0">Masuk</h6>
+            <div class="modal-header border-0">
+                <h5 class="mb-0">Masuk</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                @if (session()->has('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                @endif
                 <form action="/login" method="post">
                     @csrf
                     <div class="form-group mb-3">
@@ -150,7 +146,7 @@
                         <button type="submit" class="btn btn-primary w-100">Masuk</a></button>
                     </div>
                 </form>
-                <div class="text-center border-top">
+                <div class="text-center">
                     <p class="py-3">Belum punya akun?<a href="/register" style=" text-decoration:none;"> Daftar
                             sekarang</a></p>
                     <small>

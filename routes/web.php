@@ -43,7 +43,7 @@ Route::get('/banksoal', [BanksoalController::class, 'index'])->name('banksoal');
 Route::get('/games', [GamesController::class, 'showAll'])->name('daily-games');
 Route::get('/games/guess-the-number', [GamesController::class, 'gameGuessTheNumber'])->name('game-1');
 
-Route::get('/apa-itu-numerasi', [PojokNumerasiController::class, 'infografisNumerasi'])->name('infografis');
+Route::get('/introduction-numerasi', [PojokNumerasiController::class, 'infografisNumerasi'])->name('infografis');
 
 
 
@@ -90,7 +90,7 @@ Route::middleware(['auth', 'roles'])->group(function () {
     Route::get('/dashboard-admin/data-banksoal', [DashboardController::class, 'adminDashboardDataBanksoal'])->name('admin-banksoal');
     Route::get('/dashboard-admin/banksoal/create', [BanksoalController::class, 'create']);
     Route::post('/dashboard-admin/banksoal/store', [BanksoalController::class, 'store']);
-    Route::post('/dashboard-admin/banksoal/{id}/update', [BanksoalController::class, 'update']);
+    Route::post('/dashboard-admin/banksoal/{slug}/update', [BanksoalController::class, 'update']);
     Route::get('/dashboard-admin/banksoal/{slug}', [BanksoalController::class, 'showAdmin']);
     Route::post('/dashboard-admin/banksoal/{slug}/delete', [BanksoalController::class, 'delete']);
 

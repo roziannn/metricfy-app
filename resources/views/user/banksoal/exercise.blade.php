@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+    <div class="pt-5"></div>
     <ol class="breadcrumb bg-light px-3">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)

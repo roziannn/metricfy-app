@@ -1,4 +1,4 @@
-<div class="col-lg-4">
+<div class="col-lg-4 mb-3">
     <div class="card">
         <div class="card-body">
             <div class="profile-head text-center">
@@ -13,12 +13,9 @@
                 <small class="card-title text-muted">Email
                 </small>
                 <p>{{ auth()->user()->email }}</p>
-                <small class="card-title text-muted">Phone
+                <small class="card-title text-muted">Nomor Hp
                 </small>
                 <p>{{ auth()->user()->phone }}</p>
-                {{-- <small class="card-title text-muted">Roles
-                </small>
-                <p>{{ auth()->user()->roles }}</p> --}}
             </div>
         </div>
     </div>

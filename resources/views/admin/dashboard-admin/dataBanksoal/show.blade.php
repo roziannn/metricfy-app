@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+    <div class="pt-5"></div>
     @if (session()->has('successStore'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
             {{ session('successStore') }}
@@ -77,7 +78,7 @@
     {{-- Modal delete-confirm --}}
 
 
-    <form method="POST" action="/dashboard-admin/banksoal/{{ $banksoal->id }}/update" class="mt-3">
+    <form method="POST" action="/dashboard-admin/banksoal/{{ $banksoal->slug }}/update" class="mt-3">
         @csrf
         <div class="card border-0 shadow-sm p-3">
             <div class="row justify-content between pb-3">

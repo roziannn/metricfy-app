@@ -20,7 +20,7 @@ class HomeController extends Controller
 
         $modules = Module::orderBy('created_at', 'asc')->limit(4)->get();
 
-        $leaderboard = User::orderBy('point', 'desc')->get();
+        $leaderboard = User::orderBy('point', 'desc')->limit(8)->get();
 
         $artikel_blog = Blog::OrderBy('updated_at', 'desc')->limit(4)->get();
 

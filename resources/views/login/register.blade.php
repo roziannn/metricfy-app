@@ -2,7 +2,7 @@
 @include('partials.navbar')
 @section('container')
     <div class="col-md-6 col-lg-4 mx-auto px-3">
-        <img src="{{ asset('img/partials/registrationImg.jpg') }}" width="200px" alt="">
+        <img src="{{ asset('img/partials/registrationImg.png') }}" class="pt-3" width="200px" alt="">
         <div class="row my-3">
             <h5 class="font-weight-bold">
                 Buat akun baru

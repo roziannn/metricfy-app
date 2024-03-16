@@ -22,10 +22,8 @@ class UserController extends Controller
             'roles' => $request->roles
         ]);
 
-        $request->accepts('session');
-        session()->flash('successUpdate', 'Berhasil mengubah data user!');
-
-        return redirect()->back();
+        Alert::success('Berhasil!', "Berhasil mengubah data user!");
+        return back();
     }
 
     public function storeUserByAdmin(Request $request)
@@ -43,9 +41,8 @@ class UserController extends Controller
 
         User::create($validatedData);
 
-        return redirect()->back()->with(['successRegister' => 'Registration successfull! Please Login']);
-        $request->accepts('session');
-        session()->flash('successUpdate', 'Berhasil mengubah data user!');
+        Alert::success('Berhasil!', "Berhasil menambahkan user baru!");
+        return back();
     }
 
 
@@ -57,7 +54,8 @@ class UserController extends Controller
         $data_user = User::find($id);
         $data_user->delete();
 
-        return redirect()->back()->with('successDelete', 'Berhasil menghapus data!');
+        Alert::success('Berhasil!', "Berhasil menghapus data user!");
+        return back();
     }
     /**
      * Remove the specified resource from storage.

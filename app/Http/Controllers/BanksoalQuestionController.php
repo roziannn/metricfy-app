@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banksoal;
-use App\Models\BanksoalQuestion;
 use Illuminate\Http\Request;
+use App\Models\BanksoalQuestion;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BanksoalQuestionController extends Controller
 {
@@ -47,8 +48,7 @@ class BanksoalQuestionController extends Controller
             'answer' => $validatedData['answer'],
         ]);
 
-        $request->accepts('session');
-        session()->flash('successStore', 'Berhasil menambahkan soal!');
+        Alert::success('Berhasil', 'Berhasil menambahkan soal!');
 
         return back();
     }
@@ -94,8 +94,7 @@ class BanksoalQuestionController extends Controller
 
         $question->save();
 
-        $request->accepts('session');
-        session()->flash('successUpdatePertanyaan', 'Berhasil mengubah data banksoal!');
+        Alert::success('Berhasil', 'Berhasil mengubah data soal!');
 
         return back();
     }
@@ -108,6 +107,7 @@ class BanksoalQuestionController extends Controller
         $question = BanksoalQuestion::find($id);
         $question->delete();
 
-        return back()->with('successDelete', 'Berhasil menghapus soal!');
+        Alert::success('Berhasil', 'Berhasil menghapus soal!');
+        return back();
     }
 }

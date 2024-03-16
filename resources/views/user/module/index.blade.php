@@ -1,11 +1,28 @@
 @extends('layouts.main')
 @include('partials.navbar')
+<div class="pt-4">
+    <div class="px-lg-3 px-sm-0 bg-body-secondary">
+        <div class="container">
+            <div class="py-lg-5 py-3">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-6 my-3">
+                        <h1 class="fw-bold text-dark">Materi Belajar Numerasi<br></h1>
+                        <p class="col-sm-12 px-0 text-dark">Kamu bisa akses seluruh module dibawah ini <br> untuk mulai
+                            belajar literasi numerasi
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section('container')
-    <div class="text-center">
-        <h4 class="font-weight-bolder py-3">Materi Belajar Numerasi</h4>
+    <div class="text-left">
+        {{-- <h4 class="font-weight-bolder pt-4">Materi Belajar Numerasi</h4> --}}
         @foreach (['Bilangan', 'Geometri', 'Data'] as $category)
-            <div class="row rounded-3 p-3 bg-white">
-                <p class="fs-5 font-weight-bold py-3">{{ $category }}</p>
+            <div class="row rounded-3">
+                <p class="fs-5 font-weight-bold pt-3">{{ $category }}</p>
                 @foreach ($data_module as $module)
                     @if ($module->category === $category)
                         <div class="col-6 col-sm-4 col-lg-3 col-md-4 mb-4">

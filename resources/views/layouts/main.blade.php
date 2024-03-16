@@ -30,6 +30,8 @@
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    <link rel="icon" href="">
+
     <title>Metricfy Education</title>
 
 
@@ -40,7 +42,7 @@
 
 <body>
     @include('sweetalert::alert')
-    <div class="container pt-5">
+    <div class="container">
         @yield('container')
 
 
@@ -69,7 +71,7 @@
 
         body {
             margin-top: 30px;
-            background-color: ##f5f8f9;
+            background-color: #f5f5f5;
 
             color: #333;
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -95,9 +97,13 @@
 
         }
 
-        /* .text-purple {
+        .text-purple {
             color: #35589A;
-        } */
+        }
+
+        .bg-indigo {
+            background: #4e54c8;
+        }
 
         .breadcrumb {
             font-size: 15px;

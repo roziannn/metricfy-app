@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exercise;
 use App\Models\Module;
+use App\Models\Exercise;
 use App\Models\Submodule;
 use Illuminate\Support\Str;
 use App\Models\UserProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ModuleController extends Controller
 {
@@ -39,8 +40,7 @@ class ModuleController extends Controller
     {
         Module::create($request->all());
 
-        $request->accepts('session');
-        session()->flash('successStore', 'Berhasil menambahkan data!');
+        Alert::success('Berhasil!', "Berhasil menambahkan data module!");
 
         return redirect('/dashboard-admin/data-module');
     }
@@ -63,8 +63,7 @@ class ModuleController extends Controller
         ]);
 
 
-        $request->accepts('session');
-        session()->flash('successStore', 'Berhasil menambahkan sub module!');
+        Alert::success('Berhasil!', "Berhasil menambahkan data submodule!");
 
         return redirect()->route('admin.dashboard-admin.show', ['slug' => $module->slug]);
     }
@@ -95,7 +94,8 @@ class ModuleController extends Controller
         $updatedSlug = $submodule->fresh()->slug;
         $newUrl = url("/dashboard-admin/data-module/{$submodule->module->slug}/{$updatedSlug}/edit");
 
-        return redirect($newUrl)->with('successUpdate', 'Submodule berhasil di update!');
+        Alert::success('Berhasil!', "Berhasil mengubah data submodule!");
+        return redirect($newUrl);
     }
 
     // show page all module/index untuk user
@@ -186,59 +186,6 @@ class ModuleController extends Controller
         return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'exerciseModule', 'userProgressList'));
     }
 
-    // public function subModuleShowUser($moduleSlug, $submoduleSlug)
-    // {
-    //     $user = auth()->user();
-
-    //     $module = Module::where('slug', $moduleSlug)
-    //         ->with(['submodules' => function ($query) {
-    //             $query->orderBy('id', 'asc');
-    //         }])->first();
-
-    //     $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
-
-    //     // Check if the submodule contains a video_embed
-    //     $containsVideo = !empty($submodule->video_embed);
-
-    //     if ($containsVideo) {
-    //         $userProgressList = UserProgress::where([
-    //             'user_id' => $user->id,
-    //             'module_id' => $module->id,
-    //         ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
-
-    //         // Filter playlist based on user progress
-    //         $playlist = $module->submodules;
-
-    //         foreach ($playlist as $key => $playlistItem) {
-    //             if ($key === 0) {
-    //                 $playlistItem->locked = false;
-    //             } else {
-    //                 $playlistItem->locked = !in_array($playlistItem->id, $userProgressList) && !in_array($playlist[$key - 1]->id, $userProgressList);
-    //             }
-    //         }
-
-    //         $breadcrumbs = [
-    //             'Materi' => route('materi'),
-    //             $module->title => route('user.module.show', ['slug' => $module->slug]),
-    //             $submodule->title => ''
-    //         ];
-
-    //         return view('user.module.subModule.index', compact('module', 'submodule', 'breadcrumbs', 'playlist', 'userProgressList', 'containsVideo'));
-    //     } else {
-    //         // If there is no video, update user progress
-    //         UserProgress::updateOrCreate(
-    //             [
-    //                 'user_id' => $user->id,
-    //                 'submodule_id' => $submodule->id,
-    //                 'module_id' => $module->id,
-    //             ]
-    //         );
-
-    //         // Redirect to the next submodule
-    //         return redirect()->route('next.submodule', ['moduleSlug' => $moduleSlug, 'submoduleSlug' => $submoduleSlug]);
-    //     }
-    // }
-
 
     public function showAdmin($slug)
     {
@@ -287,8 +234,9 @@ class ModuleController extends Controller
             $module->save();
         }
 
+        Alert::success('Berhasil!', "Berhasil mengubah data module!");
 
-        return redirect('/dashboard-admin/data-module')->with('successUpdate', 'Module berhasil diperbarui!');
+        return redirect('/dashboard-admin/data-module');
     }
 
     public function delete($slug)
@@ -296,6 +244,7 @@ class ModuleController extends Controller
         $module = Module::where('slug', $slug)->firstOrFail();
         $module->delete();
 
+        Alert::success('Berhasil!', "Berhasil menghapus data module!");
         return redirect('/dashboard-admin/data-module');
     }
 
@@ -305,9 +254,10 @@ class ModuleController extends Controller
 
         $submodule = $module->submodules()->where('slug', $submoduleSlug)->firstOrFail();
 
-
         $submodule->delete();
 
-        return back()->with('successDelete', 'Berhasil menghapus data!');
+        Alert::success('Berhasil!', "Berhasil menghapus data submodule!");
+
+        return back();
     }
 }
