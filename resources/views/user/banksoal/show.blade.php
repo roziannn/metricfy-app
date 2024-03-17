@@ -145,9 +145,9 @@
                 <div class="modal-header border-0">
                     <p class="modal-title fs-6 font-weight-bold" id="exampleModalLabel">Ulangi Latihan</p>
                 </div>
-                <div class="modal-body">
 
-                    Kerjakan lagi paket soal ini?
+                <div class="modal-body">
+                    Kerjakan lagi paket soal ini? <br> kamu tidak akan mendapatkan poin.
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-sm btn-light me-3" data-bs-dismiss="modal">Batal</button>
@@ -174,7 +174,7 @@
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-sm me-3 btn-light" data-bs-dismiss="modal">Batal</button>
 
-                    <a href="/banksoal/{{ $banksoal->slug }}/exercise" class="btn btn-sm btn-primary">
+                    <a href="/banksoal/{{ $banksoal->slug }}/discussion" class="btn btn-sm btn-primary">
                         Ya,
                         lihat pembahasan</a>
                 </div>

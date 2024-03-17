@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
+    <div class="pt-5"></div>
     <ol class="breadcrumb bg-light px-2">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
@@ -37,9 +38,9 @@
                                     class="badge badge-pill {{ isset($userAlreadyAnswer[$item->id]) ? 'bg-danger' : 'bg-warning' }} p-2 small"><i
                                         class="fa-solid fa-coins pe-1"></i>{{ $item->point }} xp</span></div>
                         </div>
-                        <p class="card-text">{{ $item->question }}</p>
                         @if (isset($userAlreadyAnswer[$item->id]))
-                            <div class="alert alert-success">
+                            <div class="alert alert-primary">
+                                <p class="card-text">{{ $item->question }}</p>
                                 @foreach (json_decode($item->options) as $option)
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="answer"
@@ -52,6 +53,7 @@
                                     </div>
                                 @endforeach
                             </div>
+                            <span class="text-muted">Pembahasan soal</span>
                         @else
                             <form
                                 action="{{ route('submitAnswer', ['slug' => $item->module->slug, 'exerciseId' => $item->id]) }}"

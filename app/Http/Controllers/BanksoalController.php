@@ -134,8 +134,25 @@ class BanksoalController extends Controller
 
     public function exercise($slug)
     {
+        $user_id = auth()->id();
         $banksoal = Banksoal::where('slug', $slug)->first();
+
         $estimatedDuration = $banksoal->estimated_duration;
+
+        $breadcrumbs = [
+            'Banksoal' => route('banksoal'),
+            $banksoal->title => route('user.banksoal.show', ['slug' => $banksoal->slug]),
+            'Pengerjaan' => ''
+        ];
+
+
+        return view('user.banksoal.exercise', compact('banksoal', 'estimatedDuration', 'breadcrumbs'));
+    }
+
+    public function showDiscussion($slug)
+    {
+        $user_id = auth()->id();
+        $banksoal = Banksoal::where('slug', $slug)->first();
 
 
         $breadcrumbs = [
@@ -144,7 +161,11 @@ class BanksoalController extends Controller
             'Pengerjaan' => ''
         ];
 
-        return view('user.banksoal.exercise', compact('banksoal', 'estimatedDuration', 'breadcrumbs'));
+        $alreadyDoneByUser = UserExamBanksoal::where('user_id', $user_id)
+            ->where('banksoal_id', $banksoal->id)
+            ->first();
+
+        return view('user.banksoal.showDiscussion', compact('banksoal', 'breadcrumbs', 'alreadyDoneByUser'));
     }
 
     /**
@@ -182,6 +203,22 @@ class BanksoalController extends Controller
         return back();
     }
 
+    // // kerjakan ulang
+    // public function redoExam($id)
+    // {
+    //     $user = auth()->user();
+    //     $banksoal = Banksoal::where('id', $id)->first();
+    //     $slug = $banksoal->slug;
+
+    //     $deleteUserRecord = UserExamBanksoal::where('user_id', $user->id)->where('banksoal_id', $banksoal->id)
+    //         ->first();
+    //     $deleteUserRecord->delete();
+
+
+    //     // dd($deleteUserRecord);
+
+    //     return redirect('/banksoal/ ' . $slug . '/exercise');
+    // }
 
     public function submitExam(Request $request, $id)
     {

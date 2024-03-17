@@ -121,4 +121,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/banksoal/{slug}', [BanksoalController::class, 'showUser'])->name('user.banksoal.show');
     Route::get('/banksoal/{slug}/exercise', [BanksoalController::class, 'exercise']);
     Route::post('/submit-exam-banksoal/{id}', [BanksoalController::class, 'submitExam']);
+    Route::get('/banksoal/{slug}/discussion', [BanksoalController::class, 'showDiscussion']);
+    Route::get('/banksoal/{id}/redo/exam', [BanksoalController::class, 'redoExam']);
 });
