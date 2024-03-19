@@ -83,7 +83,7 @@ class BlogController extends Controller
         $blog = Blog::where('slug', $slug)->first();
 
         $breadcrumbs = [
-            'Blog' => route('admin-blog'),
+            'Blog' => route('blog'),
             $blog->title => ''
         ];
 

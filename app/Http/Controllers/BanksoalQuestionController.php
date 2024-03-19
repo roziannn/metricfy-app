@@ -37,6 +37,7 @@ class BanksoalQuestionController extends Controller
             'question' => 'required',
             'options' => 'required|array|min:1',
             'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'discussion' => 'required'
         ]);
 
         $banksoal = Banksoal::where('id', $id)->first();
@@ -46,6 +47,7 @@ class BanksoalQuestionController extends Controller
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
             'answer' => $validatedData['answer'],
+            'discussion' => $validatedData['discussion']
         ]);
 
         Alert::success('Berhasil', 'Berhasil menambahkan soal!');
@@ -73,14 +75,16 @@ class BanksoalQuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $banksoalId, $questionId)
     {
-        $question = BanksoalQuestion::find($id);
+        $banksoal = Banksoal::where('id', $banksoalId)->firstOrFail();
+        $question = $banksoal->banksoalQuestions()->where('id', $questionId)->firstOrFail();
 
         $rules = ([
             'question' => 'required',
             'options' => 'required|array|min:1',
             'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'discussion' => 'required',
         ]);
 
         $validatedData = $request->validate($rules);
@@ -90,7 +94,9 @@ class BanksoalQuestionController extends Controller
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
             'answer' => $validatedData['answer'],
+            'discussion' => $validatedData['discussion'],
         ]);
+
 
         $question->save();
 

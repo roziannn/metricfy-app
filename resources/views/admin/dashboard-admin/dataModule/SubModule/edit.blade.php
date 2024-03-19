@@ -9,16 +9,14 @@
         </div>
     @endif
 
-
     <div class="d-flex justify-content-start align-items-center">
-
         <a href="/dashboard-admin/data-module/{{ $module->slug }}" class="text-decoration-none text-dark"><i
                 class="fa-solid fa-lg fa-angle-left me-3"></i></a>
         <h5 class="p-0 m-0">Edit Sub Materi</h5>
-
     </div>
 
-    <form method="POST" class="mt-4" action="/dashboard-admin/data-module/{{ $submodule->slug }}/update">
+    <form method="POST" class="mt-4" action="/dashboard-admin/data-module/{{ $submodule->slug }}/update"
+        enctype="multipart/form-data">
         @csrf
         <div class="form-group row">
             <label for="title" class="col-sm-2 col-form-label">Judul Sub Module</label>
@@ -34,16 +32,47 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="content" class="col-sm-2 col-form-label">Content</label>
+            <label for="image" class="col-sm-2 col-form-label">Img Url</label>
             <div class="col-sm-10">
-                {{-- <textarea class="form-control" id="content" name="content" placeholder="Ketik di sini" rows="4">{{ $submodule->content }}"</textarea> --}}
-                <input id="content" type="hidden" name="content" value="{{ old('content', $submodule->content) }}">
-                <trix-editor input="content" class="bg-white"></trix-editor>
-            </div>
-            <div class="d-flex justify-content-end mt-4">
-                <button class="btn btn-sm btn-success col-md-2 col-sm-12" type="submit"><i
-                        class="fa-solid fa-floppy-disk me-2"></i>Simpan Perubahan</button>
+                <input type="file" name="image" id="image" class="form-control">
+                @if ($submodule->image !== null)
+                    <img src="{{ asset('img/submoduleContent/' . $submodule->image) }}" id="featuredImageDisplay"
+                        style="display:block;margin-top:10px;" width="300px;" />
+                @endif
             </div>
         </div>
+        <div class="form-group row">
+            <label for="content" class="col-sm-2 col-form-label">Content</label>
+            <div class="col-sm-10">
+                <textarea name="content" id="content" cols="30" rows="10">{{ $submodule->content }}</textarea>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-sm btn-success col-md-2 col-sm-12" type="submit"><i
+                    class="fa-solid fa-floppy-disk me-2"></i>Simpan Perubahan</button>
+        </div>
     </form>
+
+    <script>
+        var editor = new FroalaEditor('#content')
+        //     // Tambahkan opsi untuk mengunggah gambar ke Cloudinary
+        //     imageUploadURL: 'https://api.cloudinary.com/v1_1/dyfvqsbsm/image/upload',
+        //     imageUploadParams: {
+        //         // Ganti 'your_cloud_name', 'your_api_key', dan 'your_upload_preset' dengan kredensial Cloudinary Anda
+        //         upload_preset: 'dvc5ycaa',
+        //         api_key: '898875787932861'
+        //     },
+        //     // Tentukan jenis respon yang diharapkan dari Cloudinary
+        //     imageUploadMethod: 'POST',
+        //     imageMaxSize: 5 * 1024 * 1024, // Max 5MB
+        //     // Tambahkan penanganan respons dari Cloudinary
+        //     imageUploadRemoteUrls: true, // Aktifkan opsi ini untuk menangani respons dari Cloudinary
+        //     events: {
+        //         'image.inserted': function($img, response) {
+        //             // Tangkap URL gambar dari respons Cloudinary dan masukkan ke dalam atribut 'src' gambar
+        //             $img.attr('src', response.url);
+        //         }
+        //     }
+        // });
+    </script>
 @endsection

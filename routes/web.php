@@ -2,25 +2,28 @@
 
 use App\Models\Blog;
 use App\Models\Module;
+use App\Models\Banksoal;
 use App\Models\Exercise;
 use GuzzleHttp\Middleware;
+use App\Models\BanksoalQuestion;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserDashboard;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GamesController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\CloudinaryStorage;
 use App\Http\Controllers\BanksoalController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\PojokLiterasiController;
+use App\Http\Controllers\PojokNumerasiController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\BanksoalQuestionController;
-use App\Http\Controllers\GamesController;
-use App\Http\Controllers\PojokNumerasiController;
-use App\Models\Banksoal;
-use App\Models\BanksoalQuestion;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -97,7 +100,7 @@ Route::middleware(['auth', 'roles'])->group(function () {
     //Admin - Bank soal Question
     Route::get('/dashboard-admin/banksoal/{slug}/create', [BanksoalQuestionController::class, 'create']);
     Route::post('/dashboard-admin/banksoal/{slug}/store', [BanksoalQuestionController::class, 'store']);
-    Route::post('/dashboard-admin/banksoal/{id}/update', [BanksoalQuestionController::class, 'update']);
+    Route::post('/dashboard-admin/banksoal/{banksoalId}/{questionId}/update', [BanksoalQuestionController::class, 'update']);
     Route::get('/dashboard-admin/banksoal/{id}/delete', [BanksoalQuestionController::class, 'delete']);
 });
 

@@ -97,6 +97,12 @@
                             </div>
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label for="question">Pembahasan Kunci Jawaban</label>
+                            <textarea class="form-control" name="discussion" id="discussion" cols="10" rows="3">
+                            </textarea>
+                        </div>
+
                         <div class="text-right justify-content-around mt-3">
                             <button type="submit" class="btn btn-primary w-100">Buat Pertanyaan</a></button>
                         </div>
@@ -203,6 +209,12 @@
                                                             </label>
                                                         @endforeach
                                                     </div>
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label for="question">Pembahasan Kunci Jawaban</label>
+                                                    <textarea class="form-control" name="discussion" id="discussion" cols="10" rows="3" autofocus>{{ $item->discussion }}
+                                                    </textarea>
                                                 </div>
 
                                                 <div class="text-right justify-content-around mt-3">

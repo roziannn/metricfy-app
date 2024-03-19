@@ -12,7 +12,7 @@
                         <p class="col-sm-12 px-0 pb-3 text-dark">Berkenalan dengan literasi numerasi <br> serta tujuan
                             kita mempelajarinya
                         </p>
-                        <a href="/materi-belajar" type="button"
+                        <a href="#numerasiIntro" type="button"
                             class="btn btn-warning btn-m  py-2 col-sm-6 font-weight-bold shadow">Yuk, kenalan dengan
                             Numerasi</a>
                     </div>
@@ -25,7 +25,7 @@
     </div>
 </div>
 @section('container')
-    <div class="row" style="line-height: 24px;">
+    <div class="row" style="line-height: 24px;" id="numerasiIntro">
         <div class="col-12 mt-3 mb-5">
             <h6 class="font-weight-bolder text-purple">PEMBELAJARAN NUMERASI</h6>
             <h4 class="font-weight-bold mb-4">Pengertian apa itu numerasi?</h4>

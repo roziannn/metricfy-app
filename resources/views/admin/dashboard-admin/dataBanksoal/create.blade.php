@@ -64,8 +64,6 @@
                     <input id="desc" type="hidden" name="desc" value="{{ old('desc') }}">
                     <trix-editor input="desc"></trix-editor>
                 </div>
-
-
             </div>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-sm col-md-2 btn-success col-sm-12" type="submit">Buat Paket Soal</button>

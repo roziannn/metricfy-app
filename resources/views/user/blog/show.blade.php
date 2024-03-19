@@ -2,6 +2,16 @@
 @include('partials.navbar')
 <div class="pt-5"></div>
 @section('container')
+    <ol class="breadcrumb bg-light">
+        @foreach ($breadcrumbs as $label => $url)
+            @if ($url)
+                <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
+                </li>
+            @else
+                <li class="breadcrumb-item active" aria-current="page">{{ $label }}</li>
+            @endif
+        @endforeach
+    </ol>
     <div class="row justify-content-between">
         <div class="col-md-12 col-lg-8 py-3 pe-lg-5">
             <div class="head-content row">

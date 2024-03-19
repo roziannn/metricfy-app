@@ -142,7 +142,7 @@ class BanksoalController extends Controller
         $breadcrumbs = [
             'Banksoal' => route('banksoal'),
             $banksoal->title => route('user.banksoal.show', ['slug' => $banksoal->slug]),
-            'Pengerjaan' => ''
+            'Mengerjakan' => ''
         ];
 
 
@@ -158,7 +158,7 @@ class BanksoalController extends Controller
         $breadcrumbs = [
             'Banksoal' => route('banksoal'),
             $banksoal->title => route('user.banksoal.show', ['slug' => $banksoal->slug]),
-            'Pengerjaan' => ''
+            'Pembahasan' => ''
         ];
 
         $alreadyDoneByUser = UserExamBanksoal::where('user_id', $user_id)

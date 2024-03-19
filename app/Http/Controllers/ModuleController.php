@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use cloudinary;
 use App\Models\Module;
 use App\Models\Exercise;
 use App\Models\Submodule;
 use Illuminate\Support\Str;
 use App\Models\UserProgress;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Controllers\CloudinaryStorage;
+use App\Http\Controllers\ImageUploadController;
+
 
 class ModuleController extends Controller
 {
@@ -45,14 +50,24 @@ class ModuleController extends Controller
         return redirect('/dashboard-admin/data-module');
     }
 
+
     public function storeSubModule(Request $request, $id)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:120',
             'content' => 'required',
-            'video_embed' => 'nullable|string'
+            'video_embed' => 'nullable|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
         $module = Module::where('id', $id)->first();
+
+        if ($request->hasFile('image')) {
+            $img = $request->file('image');
+            $imgName = $validatedData['title'] . '-' . time() . '.' . $img->extension();
+            $img->move(public_path('img/submoduleContent'), $imgName);
+
+            $validatedData['image'] = $imgName;
+        }
 
         Submodule::create([
             'title' => $validatedData['title'],
@@ -60,6 +75,7 @@ class ModuleController extends Controller
             'content' => $validatedData['content'],
             'module_id' => $module->id,
             'video_embed' => $validatedData['video_embed'],
+            'image' => $validatedData['image'],
         ]);
 
 
@@ -80,23 +96,40 @@ class ModuleController extends Controller
 
     public function updateSubModule(Request $request, $slug)
     {
-        $rules = ([
+        $rules = [
             'title' => 'required',
             'video_embed' => 'nullable',
             'content' => 'required',
-        ]);
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
 
         $validatedData = $request->validate($rules);
 
         $submodule = Submodule::where('slug', $slug)->first();
-        $submodule->update($validatedData);
 
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $submodule->title . '-' . time() . '.' . $image->extension();
+            $image->move(public_path('img/submoduleContent'), $imageName);
+
+            $oldImagePath = public_path('img/submoduleContent') . '/' . $image;
+            if ($submodule->image && file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+
+            $validatedData['image'] = $imageName;
+        }
+
+
+        $submodule->update($validatedData);
         $updatedSlug = $submodule->fresh()->slug;
         $newUrl = url("/dashboard-admin/data-module/{$submodule->module->slug}/{$updatedSlug}/edit");
+
 
         Alert::success('Berhasil!', "Berhasil mengubah data submodule!");
         return redirect($newUrl);
     }
+
 
     // show page all module/index untuk user
     public function showUser($slug)
@@ -121,6 +154,12 @@ class ModuleController extends Controller
         ])->orderBy('submodule_id', 'asc')->pluck('submodule_id')->toArray();
 
 
+        $breadcrumbs = [
+            'Materi' => route('materi'),
+            $show_module->title => route('user.module.show', ['slug' => $show_module->slug]),
+            $show_module->title => ''
+        ];
+
 
         // Menentukan status kunci untuk setiap submodul
         $submodules = $show_module->submodules;
@@ -135,7 +174,7 @@ class ModuleController extends Controller
             $submodule->locked = !in_array($submodule->id, $userProgress) && !in_array($prevSubmodule->id, $userProgress);
         }
 
-        return view('user.module.show', compact('show_module', 'totalCurrentSub', 'userProgress'));
+        return view('user.module.show', compact('show_module', 'totalCurrentSub', 'breadcrumbs', 'userProgress'));
     }
 
 

@@ -1,4 +1,4 @@
-<div class="col-md-4 m-0 p-0 py-3">
+<div class="col-md-4 m-0 p-0 py-lg-3">
     <div class="card rounded-3">
         <div class="card-body">
             <h6>{{ $module->title }} </h6>

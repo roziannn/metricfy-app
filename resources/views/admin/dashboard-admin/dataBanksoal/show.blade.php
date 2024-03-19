@@ -202,10 +202,10 @@
 
     {{-- Modal add soal baru --}}
     <div class="modal" id="modal">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="model-title mb-0">Paket soal: {{ $banksoal->title }}</h4>
+                    <h5 class="model-title mb-0">Paket soal: {{ $banksoal->title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
                 </div>
                 <div class="modal-body">
@@ -267,6 +267,11 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group mb-2">
+                            <label class="form-check-label" for="discussion">Pembahasan Kunci Jawaban</label>
+                            <textarea class="form-control my-2" type="text" id="discussion" name="discussion" rows="3"></textarea>
+                        </div>
+
 
                         <div class="text-right justify-content-around mt-3">
                             <button type="submit" class="btn btn-primary w-100">Buat Pertanyaan</a></button>
@@ -311,9 +316,10 @@
                         <h4 class="model-title mb-0">Paket soal: {{ $banksoal->title }}</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
                     </div>
-                    <div class="modal-body">
-                        <form action="/dashboard-admin/banksoal/{{ $soal->id }}/update" method="post">
-                            @csrf
+                    <form action="/dashboard-admin/banksoal/{{ $soal->banksoal_id }}/{{ $soal->id }}/update"
+                        method="post">
+                        @csrf
+                        <div class="modal-body">
                             <div class="form-group mb-3">
                                 <label for="question">Pertanyaan</label>
                                 <textarea class="form-control" name="question" id="question" cols="10" rows="3" autofocus>{{ $soal->question }}
@@ -344,12 +350,17 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="form-group mb-2">
+                                <label class="form-check-label" for="discussion">Pembahasan Kunci
+                                    Jawaban</label>
+                                <textarea class="form-control my-2" type="text" id="discussion" name="discussion" rows="3">{{ $soal->discussion }}</textarea>
+                            </div>
 
                             <div class="text-right justify-content-around mt-3">
-                                <button type="submit" class="btn btn-primary w-100">Buat Pertanyaan</a></button>
+                                <button type="submit" class="btn btn-primary w-100">Simpan Pertanyaan</a></button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

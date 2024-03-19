@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Submodule extends Model
 {
+
+
     protected $guarded = ['id'];
 
     public static function boot()

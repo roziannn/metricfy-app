@@ -1,4 +1,3 @@
-<div class="pt-5"></div>
 <div class="d-flex justify-content-between">
     <div class="col-sm-6 px-0">
         <h4 class="font-weight-bold">{{ $show_module->title }}</h4>

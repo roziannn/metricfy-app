@@ -43,6 +43,7 @@ class ExerciseController extends Controller
             'question' => 'required',
             'options' => 'required|array|min:1',
             'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'discussion' => 'required'
         ]);
 
         $module = Module::where('id', $id)->first();
@@ -52,10 +53,10 @@ class ExerciseController extends Controller
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
             'answer' => $validatedData['answer'],
+            'discussion' => $validatedData['discussion'],
         ]);
 
-        $request->accepts('session');
-        session()->flash('successStore', 'Berhasil menambahkan latihan soal!');
+        Alert::success('Berhasil!', 'Berhasil menambahkan soal.');
 
         return back();
     }
@@ -156,6 +157,7 @@ class ExerciseController extends Controller
             'question' => 'required',
             'options' => 'required|array|min:1',
             'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'discussion' => 'required'
         ]);
 
         $validatedData = $request->validate($rules);
@@ -165,12 +167,13 @@ class ExerciseController extends Controller
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
             'answer' => $validatedData['answer'],
+            'discussion' => $validatedData['discussion'],
         ]);
 
         $question->save();
 
-        $request->accepts('session');
-        session()->flash('successUpdatePertanyaan', 'Berhasil mengubah exercise!');
+        Alert::success('Berhasil!', 'Berhasil mengubah soal.');
+
         return back();
     }
 
@@ -180,10 +183,10 @@ class ExerciseController extends Controller
         $module = Module::where('slug', $moduleSlug)->firstOrFail();
 
         $question = $module->exercises()->where('id', $exerciseId)->firstOrFail();
-
-
         $question->delete();
 
-        return back()->with('successDelete', 'Berhasil menghapus data!');
+        Alert::success('Berhasil!', 'Berhasil menghapus soal.');
+
+        return back();
     }
 }

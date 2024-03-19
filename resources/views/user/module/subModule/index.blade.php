@@ -31,7 +31,7 @@
                             frameborder="0" id="player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen class="rounded-4"></iframe>
-                        <p class="text-justify pt-3">{{ $submodule->content }}</p>
+                        <p class="text-justify pt-3">{!! $submodule->content !!}</p>
                     @else
                         <p class="text-justify bg-white">{!! $submodule->content !!}</p>
                     @endif

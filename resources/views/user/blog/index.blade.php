@@ -9,8 +9,8 @@
                     <div class="col-md-8">
                         <h1 class="font-weight-bolder text-dark d-none d-md-block">Membaca Dapat Menambah <br> Banyak
                             Pengetahuanmu Lho!</h1>
-                        <h2 class="font-weight-bolder text-dark mt-5 d-md-none">Membaca Dapat Menambah <br> Banyak
-                            Pengetahuanmu Lho!</h2>
+                        <h3 class="font-weight-bolder text-dark mt-3 d-md-none">Membaca Dapat Menambah <br> Banyak
+                            Pengetahuanmu Lho!</h3>
                         <p>Baca informasi seputar literasi numerasi dan kabar dunia pendidikan <br> di Metricfy Blog.
                         </p>
                     </div>

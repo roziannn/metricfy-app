@@ -24,63 +24,88 @@
                 @endforeach
             </div>
         </div>
+    </div>
 
-        <div class="col-md-9">
+    <div class="row">
+        <div class="col-md-6">
             @foreach ($exerciseModule as $item)
-                <div class="card mb-3" id="item{{ $loop->index }}" style="display: none;">
+                <div class="card card-questions mb-3" id="item{{ $loop->index }}" style="display: none;">
                     <input type="hidden" name="exercise_id" value="{{ $item->id }}">
-
                     <div class="card-body">
-
                         <div class="d-flex align-items-center justify-content-between">
-                            <h5 class="col-sm-3 px-0 card-title font-weight-bold">Soal {{ $loop->index + 1 }}</h5>
-                            <div class="col-sm-3 px-0 card-title text-end"> <span
-                                    class="badge badge-pill {{ isset($userAlreadyAnswer[$item->id]) ? 'bg-danger' : 'bg-warning' }} p-2 small"><i
-                                        class="fa-solid fa-coins pe-1"></i>{{ $item->point }} xp</span></div>
-                        </div>
-                        @if (isset($userAlreadyAnswer[$item->id]))
-                            <div class="alert alert-primary">
-                                <p class="card-text">{{ $item->question }}</p>
-                                @foreach (json_decode($item->options) as $option)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="answer"
-                                            id="answer{{ $loop->index + 1 }}" value="{{ chr(64 + $loop->index + 1) }}"
-                                            @if ($userAlreadyAnswer[$item->id] === chr(64 + $loop->index + 1)) checked 
-                                            @elseif ($userAlreadyAnswer[$item->id] && $userAlreadyAnswer[$item->id] !== chr(64 + $loop->index + 1)) disabled @endif>
-                                        <label class="form-check-label" for="answer{{ $loop->index + 1 }}">
-                                            {{ chr(64 + $loop->index + 1) }} . {{ $option }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                            <h6 class="col-sm-3 px-0 card-title font-weight-bold">Soal {{ $loop->index + 1 }}</h6>
+                            <div class="col-sm-3 px-0 card-title text-end">
+                                <span
+                                    class="badge badge-pill {{ isset($userAlreadyAnswer[$item->id]) ? 'bg-body-secondary' : 'bg-warning' }} p-2 small">
+                                    <i class="fa-solid fa-coins pe-1"></i>{{ $item->point }} xp
+                                </span>
                             </div>
-                            <span class="text-muted">Pembahasan soal</span>
-                        @else
-                            <form
-                                action="{{ route('submitAnswer', ['slug' => $item->module->slug, 'exerciseId' => $item->id]) }}"
-                                method="post">
-                                @csrf
-                                @foreach (json_decode($item->options) as $option)
-                                    <div class="form-check">
-                                        @php
-                                            $answerId = $loop->parent->index + 1;
-                                            $optionId = $loop->index + 1;
-                                            $inputId = "answer{$answerId}_{$optionId}";
-                                            $isAnswered = in_array($item->id, $userAlreadyAnswer);
-                                        @endphp
-                                        <input class="form-check-input" type="radio" name="answer"
-                                            id="{{ $inputId }}" value="{{ chr(64 + $optionId) }}"
-                                            @if ($isAnswered && $isAnswered->is_correct) disabled @endif>
-                                        <label class="form-check-label" for="{{ $inputId }}">
-                                            {{ chr(64 + $optionId) }} . {{ $option }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                                <div class="text-start pt-3">
-                                    <button type="submit" class="btn btn-m btn-primary col-md-3 col-sm-12">Kirim
-                                        Jawaban</button>
+                        </div>
+                        <p class="card-text">{{ $item->question }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="col-md-6">
+            @foreach ($exerciseModule as $item)
+                <div class="card card-options mb-3" id="options{{ $loop->index }}" style="display: none;">
+                    <input type="hidden" name="exercise_id" value="{{ $item->id }}">
+                    <div class="card-body">
+                        <form
+                            action="{{ route('submitAnswer', ['slug' => $item->module->slug, 'exerciseId' => $item->id]) }}"
+                            method="post" class="m-0">
+                            @csrf
+                            @foreach (json_decode($item->options) as $option)
+                                <div class="form-check">
+                                    @php
+                                        $answerId = $loop->parent->index + 1;
+                                        $optionId = $loop->index + 1;
+                                        $inputId = "answer{$answerId}_{$optionId}";
+                                        $isAnswered = isset($userAlreadyAnswer[$item->id])
+                                            ? $userAlreadyAnswer[$item->id]
+                                            : null;
+                                        $isChecked = $isAnswered === chr(64 + $optionId);
+                                        $isDisabled = $isAnswered && $isAnswered !== chr(64 + $optionId);
+                                    @endphp
+                                    <input class="form-check-input" type="radio" name="answer" id="{{ $inputId }}"
+                                        value="{{ chr(64 + $optionId) }}" {{ $isChecked ? 'checked' : '' }}
+                                        {{ $isDisabled ? 'disabled' : '' }}>
+                                    <label class="form-check-label" for="{{ $inputId }}">
+                                        {{ chr(64 + $optionId) }} . {{ $option }}
+                                    </label>
+                                    @if ($isChecked)
+                                        @if ($item->is_correct)
+                                            <p class="my-2 p-2 text-isCorrect bg-success">(Jawabanmu benar!) <i
+                                                    class="fa-solid fa-check text-light ms-2 rounded"></i>
+                                            </p>
+                                        @else
+                                            <p class="my-2 p-2 text-isCorrect bg-danger">(Jawabanmu
+                                                salah!) <i class="fa-solid fa-xmark text-light ms-2 rounded"></i>
+                                            </p>
+                                        @endif
+                                    @endif
                                 </div>
-                            </form>
-                        @endif
+                            @endforeach
+                            @unless (isset($userAlreadyAnswer[$item->id]))
+                                <div class="text-start pt-3">
+                                    <button type="submit" class="btn btn-sm btn-primary col-sm-12">Kirim Jawaban</button>
+                                </div>
+                            @endunless
+                            @if (isset($userAlreadyAnswer[$item->id]))
+                                <div class="card-footer bg-white">
+                                    <div class="row">
+                                        <span class="text-muted px-0">Pembahasan soal</span>
+
+                                        <span class="font-weight-bold px-0 mb-3">Jawaban yang tepat:</span>
+
+                                        <p class="p-0">
+                                            {{ $item->discussion }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endif
+                        </form>
                     </div>
                 </div>
             @endforeach
@@ -90,8 +115,11 @@
 
 <script>
     function showQuestion(index) {
-        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+        document.querySelectorAll('.card-questions').forEach(card => card.style.display = 'none');
+        document.querySelectorAll('.card-options').forEach(card => card.style.display = 'none');
+
         document.getElementById('item' + index).style.display = 'block';
+        document.getElementById('options' + index).style.display = 'block';
 
         sessionStorage.setItem('selectedCardIndex', index);
 
@@ -128,5 +156,18 @@
     .btn-outline-primary:hover {
         background-color: #007bff;
         color: #fff;
+    }
+
+    #alreadyAnswer {
+        opacity: 70%;
+        color:
+    }
+
+    .text-isCorrect {
+        font-size: 15px;
+        font-weight: 500;
+        color: #fff;
+        border-radius: 8px;
+        opacity: 85%;
     }
 </style>

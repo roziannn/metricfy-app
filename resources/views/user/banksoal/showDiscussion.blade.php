@@ -2,15 +2,25 @@
 @include('partials.navbar')
 @section('container')
     <div class="pt-5"></div>
+    <ol class="breadcrumb bg-light px-2">
+        @foreach ($breadcrumbs as $label => $url)
+            @if ($url)
+                <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
+                </li>
+            @else
+                <li class="breadcrumb-item active" aria-current="page">{{ $label }}</li>
+            @endif
+        @endforeach
+    </ol>
     <div class="pb-3">
         <div class="d-flex align-items-center">
             <a href="/banksoal/{{ $banksoal->slug }}" class="text-decoration-none me-3">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <h5 class="font-weight-bolder"> Pembahasan: {{ $banksoal->title }}</h5>
+            <h6 class="font-weight-bolder  m-0"> Pembahasan: {{ $banksoal->title }}</h6>
         </div>
     </div>
-    <div class="col-md-3 mb-3 px-0">
+    <div class="col-md-12 mb-3 px-0">
         <div class="d-flex flex-wrap">
             @foreach ($banksoal->banksoalQuestions as $item)
                 <button id="button{{ $loop->index }}" class="btn btn-outline-primary m-2"
@@ -26,6 +36,7 @@
                 <div class="card card-question mb-3" id="item{{ $loop->index }}" style="display: none;">
                     <input type="hidden" name="answers[{{ $item->id }}][question_id]" value="{{ $item->id }}">
                     <div class="card-body">
+                        <h6 class="col-sm-3 px-0 card-title font-weight-bold">Soal {{ $loop->index + 1 }}</h6>
                         <p class="card-text">{{ $item->question }}</p>
                         @foreach (json_decode($item->options) as $optionIndex => $option)
                             {{-- optionIndex-> indeks elemen jawaban saat ini dalam array
@@ -82,13 +93,8 @@
                             {{ $correctAnswer }}. {{ $correctOption }} {{-- digabung --}}
                         </span>
 
-                        <p class="mt-3">
-                            Skimming adalah membaca dengan cepat untuk mendapatkan gambaran umum atau ide pokok dari
-                            teks.
-                            Ini melibatkan membaca judul, subjudul, dan paragraf pertama atau terakhir, serta
-                            mencari
-                            kata
-                            kunci atau informasi yang menonjol.
+                        <p class="mt-3 text-justify">
+                            {{ $item->discussion }}
                         </p>
 
                     </div>
