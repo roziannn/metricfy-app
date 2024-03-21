@@ -141,6 +141,18 @@
         .blog-text {
             font-size: 14px;
         }
+
+        a[id="fr-logo"] {
+            display: none !important;
+        }
+
+        p[data-f-id="pbf"] {
+            display: none !important;
+        }
+
+        a[href*="www.froala.com"] {
+            display: none !important;
+        }
     </style>
 </body>
 

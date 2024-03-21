@@ -49,7 +49,7 @@
                             value="{{ $item->id }}">
                         <div class="card-body">
                             <h6 class="col-sm-3 px-0 card-title font-weight-bold">Soal {{ $loop->index + 1 }}</h6>
-                            <p class="card-text">{{ $item->question }}</p>
+                            <p class="card-text">{!! $item->question !!}</p>
                         </div>
                     </div>
                 @endforeach

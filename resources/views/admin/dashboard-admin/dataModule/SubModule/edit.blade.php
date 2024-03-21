@@ -2,12 +2,6 @@
 @include('partials.navbar')
 @section('container')
     <div class="pt-5"></div>
-    @if (session()->has('successUpdate'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="width:100% ;">
-            {{ session('successUpdate') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="d-flex justify-content-start align-items-center">
         <a href="/dashboard-admin/data-module/{{ $module->slug }}" class="text-decoration-none text-dark"><i
@@ -54,25 +48,8 @@
     </form>
 
     <script>
-        var editor = new FroalaEditor('#content')
-        //     // Tambahkan opsi untuk mengunggah gambar ke Cloudinary
-        //     imageUploadURL: 'https://api.cloudinary.com/v1_1/dyfvqsbsm/image/upload',
-        //     imageUploadParams: {
-        //         // Ganti 'your_cloud_name', 'your_api_key', dan 'your_upload_preset' dengan kredensial Cloudinary Anda
-        //         upload_preset: 'dvc5ycaa',
-        //         api_key: '898875787932861'
-        //     },
-        //     // Tentukan jenis respon yang diharapkan dari Cloudinary
-        //     imageUploadMethod: 'POST',
-        //     imageMaxSize: 5 * 1024 * 1024, // Max 5MB
-        //     // Tambahkan penanganan respons dari Cloudinary
-        //     imageUploadRemoteUrls: true, // Aktifkan opsi ini untuk menangani respons dari Cloudinary
-        //     events: {
-        //         'image.inserted': function($img, response) {
-        //             // Tangkap URL gambar dari respons Cloudinary dan masukkan ke dalam atribut 'src' gambar
-        //             $img.attr('src', response.url);
-        //         }
-        //     }
-        // });
+        var editor = new FroalaEditor('#content', {
+            attribution: false
+        });
     </script>
 @endsection

@@ -75,7 +75,8 @@
                                         {{ chr(64 + $optionId) }} . {{ $option }}
                                     </label>
                                     @if ($isChecked)
-                                        @if ($item->is_correct)
+                                        @if (!$item->is_correct)
+                                            {{-- karena defaultnya is_correct adalah false. jadi harus !false alias TRUE --}}
                                             <p class="my-2 p-2 text-isCorrect bg-success">(Jawabanmu benar!) <i
                                                     class="fa-solid fa-check text-light ms-2 rounded"></i>
                                             </p>

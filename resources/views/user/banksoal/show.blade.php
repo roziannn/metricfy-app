@@ -42,7 +42,7 @@
                             @if ($latestExam)
                                 <div class="d-flex justify-content-between bg-body-secondary rounded-3 px-3 py-2">
 
-                                    <p class="m-0 info-estimated"> {{ $latestExam->created_at }}</p>
+                                    <p class="m-0 info-estimated"> {{ $latestExam->created_at->format(' d/m/Y') }}</p>
 
                                     <p class="m-0 info-estimated">
                                         <i class="fa-regular fa-clock me-2"></i>{{ $latestExam->timed }}
@@ -99,10 +99,10 @@
                     <div class="card rounded-4">
                         <div class="card-body">
                             <p class="card-title border-bottom pb-1 font-weight-bold">Histori Pengerjaan</p>
-                            @if ($latestExam)
+                            {{-- @if ($latestExam)
                                 <div class="d-flex justify-content-between bg-body-secondary rounded-3 px-3 py-2">
 
-                                    <p class="m-0 info-estimated"> {{ $latestExam->created_at }}</p>
+                                    <p class="m-0 info-estimated"> {{ $latestExam->created_at->format(' d/m/Y') }}</p>
 
                                     <p class="m-0 info-estimated">
                                         <i class="fa-regular fa-clock me-2"></i>{{ $latestExam->timed }}
@@ -118,9 +118,9 @@
                                             {{ $latestExam->nilai }}</span>
                                     </div>
                                 </div>
-                            @else
-                                <p class="card-text">Belum ada riwayat pengerjaan.</p>
-                            @endif
+                            @else --}}
+                            <p class="card-text">Belum ada riwayat pengerjaan.</p>
+                            {{-- @endif --}}
                         </div>
                     </div>
                 </div>

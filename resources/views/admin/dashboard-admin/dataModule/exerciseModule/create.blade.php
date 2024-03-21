@@ -180,6 +180,7 @@
                                                     <label for="question">Pertanyaan</label>
                                                     <textarea class="form-control" name="question" id="question" cols="10" rows="3" autofocus>{{ $item->question }}
                                                     </textarea>
+
                                                 </div>
                                                 <div class="form-group mb-3">
                                                     <label for="options">Jawaban <small class="text-danger">*Minimal 1
@@ -235,4 +236,8 @@
 
 
     </div>
+    <script>
+        var editorQuestion = new FroalaEditor('#question');
+        var editorDiscussion = new FroalaEditor('#discussion');
+    </script>
 @endsection

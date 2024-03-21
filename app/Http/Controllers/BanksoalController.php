@@ -80,7 +80,7 @@ class BanksoalController extends Controller
 
         //ambil jawaban terakhir dari user
         $latestExam = UserExamBanksoal::where('user_id', $user->id)->where('banksoal_id', $banksoal->id)
-            ->first();
+            ->latest()->first();
 
         //cek benar salah riwayat pengerjaan terakhir
         if ($latestExam) {
@@ -163,7 +163,7 @@ class BanksoalController extends Controller
 
         $alreadyDoneByUser = UserExamBanksoal::where('user_id', $user_id)
             ->where('banksoal_id', $banksoal->id)
-            ->first();
+            ->latest()->first();
 
         return view('user.banksoal.showDiscussion', compact('banksoal', 'breadcrumbs', 'alreadyDoneByUser'));
     }
@@ -203,23 +203,55 @@ class BanksoalController extends Controller
         return back();
     }
 
-    // // kerjakan ulang
-    // public function redoExam($id)
+    // public function submitExam(Request $request, $id)
     // {
     //     $user = auth()->user();
     //     $banksoal = Banksoal::where('id', $id)->first();
     //     $slug = $banksoal->slug;
+    //     $questions = $banksoal->banksoalQuestions;
 
-    //     $deleteUserRecord = UserExamBanksoal::where('user_id', $user->id)->where('banksoal_id', $banksoal->id)
-    //         ->first();
-    //     $deleteUserRecord->delete();
+    //     $answers = $request->input('answers');
+
+    //     $timed = $request->input('timed');
+
+    //     $totalScore = 0;
+
+    //     foreach ($questions as $question) {
+    //         $correctJawaban = $question->answer;
+    //         $point = $question->point;
+
+    //         $userAnswer = $answers[$question->id]['answer']  ?? null;
+    //         $isCorrect = ($userAnswer === $correctJawaban);
+
+    //         $answers[$question->id]['isCorrect'] = $isCorrect;
+
+    //         if ($isCorrect) {
+    //             $totalScore += $point;
+    //         }
+    //     }
 
 
-    //     // dd($deleteUserRecord);
+    //     UserExamBanksoal::updateOrCreate(
+    //         ['banksoal_id' => $banksoal->id, 'user_id' => $user->id],
+    //         [
+    //             'response_data' => is_array($answers) ? json_encode($answers) : $answers,
+    //             'timed' => $timed, 'pointGet' => $totalScore
+    //         ]
+    //     );
 
-    //     return redirect('/banksoal/ ' . $slug . '/exercise');
+
+    //     //tambah point yg terakhir didapat
+    //     $user->point += $totalScore;
+    //     $user->save();
+
+    //     if ($totalScore <= 65) {
+    //         Alert::warning("😥", "Nilaimu masih dibawah rata-rata :( Kamu bisa coba kerjakan ulang");
+    //     } else {
+    //         Alert::success("Hore!😁", "Nilaimu diatas rata-rata! :)");
+    //     }
+
+    //     return redirect('banksoal/' . $slug);
     // }
-
     public function submitExam(Request $request, $id)
     {
         $user = auth()->user();
@@ -233,38 +265,78 @@ class BanksoalController extends Controller
 
         $totalScore = 0;
 
-        foreach ($questions as $question) {
-            $correctJawaban = $question->answer;
-            $point = $question->point;
+        // Cek apakah data ujian pengguna untuk bank soal ini sudah ada di database sebelumnya
+        $userExam = UserExamBanksoal::where('banksoal_id', $banksoal->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-            $userAnswer = $answers[$question->id]['answer']  ?? null;
-            $isCorrect = ($userAnswer === $correctJawaban);
+        if (!$userExam) {
+            foreach ($questions as $question) {
+                $correctJawaban = $question->answer;
+                $point = $question->point;
 
-            $answers[$question->id]['isCorrect'] = $isCorrect;
+                $userAnswer = $answers[$question->id]['answer']  ?? null;
+                $isCorrect = ($userAnswer === $correctJawaban);
 
-            if ($isCorrect) {
-                $totalScore += $point;
+                $answers[$question->id]['isCorrect'] = $isCorrect;
+
+                if ($isCorrect) {
+                    $totalScore += $point;
+                }
             }
-        }
 
-
-        UserExamBanksoal::updateOrCreate(
-            ['banksoal_id' => $banksoal->id, 'user_id' => $user->id],
-            [
+            // Simpan data ujian pengguna
+            UserExamBanksoal::create([
+                'banksoal_id' => $banksoal->id,
+                'user_id' => $user->id,
                 'response_data' => is_array($answers) ? json_encode($answers) : $answers,
-                'timed' => $timed, 'pointGet' => $totalScore
-            ]
-        );
+                'timed' => $timed,
+                'pointGet' => $totalScore
+            ]);
 
+            // Tambahkan point yang didapat pengguna
+            $user->point += $totalScore;
+            $user->save();
 
-        //tambah point yg terakhir didapat
-        $user->point += $totalScore;
-        $user->save();
+            $totalQuestions = count($questions);
+            $averageScore = $totalQuestions > 0 ? $totalScore / $totalQuestions : 0;
 
-        if ($totalScore <= 70) {
-            Alert::warning("😥", "Nilaimu masih dibawah rata-rata :( Kamu bisa coba kerjakan ulang");
+            // Tampilkan pesan sesuai dengan hasil ujian
+            if ($totalScore <= $averageScore) {
+                Alert::warning("😥", "Nilaimu masih dibawah rata-rata :( Kamu bisa coba kerjakan ulang");
+            } else {
+                Alert::success("Hore!😁", "Nilaimu diatas rata-rata! :)");
+            }
         } else {
-            Alert::success("Hore!😁", "Nilaimu diatas rata-rata! :)");
+            foreach ($questions as $question) {
+                $correctJawaban = $question->answer;
+                $point = $question->point;
+
+                $userAnswer = $answers[$question->id]['answer']  ?? null;
+                $isCorrect = ($userAnswer === $correctJawaban);
+
+                $answers[$question->id]['isCorrect'] = $isCorrect;
+                if ($isCorrect) {
+                    $totalScore += $point; //point tetap di hitung, tp tidak di parse ke database
+                }
+            }
+
+            UserExamBanksoal::create([
+                'banksoal_id' => $banksoal->id,
+                'user_id' => $user->id,
+                'response_data' => is_array($answers) ? json_encode($answers) : $answers,
+                'timed' => $timed,
+                'pointGet' => 0,
+            ]);
+
+            $totalQuestions = count($questions);
+            $averageScore = $totalQuestions > 0 ? $totalScore / $totalQuestions : 0;
+
+            if ($totalScore <= $averageScore) {
+                Alert::warning("😥", "Nilaimu lebih rendah dari pengerjaan terakhirmu.");
+            } else {
+                Alert::success("Hore!😁", "Nilaimu lebih besar dari pengerjaan terakhirmu! :)");
+            }
         }
 
         return redirect('banksoal/' . $slug);

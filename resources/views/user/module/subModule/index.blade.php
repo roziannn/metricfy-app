@@ -2,7 +2,7 @@
 @include('partials.navbar')
 @section('container')
     <div class="pt-5"></div>
-    <ol class="breadcrumb bg-light px-3">
+    <ol class="breadcrumb bg-light px-3 m-0">
         @foreach ($breadcrumbs as $label => $url)
             @if ($url)
                 <li class="breadcrumb-item"><a href="{{ $url }}" class="text-decoration-none">{{ $label }}</a>
