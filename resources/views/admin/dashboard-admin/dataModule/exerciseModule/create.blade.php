@@ -33,7 +33,8 @@
         <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal">+ Tambah soal</button>
     </div>
 
-    <div class="modal" id="modal">
+    <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -62,38 +63,23 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="question">Jawaban Benar</label> <br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer" value="A">
-                                <label class="form-check-label" for="answer">
-                                    A
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer" value="B">
-                                <label class="form-check-label" for="answer">
-                                    B
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+
+                            <div class="px-4">
+                                <input class="form-check-input" type="checkbox" id="answer_1" name="answer[]"
+                                    value="A">
+                                <label class="form-check-label" for="answer_1">A</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_2" name="answer[]"
+                                    value="B">
+                                <label class="form-check-label" for="answer_2">B</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_3" name="answer[]"
                                     value="C">
-                                <label class="form-check-label" for="answer">
-                                    C
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                <label class="form-check-label" for="answer_3">C</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_4" name="answer[]"
                                     value="D">
-                                <label class="form-check-label" for="answer">
-                                    D
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                <label class="form-check-label" for="answer_4">D</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_5" name="answer[]"
                                     value="E">
-                                <label class="form-check-label" for="answer">
-                                    E
-                                </label>
+                                <label class="form-check-label" for="answer_5">E</label><br>
                             </div>
                         </div>
 
@@ -127,7 +113,7 @@
                 @foreach ($available_questions as $item)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ Str::limit($item->question, 80) }}</td>
+                        <td>{!! Str::limit($item->question, 80) !!}</td>
                         <td>
                             <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-update{{ $item->id }}">
@@ -136,108 +122,101 @@
                             <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-danger{{ $item->id }}"><i class="fa fa-trash"></i>
                             </a>
-
-                            <!-- Modal Danger Delete-->
-                            <div class="modal fade" id="modal-danger{{ $item->id }}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header border-0">
-                                            <h6 class="modal-title">Konfirmasi</h6>
-                                        </div>
-                                        <form method="post"
-                                            action="{{ '/dashboard-admin/data-module/' . $module->slug . '/' . 'exercise/' . $item->id . '/delete' }}">
-                                            @csrf
-                                            <div class="modal-body py-0">
-                                                Hapus Pertanyaan?
-                                            </div>
-                                            <div class="modal-footer border-0">
-                                                <button type="button" class="btn btn-sm btn-light"
-                                                    data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Modal Update -->
-                            <div class="modal" id="modal-update{{ $item->id }}">
-                                <div class="modal-dialog modal-xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="model-title mb-0">Paket soal: {{ $item->question }}</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="close"></button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            <form
-                                                action="/dashboard-admin/data-module/{{ $module->slug }}/exercise/{{ $item->id }}/update"
-                                                method="post">
-                                                @csrf
-                                                <div class="form-group mb-3">
-                                                    <label for="question">Pertanyaan</label>
-                                                    <textarea class="form-control" name="question" id="question" cols="10" rows="3" autofocus>{{ $item->question }}
-                                                    </textarea>
-
-                                                </div>
-                                                <div class="form-group mb-3">
-                                                    <label for="options">Jawaban <small class="text-danger">*Minimal 1
-                                                            Opsi
-                                                            Jawaban</small></label>
-                                                    @php
-                                                        $options = json_decode($item->options);
-                                                    @endphp
-                                                    @foreach ($options as $key => $option)
-                                                        <input class="form-control my-2" type="text"
-                                                            id="options_{{ $key }}" name="options[]"
-                                                            placeholder="Opsi {{ $key + 1 }}"
-                                                            value="{{ $option }}">
-                                                    @endforeach
-                                                </div>
-                                                <div class="form-group mb-3">
-                                                    <label for="question">Jawaban Benar</label> <br>
-                                                    <div class="form-check form-check-inline">
-                                                        @foreach ($options as $key => $option)
-                                                            <input class="form-check-input" type="radio" name="answer"
-                                                                id="answer_{{ $key }}"
-                                                                value="{{ chr(65 + $key) }}"
-                                                                @if ($item->answer === chr(65 + $key)) checked @endif>
-                                                            <label class="form-check-label"
-                                                                for="answer_{{ $key }}">
-                                                                {{ chr(65 + $key) }}
-                                                            </label>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group mb-3">
-                                                    <label for="question">Pembahasan Kunci Jawaban</label>
-                                                    <textarea class="form-control" name="discussion" id="discussion" cols="10" rows="3" autofocus>{{ $item->discussion }}
-                                                    </textarea>
-                                                </div>
-
-                                                <div class="text-right justify-content-around mt-3">
-                                                    <button type="submit" class="btn btn-primary w-100">Buat
-                                                        Pertanyaan</a></button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </td>
                     </tr>
+                    <!-- Modal Danger Delete-->
+                    <div class="modal fade" id="modal-danger{{ $item->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <h6 class="modal-title">Konfirmasi</h6>
+                                </div>
+                                <form method="post"
+                                    action="{{ '/dashboard-admin/data-module/' . $module->slug . '/' . 'exercise/' . $item->id . '/delete' }}">
+                                    @csrf
+                                    <div class="modal-body py-0">
+                                        Hapus Pertanyaan?
+                                    </div>
+                                    <div class="modal-footer border-0">
+                                        <button type="button" class="btn btn-sm btn-light"
+                                            data-bs-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Update -->
+                    <div class="modal fade" id="modal-update{{ $item->id }}" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="model-title mb-0">Edit Pertanyaan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form
+                                        action="/dashboard-admin/data-module/{{ $module->slug }}/exercise/{{ $item->id }}/update"
+                                        method="post">
+                                        @csrf
+                                        <div class="form-group mb-3">
+                                            <label for="question">Pertanyaan</label>
+                                            <textarea class="form-control" name="question" id="question" cols="10" rows="3" autofocus>{{ $item->question }}
+                                                    </textarea>
+
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="options">Jawaban <small class="text-danger">*Minimal 1 Opsi
+                                                    Jawaban</small></label>
+                                            @php
+                                                $options = json_decode($item->options);
+                                            @endphp
+                                            @foreach ($options as $key => $option)
+                                                <input class="form-control my-2" type="text"
+                                                    id="options_{{ $key }}" name="options[]"
+                                                    placeholder="Opsi {{ $key + 1 }}" value="{{ $option }}">
+                                            @endforeach
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="question">Jawaban Benar</label> <br>
+                                            @php
+                                                $options = json_decode($item->options);
+                                                $selectedAnswers = str_split($item->answer);
+                                            @endphp
+                                            @foreach ($options as $key => $option)
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="answer[]"
+                                                        id="answer_{{ $key }}" value="{{ chr(65 + $key) }}"
+                                                        @if (in_array(chr(65 + $key), $selectedAnswers)) checked @endif>
+                                                    <label class="form-check-label"
+                                                        for="answer_{{ $key }}">{{ chr(65 + $key) }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="form-group mb-3">
+                                            <label for="question">Pembahasan Kunci Jawaban</label>
+                                            <textarea class="form-control" name="discussion" id="discussion" cols="10" rows="3" autofocus>{{ $item->discussion }}
+                                                    </textarea>
+                                        </div>
+
+                                        <div class="text-right justify-content-around mt-3">
+                                            <button type="submit" class="btn btn-primary w-100">Simpan
+                                                Pertanyaan</a></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>
-
-
     </div>
-    <script>
-        var editorQuestion = new FroalaEditor('#question');
-        var editorDiscussion = new FroalaEditor('#discussion');
-    </script>
 @endsection

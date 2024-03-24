@@ -36,7 +36,7 @@ class BanksoalQuestionController extends Controller
         $validatedData = $request->validate([
             'question' => 'required',
             'options' => 'required|array|min:1',
-            'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'answer' => 'required|array|in:' . implode(',', range('A', 'E')),
             'discussion' => 'required'
         ]);
 
@@ -46,7 +46,7 @@ class BanksoalQuestionController extends Controller
             'banksoal_id' => $banksoal->id,
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
-            'answer' => $validatedData['answer'],
+            'answer' =>  json_encode($validatedData['answer']),
             'discussion' => $validatedData['discussion']
         ]);
 
@@ -83,7 +83,7 @@ class BanksoalQuestionController extends Controller
         $rules = ([
             'question' => 'required',
             'options' => 'required|array|min:1',
-            'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'answer' => 'required|array|in:' . implode(',', range('A', 'E')),
             'discussion' => 'required',
         ]);
 
@@ -93,7 +93,7 @@ class BanksoalQuestionController extends Controller
         $question->update([
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
-            'answer' => $validatedData['answer'],
+            'answer' =>  json_encode($validatedData['answer']),
             'discussion' => $validatedData['discussion'],
         ]);
 

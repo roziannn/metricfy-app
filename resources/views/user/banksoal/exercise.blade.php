@@ -1,3 +1,4 @@
+<link rel="shortcut icon" sizes="114x114" href="{{ asset('img/bxMath.png') }}">
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
@@ -63,15 +64,16 @@
                             <input type="hidden" name="answers[{{ $item->id }}][question_id]"
                                 value="{{ $item->id }}">
                             <div class="card-body">
-                                @foreach (json_decode($item->options) as $option)
+                                @php
+                                    $options = range('A', 'E');
+                                @endphp
+                                @foreach (json_decode($item->options) as $key => $option)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio"
-                                            name="answers[{{ $item->id }}][answer]"
-                                            value="{{ chr(64 + $loop->index + 1) }}"
+                                        <input class="form-check-input" type="checkbox"
+                                            name="answers[{{ $item->id }}][answer][]" value="{{ $options[$key] }}"
                                             data-question-number="{{ $loop->index }}">
-                                        {{-- hasil input berupa array dgn pasangan jawaban dan jawaban untuk pertanyaan dgn id berapa --}}
                                         <label class="form-check-label">
-                                            {{ chr(64 + $loop->index + 1) }} . {{ $option }}
+                                            {{ $options[$key] }} . {{ $option }}
                                         </label>
                                     </div>
                                 @endforeach
@@ -92,6 +94,7 @@
                         </div>
                     @endforeach
                 </form>
+
             </div>
         </div>
     </div>
@@ -111,10 +114,10 @@
                     jawaban?</span>
             </div>
             {{-- script additional info/soal terjawab - blm terjawab --}}
-            <script>
+            {{-- <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     //get all radio buttons di form
-                    const radioButtons = document.querySelectorAll('input[type="radio"]');
+                    const radioButtons = document.querySelectorAll('input[type="checkbox"]');
                     const submitButton = document.getElementById('btn-submit');
                     const modalText = document.getElementById('modalText');
 
@@ -141,7 +144,56 @@
                     }
                     updateAnsweredCount();
                 });
+            </script> --}}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Mendapatkan semua checkbox dalam form
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    const submitButton = document.getElementById('btn-submit');
+                    const modalText = document.getElementById('modalText');
+
+                    // Menambahkan event listener ke setiap checkbox
+                    checkboxes.forEach(function(checkbox) {
+                        checkbox.addEventListener('change', function() {
+                            updateAnsweredCount();
+                        });
+                    });
+
+                    // Fungsi untuk mengupdate jumlah checkbox yang dipilih
+                    function updateAnsweredCount() {
+                        // Mendapatkan semua elemen pertanyaan
+                        const questions = document.querySelectorAll('.card-options');
+                        let answeredCount = 0;
+
+                        // Iterasi melalui setiap elemen pertanyaan
+                        questions.forEach(function(question) {
+                            // Mendapatkan checkbox yang tercentang pada setiap pertanyaan
+                            const checkedCheckboxes = question.querySelectorAll('input[type="checkbox"]:checked');
+
+                            // Jika ada checkbox yang tercentang di pertanyaan tertentu, tambahkan 1 ke answeredCount
+                            if (checkedCheckboxes.length > 0) {
+                                answeredCount++;
+                            }
+                        });
+
+                        // Mengatur jumlah pertanyaan yang dijawab pada elemen dengan ID 'answered'
+                        document.getElementById('answered').textContent = answeredCount;
+
+                        // Enable/disable tombol submit berdasarkan jumlah pertanyaan yang dijawab
+                        if (answeredCount === {{ count($banksoal->banksoalQuestions) }}) {
+                            submitButton.disabled = false;
+                            modalText.textContent = "Yakin ingin mengumpulkan jawaban?";
+                        } else {
+                            submitButton.disabled = true;
+                            modalText.textContent = "Jawab semua pertanyaan untuk mengumpulkan.";
+                        }
+                    }
+
+                    // Memanggil fungsi updateAnsweredCount saat halaman dimuat
+                    updateAnsweredCount();
+                });
             </script>
+
             {{-- end js --}}
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>

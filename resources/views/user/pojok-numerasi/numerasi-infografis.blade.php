@@ -1,3 +1,4 @@
+<link rel="shortcut icon" sizes="114x114" href="{{ asset('img/bxMath.png') }}">
 @extends('layouts.main')
 @include('partials.navbar')
 
@@ -7,7 +8,7 @@
             <div class="py-4">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-md-6 my-3">
-                        <span class="badge badge-secondary p-2 my-2 rounded-pill">Pojok Numerasi</span>
+                        <span class="badge badge-secondary p-2 my-2 rounded-pill">Pojok Metric</span>
                         <h1 class="fw-bold text-dark">Introduction: Tentang Pembelajaran Numerasi <br></h1>
                         <p class="col-sm-12 px-0 pb-3 text-dark">Berkenalan dengan literasi numerasi <br> serta tujuan
                             kita mempelajarinya

@@ -33,11 +33,11 @@
         <div class="form-group row">
             <label for="content" class="col-sm-2 col-form-label">Content</label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="content" name="content" placeholder="Ketik di sini" rows="4"></textarea>
+                <textarea class="form-control" id="content" name="content" placeholder="Ketik dsini" rows="4"></textarea>
+
             </div>
-            <script>
-                var editor = new FroalaEditor('#content');
-            </script>
+
+
         </div>
         <div class="d-flex justify-content-end">
             <button class="btn btn-m btn-success col-md-3 col-sm-12" type="submit">Buat Module</button>

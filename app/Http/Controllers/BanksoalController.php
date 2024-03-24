@@ -75,32 +75,42 @@ class BanksoalController extends Controller
     public function showUser($slug)
     {
         $banksoal = Banksoal::where('slug', $slug)->first();
+        $questions = $banksoal->banksoalQuestions;
         $topic = Module::all();
         $user = Auth::user();
 
-        //ambil jawaban terakhir dari user
         $latestExam = UserExamBanksoal::where('user_id', $user->id)->where('banksoal_id', $banksoal->id)
             ->latest()->first();
 
-        //cek benar salah riwayat pengerjaan terakhir
         if ($latestExam) {
             $response_data = json_decode($latestExam->response_data, true);
 
             $benarCount = 0;
             $salahCount = 0;
 
-            foreach ($response_data as $questionId => $response) {
-                $question = $banksoal->banksoalQuestions->find($questionId);
-                if ($question) {
-                    $isCorrect = ($response['answer'] === $question->answer);
-                    if ($isCorrect) {
-                        $benarCount++;
-                    } else {
-                        $salahCount++;
+            foreach ($questions as $question) {
+                $questionId = $question->id;
+                $keyAnswers = json_decode($question->answer);
+                $point = $question->point;
+                $userAnswer = $response_data[$questionId]['answer'] ?? null;
+
+                $isCorrect = false;
+
+                // Check if both key answers and user's answer are arrays
+                if (is_array($keyAnswers) && is_array($userAnswer)) {
+                    // Check if user's answer includes all elements of key answers
+                    if (empty(array_diff($keyAnswers, $userAnswer))) {
+                        $isCorrect = true;
                     }
                 }
-            }
 
+                // Update the counts based on correctness
+                if ($isCorrect) {
+                    $benarCount++;
+                } else {
+                    $salahCount++;
+                }
+            }
 
             //add ke latestExam buat di blade
             $latestExam->benarCount = $benarCount;
@@ -168,10 +178,6 @@ class BanksoalController extends Controller
         return view('user.banksoal.showDiscussion', compact('banksoal', 'breadcrumbs', 'alreadyDoneByUser'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-
     public function update(Request $request, $slug)
     {
         $banksoal = Banksoal::where('slug', $slug)->first();
@@ -203,98 +209,53 @@ class BanksoalController extends Controller
         return back();
     }
 
-    // public function submitExam(Request $request, $id)
-    // {
-    //     $user = auth()->user();
-    //     $banksoal = Banksoal::where('id', $id)->first();
-    //     $slug = $banksoal->slug;
-    //     $questions = $banksoal->banksoalQuestions;
-
-    //     $answers = $request->input('answers');
-
-    //     $timed = $request->input('timed');
-
-    //     $totalScore = 0;
-
-    //     foreach ($questions as $question) {
-    //         $correctJawaban = $question->answer;
-    //         $point = $question->point;
-
-    //         $userAnswer = $answers[$question->id]['answer']  ?? null;
-    //         $isCorrect = ($userAnswer === $correctJawaban);
-
-    //         $answers[$question->id]['isCorrect'] = $isCorrect;
-
-    //         if ($isCorrect) {
-    //             $totalScore += $point;
-    //         }
-    //     }
-
-
-    //     UserExamBanksoal::updateOrCreate(
-    //         ['banksoal_id' => $banksoal->id, 'user_id' => $user->id],
-    //         [
-    //             'response_data' => is_array($answers) ? json_encode($answers) : $answers,
-    //             'timed' => $timed, 'pointGet' => $totalScore
-    //         ]
-    //     );
-
-
-    //     //tambah point yg terakhir didapat
-    //     $user->point += $totalScore;
-    //     $user->save();
-
-    //     if ($totalScore <= 65) {
-    //         Alert::warning("😥", "Nilaimu masih dibawah rata-rata :( Kamu bisa coba kerjakan ulang");
-    //     } else {
-    //         Alert::success("Hore!😁", "Nilaimu diatas rata-rata! :)");
-    //     }
-
-    //     return redirect('banksoal/' . $slug);
-    // }
     public function submitExam(Request $request, $id)
     {
         $user = auth()->user();
-        $banksoal = Banksoal::where('id', $id)->first();
-        $slug = $banksoal->slug;
+        $banksoal = Banksoal::findOrFail($id);
         $questions = $banksoal->banksoalQuestions;
-
         $answers = $request->input('answers');
-
         $timed = $request->input('timed');
 
-        $totalScore = 0;
+        $slug = $banksoal->slug;
 
-        // Cek apakah data ujian pengguna untuk bank soal ini sudah ada di database sebelumnya
         $userExam = UserExamBanksoal::where('banksoal_id', $banksoal->id)
             ->where('user_id', $user->id)
             ->first();
 
+        $totalScore = 0;
+
         if (!$userExam) {
             foreach ($questions as $question) {
-                $correctJawaban = $question->answer;
+                $keyAnswers = json_decode($question->answer);
                 $point = $question->point;
+                $userAnswer = $answers[$question->id]['answer'] ?? null;
+                // dd($userAnswer);
 
-                $userAnswer = $answers[$question->id]['answer']  ?? null;
-                $isCorrect = ($userAnswer === $correctJawaban);
+                $isCorrect = false;
+
+                // Check if both key answers and user's answer are arrays
+                if (is_array($keyAnswers) && is_array($userAnswer) && empty(array_diff($keyAnswers, $userAnswer))) {
+                    $isCorrect = true;
+                }
 
                 $answers[$question->id]['isCorrect'] = $isCorrect;
-
                 if ($isCorrect) {
-                    $totalScore += $point;
+                    $totalScore += $point; //point tetap di hitung, tp tidak di parse ke database
                 }
             }
 
-            // Simpan data ujian pengguna
+            $pointGet = $totalScore;
+
+            // Save user exam data
             UserExamBanksoal::create([
                 'banksoal_id' => $banksoal->id,
                 'user_id' => $user->id,
                 'response_data' => is_array($answers) ? json_encode($answers) : $answers,
                 'timed' => $timed,
-                'pointGet' => $totalScore
+                'pointGet' => $pointGet
             ]);
 
-            // Tambahkan point yang didapat pengguna
             $user->point += $totalScore;
             $user->save();
 
@@ -309,33 +270,43 @@ class BanksoalController extends Controller
             }
         } else {
             foreach ($questions as $question) {
-                $correctJawaban = $question->answer;
+                $keyAnswers = json_decode($question->answer);
                 $point = $question->point;
 
                 $userAnswer = $answers[$question->id]['answer']  ?? null;
-                $isCorrect = ($userAnswer === $correctJawaban);
+
+                $isCorrect = false;
+
+                // Check if both key answers and user's answer are arrays
+                // Check if user's answer includes all elements of key answers
+                if (is_array($keyAnswers) && is_array($userAnswer) && empty(array_diff($keyAnswers, $userAnswer))) {
+                    $isCorrect = true;
+                }
 
                 $answers[$question->id]['isCorrect'] = $isCorrect;
-                if ($isCorrect) {
-                    $totalScore += $point; //point tetap di hitung, tp tidak di parse ke database
-                }
+                //point tetap di hitung, tp tidak di parse ke database
+                $totalScore += $isCorrect ? $point : 0;
             }
+
+            $pointGet = $totalScore;
 
             UserExamBanksoal::create([
                 'banksoal_id' => $banksoal->id,
                 'user_id' => $user->id,
                 'response_data' => is_array($answers) ? json_encode($answers) : $answers,
                 'timed' => $timed,
-                'pointGet' => 0,
+                'pointGet' => $pointGet
             ]);
 
             $totalQuestions = count($questions);
             $averageScore = $totalQuestions > 0 ? $totalScore / $totalQuestions : 0;
 
-            if ($totalScore <= $averageScore) {
-                Alert::warning("😥", "Nilaimu lebih rendah dari pengerjaan terakhirmu.");
-            } else {
-                Alert::success("Hore!😁", "Nilaimu lebih besar dari pengerjaan terakhirmu! :)");
+            if ($userExam) {
+                if ($totalScore <= $averageScore) {
+                    Alert::warning("😥", "Nilaimu lebih rendah dari pengerjaan terakhirmu. Ayo tingkatkan lagi!");
+                } else {
+                    Alert::success("Hore!😁", "Nilaimu lebih besar dari pengerjaan terakhirmu! :)");
+                }
             }
         }
 

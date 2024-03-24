@@ -181,9 +181,13 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $i = 1;
+                @endphp
                 @foreach ($banksoal->banksoalQuestions as $soal)
                     <tr>
-                        <td>{{ $soal->question }}</td>
+                        <td>{{ $i++ }}</td>
+                        <td>{!! $soal->question !!}</td>
                         <td class="text-end">
                             <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit{{ $soal->id }}">
@@ -201,7 +205,8 @@
     </div>
 
     {{-- Modal add soal baru --}}
-    <div class="modal" id="modal">
+    <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -231,47 +236,29 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="question">Jawaban Benar</label> <br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+
+                            <div class="px-4">
+                                <input class="form-check-input" type="checkbox" id="answer_1" name="answer[]"
                                     value="A">
-                                <label class="form-check-label" for="answer">
-                                    A
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                <label class="form-check-label" for="answer_1">A</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_2" name="answer[]"
                                     value="B">
-                                <label class="form-check-label" for="answer">
-                                    B
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                <label class="form-check-label" for="answer_2">B</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_3" name="answer[]"
                                     value="C">
-                                <label class="form-check-label" for="answer">
-                                    C
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                <label class="form-check-label" for="answer_3">C</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_4" name="answer[]"
                                     value="D">
-                                <label class="form-check-label" for="answer">
-                                    D
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="answer" id="answer"
+                                <label class="form-check-label" for="answer_4">D</label><br>
+                                <input class="form-check-input" type="checkbox" id="answer_5" name="answer[]"
                                     value="E">
-                                <label class="form-check-label" for="answer">
-                                    E
-                                </label>
+                                <label class="form-check-label" for="answer_5">E</label><br>
                             </div>
                         </div>
                         <div class="form-group mb-2">
                             <label class="form-check-label" for="discussion">Pembahasan Kunci Jawaban</label>
                             <textarea class="form-control my-2" type="text" id="discussion" name="discussion" rows="3"></textarea>
                         </div>
-
 
                         <div class="text-right justify-content-around mt-3">
                             <button type="submit" class="btn btn-primary w-100">Buat Pertanyaan</a></button>
@@ -281,31 +268,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Danger Delete-->
-    @foreach ($banksoal->banksoalQuestions as $soal)
-        <div class="modal fade" id="modal-danger{{ $soal->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title" id="exampleModalLabel">Konfirmasi</h6>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url('/dashboard-admin/banksoal/' . $soal->id . '/delete') }}" method="GET">
-                            {{ csrf_field() }}
-                            <p>Yakin ingin menghapus data?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            aria-label="close">Batal</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endforeach
 
     <!-- Modal Edit-->
     @foreach ($banksoal->banksoalQuestions as $soal)
@@ -339,16 +301,19 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="question">Jawaban Benar</label> <br>
-                                <div class="form-check form-check-inline">
-                                    @foreach ($options as $key => $option)
-                                        <input class="form-check-input" type="radio" name="answer"
+                                @php
+                                    $options = json_decode($soal->options);
+                                    $selectedAnswers = str_split($soal->answer);
+                                @endphp
+                                @foreach ($options as $key => $option)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="answer[]"
                                             id="answer_{{ $key }}" value="{{ chr(65 + $key) }}"
-                                            @if ($soal->answer === chr(65 + $key)) checked @endif>
-                                        <label class="form-check-label" for="answer_{{ $key }}">
-                                            {{ chr(65 + $key) }}
-                                        </label>
-                                    @endforeach
-                                </div>
+                                            @if (in_array(chr(65 + $key), $selectedAnswers)) checked @endif>
+                                        <label class="form-check-label"
+                                            for="answer_{{ $key }}">{{ chr(65 + $key) }}</label>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-check-label" for="discussion">Pembahasan Kunci
@@ -360,6 +325,32 @@
                                 <button type="submit" class="btn btn-primary w-100">Simpan Pertanyaan</a></button>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
+    <!-- Modal Danger Delete-->
+    @foreach ($banksoal->banksoalQuestions as $soal)
+        <div class="modal fade" id="modal-danger{{ $soal->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="exampleModalLabel">Konfirmasi</h6>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url('/dashboard-admin/banksoal/' . $soal->id . '/delete') }}" method="GET">
+                            {{ csrf_field() }}
+                            <p>Yakin ingin menghapus data?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            aria-label="close">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </div>
                     </form>
                 </div>
             </div>

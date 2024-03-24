@@ -42,7 +42,7 @@ class ExerciseController extends Controller
         $validatedData = $request->validate([
             'question' => 'required',
             'options' => 'required|array|min:1',
-            'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'answer' => 'required|array|in:' . implode(',', range('A', 'E')),
             'discussion' => 'required'
         ]);
 
@@ -52,7 +52,7 @@ class ExerciseController extends Controller
             'module_id' => $module->id,
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
-            'answer' => $validatedData['answer'],
+            'answer' => json_encode($validatedData['answer']),
             'discussion' => $validatedData['discussion'],
         ]);
 
@@ -90,21 +90,28 @@ class ExerciseController extends Controller
         return view('user.module.exerciseModule.show', compact('module', 'exerciseModule', 'breadcrumbs', 'userAlreadyAnswer'));
     }
 
+
     public function submitAnswer(Request $request, $slug, $exerciseId)
     {
-        $request->validate([
-            'answer' => [
-                'required',
-                Rule::in(['A', 'B', 'C', 'D', 'E']),
-            ]
-        ]);
-
-        $userAnswer = strtoupper($request->input('answer'));
+        $answers = $request->input('answers');
 
         $exercise = Exercise::findOrFail($exerciseId);
 
-        $correctAnswer = strtoupper($exercise->answer);
-        $isCorrect = ($userAnswer === $correctAnswer);
+        // $correctAnswer = strtoupper($exercise->answer);
+        // $isCorrect = ($userAnswer === $correctAnswer);
+
+
+        $keyAnswers = json_decode($exercise->answer);
+
+        $userAnswer = $answers[$exercise->id]['answer'] ?? null;
+
+        $isCorrect = false;
+
+        // Check if both key answers and user's answer are arrays
+        if (is_array($keyAnswers) && is_array($userAnswer) && empty(array_diff($keyAnswers, $userAnswer))) {
+            $isCorrect = true;
+        }
+
 
         $pointsEarn = 0;
 
@@ -114,15 +121,17 @@ class ExerciseController extends Controller
             $exercise->point = 0;
         }
 
-        UserExerciseAnswer::create([
+
+        $test = UserExerciseAnswer::create([
             'user_id' => auth()->user()->id,
             'module_id' => $exercise->module_id,
             'exercise_id' => $exercise->id,
-            'user_answer' => $userAnswer,
-            'point' => $exercise->point,
+            'user_answer' => is_array($answers) ? json_encode($answers) : $answers,
+            'point' => $pointsEarn,
             'is_correct' => $isCorrect,
         ]);
 
+        // dd($test);
         $user = auth()->user();
         $user->point += $pointsEarn; //current point ditambah pointEarned
         $user->save();
@@ -130,23 +139,19 @@ class ExerciseController extends Controller
 
         if ($isCorrect) {
             Alert::success('Jawaban kamu benar!', 'Kamu mendapatkan 3 poin 🪙');
+            echo "<script>
+                    $(document).ready(function() {
+                        $('.toast').toast('show');
+                    });
+                </script>";
         } else {
 
             Alert::error('Jawaban kamu salah!', 'Coba lagi');
         }
 
-
         return back();
     }
 
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $moduleSlug, $exerciseId)
     {
         $module = Module::where('slug', $moduleSlug)->firstOrFail();
@@ -156,7 +161,7 @@ class ExerciseController extends Controller
         $rules = ([
             'question' => 'required',
             'options' => 'required|array|min:1',
-            'answer' => 'required|in:' . implode(',', range('A', 'E')),
+            'answer' => 'required|array|in:' . implode(',', range('A', 'E')),
             'discussion' => 'required'
         ]);
 
@@ -166,7 +171,7 @@ class ExerciseController extends Controller
         $question->update([
             'question' => $validatedData['question'],
             'options' => json_encode($validatedData['options']),
-            'answer' => $validatedData['answer'],
+            'answer' => json_encode($validatedData['answer']),
             'discussion' => $validatedData['discussion'],
         ]);
 

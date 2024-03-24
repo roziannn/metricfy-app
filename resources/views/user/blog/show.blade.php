@@ -1,3 +1,4 @@
+<link rel="shortcut icon" sizes="114x114" href="{{ asset('img/bxMath.png') }}">
 @extends('layouts.main')
 @include('partials.navbar')
 <div class="pt-5"></div>
@@ -32,14 +33,25 @@
             <div class="py-3">
                 <p class="fs-5">Bagikan artikel ini</p>
                 <div class="d-flex">
-                    <i class="fa-brands fa-square-facebook fa-2x me-3" style="color: #0866FF"></i>
-                    <i class="fa-brands fa-square-x-twitter fa-2x me-3"></i>
-                    <i class="fa-brands fa-square-whatsapp fa-2x me-3" style="color: #12AF0A"></i>
-                    <i class="fa-brands fa-linkedin fa-2x me-3" style="color:#007BB5"></i>
-
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('/blog/' . $blog->slug) }}" target="_blank"
+                        class="text-decoration-none me-3">
+                        <i class="fab fa-facebook-square fa-2x" style="color: #0866FF;"></i>
+                    </a>
+                    <a href="https://twitter.com/share?url={{ url('/blog/' . $blog->slug) }}" target="_blank"
+                        class="text-decoration-none me-3">
+                        <i class="fab fa-twitter-square fa-2x"></i>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text={{ url('/blog/' . $blog->slug) }}" target="_blank"
+                        class="text-decoration-none me-3">
+                        <i class="fab fa-whatsapp-square fa-2x" style="color: #12AF0A;"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url('/blog/' . $blog->slug) }}"
+                        target="_blank" class="text-decoration-none me-3">
+                        <i class="fab fa-linkedin fa-2x" style="color:#007BB5;"></i>
+                    </a>
                 </div>
-
             </div>
+
         </div>
         @include('user.blog.partials.viewlist-show-blog')
     </div>

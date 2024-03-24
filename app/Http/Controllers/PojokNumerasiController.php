@@ -10,4 +10,9 @@ class PojokNumerasiController extends Controller
     {
         return view('user.pojok-numerasi.numerasi-infografis');
     }
+
+    public function about()
+    {
+        return view('user.pojok-numerasi.aboutUs');
+    }
 }

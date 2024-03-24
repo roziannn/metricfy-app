@@ -47,7 +47,7 @@ Route::get('/games', [GamesController::class, 'showAll'])->name('daily-games');
 Route::get('/games/guess-the-number', [GamesController::class, 'gameGuessTheNumber'])->name('game-1');
 
 Route::get('/introduction-numerasi', [PojokNumerasiController::class, 'infografisNumerasi'])->name('infografis');
-
+Route::get('/about', [PojokNumerasiController::class, 'about'])->name('about');
 
 
 

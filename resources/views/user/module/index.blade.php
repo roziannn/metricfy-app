@@ -1,3 +1,4 @@
+<link rel="shortcut icon" sizes="114x114" href="{{ asset('img/bxMath.png') }}">
 @extends('layouts.main')
 @include('partials.navbar')
 <div class="pt-4">

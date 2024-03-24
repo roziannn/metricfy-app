@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Share;
 use App\Models\Blog;
 use App\Models\Module;
 use Illuminate\Support\Str;

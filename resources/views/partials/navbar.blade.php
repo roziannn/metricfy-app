@@ -41,16 +41,16 @@
                             <a class="nav-link" href="/banksoal">Bank Soal</a>
                         </li>
                         <li
-                            class="nav-item px-lg-3 dropdown {{ Route::is('infografis') || Request::is('kamus') ? 'active' : '' }}">
+                            class="nav-item px-lg-3 dropdown {{ Route::is('infografis') || Request::is('about') ? 'active' : '' }}">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                Pojok Numerasi
+                                Pojok Metric
                             </a>
                             <ul class="dropdown-menu border-0 shadow">
                                 <li><a class="dropdown-item py-2 {{ Route::is('infografis') ? 'active' : '' }}"
                                         href="/introduction-numerasi">Tentang Numerasi</a></li>
-                                <li><a class="dropdown-item py-2 {{ Request::is('fungsi-logika') ? 'active' : '' }}"
-                                        href="#">Fungsi Logika</a></li>
+                                <li><a class="dropdown-item py-2 {{ Request::is('about') ? 'active' : '' }}"
+                                        href="/about">Tentang Metricfy</a></li>
                             </ul>
                         </li>
                         <li class="nav-item px-lg-3  {{ Request::is('blog') ? 'active' : '' }}">
@@ -65,7 +65,7 @@
         </div>
         @auth
             <div class="navbar ms-auto">
-                <div class="nav-item">
+                <div class="nav-item p-0">
                     <a class="nav-link p-0 dropdown" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="username-name text-dark font-weight-bold">Halo,
@@ -86,6 +86,29 @@
                             <span class="px-1 font-weight-bold">{{ explode(' ', auth()->user()->name)[0] }}</span>
                             <span class="px-1 small font-weight-bold"><i class="fa-solid fa-coins text-warning"></i>
                                 {{ auth()->user()->point }} xp</span>
+                        </li>
+                        <li>
+
+                            <a class="dropdown-item px-3" href="/notification"> Notifikasi
+
+                                <span class="badge rounded-pill badge-notification bg-danger" id="notify-count"></span>
+                                <script>
+                                    fetch('/notification/count')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const notifyCount = parseInt(data.total);
+                                            if (notifyCount > 0) {
+                                                document.getElementById('notify-count').innerText = notifyCount;
+                                            } else {
+                                                document.getElementById('notify-count').style.display = 'none';
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        });
+                                </script>
+                            </a>
+
                         </li>
                         <li><a class="dropdown-item px-3" href="/profile">Profil</a>
                         </li>

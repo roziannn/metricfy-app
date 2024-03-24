@@ -1,3 +1,4 @@
+<link rel="shortcut icon" sizes="114x114" href="{{ asset('img/bxMath.png') }}">
 @extends('layouts.main')
 @include('partials.navbar')
 @section('container')
@@ -37,36 +38,37 @@
                     <input type="hidden" name="answers[{{ $item->id }}][question_id]" value="{{ $item->id }}">
                     <div class="card-body">
                         <h6 class="col-sm-3 px-0 card-title font-weight-bold">Soal {{ $loop->index + 1 }}</h6>
-                        <p class="card-text">{{ $item->question }}</p>
+                        <p class="card-text">{!! $item->question !!}</p>
                         @foreach (json_decode($item->options) as $optionIndex => $option)
                             {{-- optionIndex-> indeks elemen jawaban saat ini dalam array
                       option -> nilai opsi jawaban itu sendiri --}}
                             @php
                                 $questionId = $item->id;
                                 $answerKey = (string) $questionId;
-                                $answerData = json_decode($alreadyDoneByUser->response_data, true)[$answerKey] ?? null;
+                                $answerData = isset(json_decode($alreadyDoneByUser->response_data, true)[$answerKey])
+                                    ? json_decode($alreadyDoneByUser->response_data, true)[$answerKey]
+                                    : null;
+                                $isAnswered = $answerData ? $answerData['answer'] : null;
+                                $isChecked = $isAnswered && in_array(chr(65 + $optionIndex), $isAnswered);
+                                $isDisabled = $isAnswered && !in_array(chr(65 + $optionIndex), $isAnswered);
+
                             @endphp
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="answers[{{ $item->id }}][answer]"
-                                    value="{{ chr(65 + $optionIndex) }}" data-question-number="{{ $loop->index }}"
-                                    @if ($answerData && $answerData['answer'] === chr(65 + $optionIndex)) checked
-                              @else disabled @endif>
+                            <div class="form-check ps-0">
+                                <input class="form-check-input" type="checkbox"
+                                    name="answers[{{ $item->id }}][answer][]" value="{{ chr(65 + $optionIndex) }}"
+                                    data-question-number="{{ $loop->index }}" {{ $isChecked ? 'checked' : '' }}
+                                    {{ $isDisabled ? 'disabled' : '' }}>
+
                                 <label class="form-check-label">
                                     {{ chr(65 + $optionIndex) }} . {{ $option }}
-
                                 </label>
-                                @if ($answerData)
-                                    @if ($answerData['answer'] === chr(65 + $optionIndex))
-                                        @if ($answerData['isCorrect'])
-                                            <p class="my-2 p-2 text-isCorrect bg-success">(Jawabanmu benar!) <i
-                                                    class="fa-solid fa-check text-light ms-2 rounded"></i>
-                                            </p>
-                                        @else
-                                            <p class="my-2 p-2 text-isCorrect bg-danger">(Jawabanmu
-                                                salah!) <i class="fa-solid fa-xmark text-light ms-2 rounded"></i>
-                                            </p>
-                                        @endif
-                                    @endif
+                                @if ($answerData && isset($answerData['isCorrect']) && in_array(chr(65 + $optionIndex), $answerData['answer']))
+                                    <p
+                                        class="my-2 p-2 text-isCorrect bg-{{ $answerData['isCorrect'] ? 'success' : 'danger' }}">
+                                        (Jawabanmu {{ $answerData['isCorrect'] ? 'benar' : 'salah' }}!)
+                                        <i
+                                            class="fa-solid fa-{{ $answerData['isCorrect'] ? 'check' : 'xmark' }} text-light ms-2 rounded"></i>
+                                    </p>
                                 @endif
                             </div>
                         @endforeach
@@ -74,29 +76,40 @@
                 </div>
             @endforeach
         </div>
+
         <div class="col-md-6">
             @foreach ($banksoal->banksoalQuestions as $item)
                 <div class="card card-answers mb-3" id="answers{{ $loop->index }}" style="display: none;">
                     <div class="card-body">
                         <span class="text-muted"> Pembahasan soal</span>
                         <p class="font-weight-bold">Jawaban yang tepat:</p>
-
                         @php
-                            // Parse JSON get mendapatkan array opsi jawaban
                             $options = json_decode($item->options);
-                            // get correct answer
-                            $correctAnswer = $item->answer;
-                            // Mencari opsi jawaban yang sesuai dengan jawaban benar
-                            $correctOption = $options[ord($correctAnswer) - ord('A')];
+                            //get semua jawaban yang benar
+                            // Membuat daftar opsi jawaban yang sesuai dengan jawaban yang benar
+                            $correctAnswers = json_decode($item->answer);
+                            $correctOptions = [];
+                            foreach ($correctAnswers as $answer) {
+                                // Mendapatkan indeks opsi jawaban yang sesuai dengan kode jawaban
+                                $index = ord($answer) - ord('A');
+                                $correctOptions[] = $options[$index];
+                            }
                         @endphp
-                        <span id="correctAnswer" class="font-weight-bold">
-                            {{ $correctAnswer }}. {{ $correctOption }} {{-- digabung --}}
-                        </span>
+
+                        {{-- Tampilkan jawaban yang benar --}}
+                        @foreach ($correctOptions as $index => $correctOption)
+                            <span class="font-weight-bold">
+                                {{ $correctAnswers[$index] }}. {{ $correctOption }}
+                            </span>
+                            {{-- Tampilkan koma untuk pemisah jika masih ada jawaban yang tersisa --}}
+                            @if ($index < count($correctOptions) - 1)
+                                <br>
+                            @endif
+                        @endforeach
 
                         <p class="mt-3 text-justify">
-                            {{ $item->discussion }}
+                            {!! $item->discussion !!}
                         </p>
-
                     </div>
                 </div>
             @endforeach
@@ -169,5 +182,36 @@
         color: #fff;
         border-radius: 8px;
         opacity: 85%;
+    }
+
+    /* input[type=checkbox] {
+        height: 20px;
+        width: 20px;
+        border: 2px solid #c9c9c9;
+        background-color: #dedbdb;
+
+    } */
+
+    input[type="checkbox"] {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    input[type="checkbox"]+label:before {
+        height: 14px;
+        width: 14px;
+        margin-right: 10px;
+        content: " ";
+        display: inline-block;
+        vertical-align: baseline;
+        border: 1px solid #bababa;
+    }
+
+    input[type="checkbox"]:checked+label:before {
+        background-color: rgb(214, 214, 214);
+    }
+
+    input[type="checkbox"]+label:before {
+        border-radius: 50%;
     }
 </style>

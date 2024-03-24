@@ -57,7 +57,7 @@ class ModuleController extends Controller
             'title' => 'required|string|max:120',
             'content' => 'required',
             'video_embed' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
         $module = Module::where('id', $id)->first();
 
@@ -75,7 +75,6 @@ class ModuleController extends Controller
             'content' => $validatedData['content'],
             'module_id' => $module->id,
             'video_embed' => $validatedData['video_embed'],
-            'image' => $validatedData['image'],
         ]);
 
 

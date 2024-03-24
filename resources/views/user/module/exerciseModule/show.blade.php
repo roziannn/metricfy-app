@@ -41,7 +41,7 @@
                                 </span>
                             </div>
                         </div>
-                        <p class="card-text">{{ $item->question }}</p>
+                        <p class="card-text">{!! $item->question !!}</p>
                     </div>
                 </div>
             @endforeach
@@ -56,38 +56,38 @@
                             action="{{ route('submitAnswer', ['slug' => $item->module->slug, 'exerciseId' => $item->id]) }}"
                             method="post" class="m-0">
                             @csrf
-                            @foreach (json_decode($item->options) as $option)
+                            @foreach (json_decode($item->options) as $optionIndex => $option)
                                 <div class="form-check">
                                     @php
-                                        $answerId = $loop->parent->index + 1;
-                                        $optionId = $loop->index + 1;
-                                        $inputId = "answer{$answerId}_{$optionId}";
-                                        $isAnswered = isset($userAlreadyAnswer[$item->id])
-                                            ? $userAlreadyAnswer[$item->id]
+                                        $questionId = $item->id;
+                                        $answerKey = (string) $questionId;
+                                        $answerData = isset($userAlreadyAnswer[$answerKey])
+                                            ? json_decode($userAlreadyAnswer[$answerKey], true)
                                             : null;
-                                        $isChecked = $isAnswered === chr(64 + $optionId);
-                                        $isDisabled = $isAnswered && $isAnswered !== chr(64 + $optionId);
+                                        $isAnswered = $answerData ? $answerData[$questionId]['answer'] : null;
+                                        $isChecked = $isAnswered && in_array(chr(65 + $optionIndex), $isAnswered);
+                                        $isDisabled = $isAnswered && !in_array(chr(65 + $optionIndex), $isAnswered);
                                     @endphp
-                                    <input class="form-check-input" type="radio" name="answer" id="{{ $inputId }}"
-                                        value="{{ chr(64 + $optionId) }}" {{ $isChecked ? 'checked' : '' }}
+
+                                    <input class="form-check-input" type="checkbox"
+                                        name="answers[{{ $item->id }}][answer][]" value="{{ chr(65 + $optionIndex) }}"
+                                        data-question-number="{{ $loop->index }}" {{ $isChecked ? 'checked' : '' }}
                                         {{ $isDisabled ? 'disabled' : '' }}>
-                                    <label class="form-check-label" for="{{ $inputId }}">
-                                        {{ chr(64 + $optionId) }} . {{ $option }}
+                                    <label class="form-check-label">
+                                        {{ chr(65 + $optionIndex) }} . {{ $option }}
                                     </label>
                                     @if ($isChecked)
                                         @if (!$item->is_correct)
-                                            {{-- karena defaultnya is_correct adalah false. jadi harus !false alias TRUE --}}
                                             <p class="my-2 p-2 text-isCorrect bg-success">(Jawabanmu benar!) <i
-                                                    class="fa-solid fa-check text-light ms-2 rounded"></i>
-                                            </p>
+                                                    class="fa-solid fa-check text-light ms-2 rounded"></i></p>
                                         @else
-                                            <p class="my-2 p-2 text-isCorrect bg-danger">(Jawabanmu
-                                                salah!) <i class="fa-solid fa-xmark text-light ms-2 rounded"></i>
-                                            </p>
+                                            <p class="my-2 p-2 text-isCorrect bg-danger">(Jawabanmu salah!) <i
+                                                    class="fa-solid fa-xmark text-light ms-2 rounded"></i></p>
                                         @endif
                                     @endif
                                 </div>
                             @endforeach
+
                             @unless (isset($userAlreadyAnswer[$item->id]))
                                 <div class="text-start pt-3">
                                     <button type="submit" class="btn btn-sm btn-primary col-sm-12">Kirim Jawaban</button>
@@ -100,9 +100,11 @@
 
                                         <span class="font-weight-bold px-0 mb-3">Jawaban yang tepat:</span>
 
-                                        <p class="p-0">
-                                            {{ $item->discussion }}
-                                        </p>
+
+                                        <span class="p-0">
+
+                                            {!! $item->discussion !!}
+                                        </span>
                                     </div>
                                 </div>
                             @endif
